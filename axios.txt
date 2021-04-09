@@ -1,3 +1,4 @@
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>   //引入axios
 1.
 1-json-server   创建这个文件夹
 去里面git   执行命令:npm intall -g json-serve
@@ -45,4 +46,12 @@ url:'/posts'}).then(function(res){
 concole.log(res);
 })}
 })
+btns[0].onclick = function(){
+axios({
+method:"GET",
+url:"http://localhost:3000/posts",}).then(function(res){
+console.log(res);})}
+axios让AJAX请求变得更加优雅
+axios 是AJAX的请求的封装扩展
+axios是基于promise的
 axios 拦截器

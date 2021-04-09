@@ -1,0 +1,81 @@
+v-for里面添加       :key   这个键   v-for 取数据是复制粘贴       
+那么可能由于缓存的原因导致数据不能实时刷新处理       就需要添加:key值来帮忙    
+这样就可以不需要从缓存当中去取数据
+
+
+filter返回满足条件的数组,回调函数
+indexOf()  未匹配成功 返回-1
+var arr = [1,2,3,4,5,4];
+var a = arr.filter(function(item){
+return item >5;})
+console.log(a)
+
+
+var arr = ['red','green','blue','orange'];
+var a = arr.filter(function(item){
+return item.indexOf('red')!=-1;})
+console.log(a)//返回了red
+
+
+计算优于监听
+计算   属性发生变化    双向改变   不用多个监听
+
+
+
+computed:{
+			searchFor:function(){
+				var self = this;//因为是回调函数，提前先定义一个self
+				if(!this.input){
+					return this.items;
+				};
+				return this.items.filter(function(item){
+					return item.title.indexOf(self.input) !=-1;
+				})
+			}
+		}//用于模糊匹配
+		
+class 优于id    批量设置css样式   id只能唯一
+
+
+onClick	                鼠标点击事件，多用在某个对象控制的范围内的鼠标点击
+onDblClick	鼠标双击事件
+onMouseDown   	鼠标上的按钮被按下了
+onMouseUp	鼠标按下后，松开时激发的事件
+onMouseOver	当鼠标移动到某对象范围的上方时触发的事件
+onMouseMove	鼠标移动时触发的事件
+onMouseOut	当鼠标离开某对象范围时触发的事件
+onKeyPress	当键盘上的某个键被按下并且释放时触发的事件.
+[注意:页面内必须有被聚焦的对象]
+onKeyDown	当键盘上某个按键被按下时触发的事件[注意:页面内必须有被聚焦的对象]
+onKeyUp	                当键盘上某个按键被按放开时触发的事件[注意:页面内必须有被聚焦的对象]
+
+
+用到过v-model   html里面的数据和Vue里面的数据来双向绑定
+
+
+@click="xx()"//点击使用函数
+
+v-show来联系 v-show="shownormal"
+Vue里面的shownormal变量,在Vue里面的methods来处理shownormal变量是true或者false
+
+设置边框
+document.getElementById('input_1').style.border = "1px solid blue";
+
+js是弱类型语言
+
+
+强制类型转换，用到了this.num1 = Number(this.num1)//string 变为   number
+
+Boolean(value)——把给定的值转换成Boolean型
+
+Number(value)——把给定的值转换成数字（可以是整数或浮点数）
+
+String(value)——把给定的值转换成字符串
+
+
+Vue 的data里面的false不用引号,直接写
+调用自身data的时候,不要忘了加上this
+
+
+
+border不占元素大小
