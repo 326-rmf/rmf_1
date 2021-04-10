@@ -3,19 +3,31 @@
 
 
 引入element-ui
+
+vue add element
+
 <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 				
 				
 				
 引入echarts
+
+npm install echarts
+
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.0.2/dist/echarts.min.js"></script>
 
 
 引入axios
+
+npm install axios
+
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 
+拉入router
+vue add router
+            
 腾讯api
 https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5
 
@@ -24,5 +36,6 @@ https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5
 <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui-v2.6.4/css/layui.css" />
 <script src="https://www.layuicdn.com/layui-v2.6.4/layui.js"></script>
 
-	
+引入gojs
+<script src="https://unpkg.com/gojs/release/go-debug.js"></script>
 		
