@@ -88,3 +88,62 @@ JSON.parse() 方法用来解析JSON字符串，构造由字符串描述的JavaSc
 柱状图横坐标显示不全在setOption里面的xAxis里面添加
 axisLabel:{
 interval: 0}//这样之后横坐标显示完整。
+
+
+target="_blank"   	//直接打开新页面跳转
+
+
+页面输入密码用这几行代码
+
+<script language="JavaScript">
+    var password="";password=prompt('请输入密码 (本网站需输入密码才可进入):','');
+        if (password != '3263')   {alert("密码不正确,无法进入本站!!");  
+          window.opener=null; window.close();}  </script>
+
+
+颜色渐变
+-webkit-linear-gradient(left, hsl(120, 97%, 64%), rgba(26, 26, 2, 0),yellow) no-repeat;//background属性
+
+
+ie缓存问题
+xhr.open('get','http://localhost:3000/ie?t='+Date.now());//加一个Date.now()时刻都在变换
+那么ie就不走缓存路线，也跟着服务器变换值
+
+xhr.timeout = 2000;//两秒之内   没结果出错
+xhr.ontimeout = function(){
+}//超时回调   执行function()
+xhr.onerror = function(){
+}//网络异常的时候执行function()
+
+
+AJAX取消请求
+abort方法用来取消请求
+let x = null;
+btns[1].onclick = function(){
+x.abort();}
+
+
+AJAX取消重复请求
+const btns = document.querySelectorAll('button');
+let x = null;
+ler isSending = false;
+btns[0].onclick = function(){
+if(isSending) x.abort();
+x  = new XMLHttpRequest();
+isSending = true;
+x.open("GET",'http://localhost:8000/delay')};
+x.send();
+x.onreadystatechange = function(){
+if(x.readyState === 4){
+isSending = false;
+}
+
+
+
+x.abort();}
+
+
+
+script标签具有跨域特性
+
+
