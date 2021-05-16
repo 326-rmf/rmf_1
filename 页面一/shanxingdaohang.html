@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shanxingdaohang</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        li{
+            list-style: none;
+        }
+        nav{
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            right: 0;
+            bottom: 0;
+        }
+        .home{
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            border: 1px solid black;
+            z-index: 2;
+            transition: 1s;
+            /* border-radius: 50%; */
+        }
+        /* img{
+           
+        } */
+        ul{
+            position: absolute;
+            width: 42px;
+            height: 42px;
+            left: 0;
+            top: 0;
+        }
+        li{
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 42px;
+        height: 42px;
+        transition: 0.5s;
+        }
+    </style>
+
+</head>
+<body>
+    <nav>
+        <div class="home">
+            <img src="img/gulihome.jpg" alt="">
+        </div>
+        <ul>
+            <li><img src="img/gulihome.jpg" alt=""></li>
+            <li><img src="img/gulihome.jpg" alt=""></li>
+            <li><img src="img/gulihome.jpg" alt=""></li>
+            <li><img src="img/gulihome.jpg" alt=""></li>
+            <li><img src="img/gulihome.jpg" alt=""></li>
+           
+        </ul>
+    </nav>
+    <script>
+        //获取元素
+        var home = document.querySelector('.home');
+        var lis = document.querySelectorAll('li');
+        //当前菜单是否开启
+        var isOpen =  false;
+        var homeDeg =  0;
+        home.onclick = function(){
+            homeDeg+=360;
+            
+            home.style.transform  ='rotate('+homeDeg+'deg)';
+            if(!isOpen){
+            for(var i=0;i<5;i++){
+                var x = -200*Math.sin(22.5*i/180*Math.PI);
+            var y = -200*Math.cos(22.5*i/180*Math.PI);
+            lis[i].style.transform='translateX('+x+'px)  translateY('+y+'px)';
+            lis[i].style.transition='transform 1s '+(i)*100+'ms'
+            lis[i].querySelector('img').style.transform='rotate(360deg)';
+            lis[i].querySelector('img').style.transition='transform 0.5s';
+            
+            }
+        }else{
+            //拉起菜单
+            for(var i=0;i<5;i++){
+                var x=0;
+                var y = 0;
+                lis[i].style.transition='transform 1s '+(4-i)*100+'ms';
+
+                lis[i].style.transform='rotate(360deg) translateX('+x+'px)  translateY('+y+'px)';
+                //设置过渡的延时
+                lis[i].querySelector('img').style.transform='rotate(0deg)';
+                lis[i].querySelector('img').style.transition='transform 5s'+(4-i)*100+'ms';
+            }
+        }
+           
+           isOpen=!isOpen;
+        }
+    </script>
+</body>
+</html>

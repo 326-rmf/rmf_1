@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            position: relative;
+            width: 600px;
+            height: 500px;border: 1px solid #000;
+        }
+        
+.colorList{
+    width: 100px;
+    height: 200px;
+    /* border: 1px solid blue; */
+    /* background: blue; */
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+        .co1,.co2,.co3{
+            width: 50px;
+            height: 50px;
+            /* float: left; */
+            margin-bottom: 10px;
+            transition: 0.5s;
+            margin-left: 10px;
+        }
+        .co1{
+           background-color: green;
+        }
+        .co2{
+            background-color: pink;
+        }
+        .co3{
+           background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <!-- <div class="container"> -->
+    <canvas width="500" height="500" id="c1"> 
+        
+    </canvas>
+    <canvas id="c2"></canvas>
+    <!-- <div class="colorList"> -->
+            <!-- <div class="co1 item"></div>
+            <div class="co2 item"></div>
+            <div class="co3 item"></div>
+        </div></div> -->
+    <script>
+        
+        //获取渲染的上下文对象(画笔)
+        // var colList=document.querySelector('.colorList');
+        // var colNode=document.querySelectorAll('.colorList .item');
+        //webgl是3d图形设置的
+        //绘制图形
+        // ctx.fillRect(100,50,200,100);//前两个数是相对位置   后两个数是图形大小
+        // 1.矩形
+        //这是绘制了一个矩形
+        //绘制一个矩形的另一种方法
+        //ctx.rect(200,100,400,200);先是绘制了图形的轮廓
+        //ctx.fill();再是来填充矩形
+        //边框矩形的绘制
+        // ctx.strokeRect(100,100,200,200);//只有边框
+        //拆开来绘制
+        // ctx.rect(200,200,100,100);
+        // ctx.stroke();
+        // 2.线段绘制
+        //  100，50--》300，150 一个坐标到另一个坐标
+        // ctx.beginPath();//宣布开始
+        // ctx.moveTo(100,50);//开始点
+        // ctx.lineTo(300,150);//结束点
+        // ctx.lineTo(500,50);//这样点会依次链接
+        // ctx.stroke();//开始绘制路径
+        //还有属性lineWidth strokeStyle
+        // 线段的样式
+        // ctx.beginPath();
+        // ctx.moveTo(50,50);
+        // ctx.lineTo(100,50);
+        // ctx.lineCap='round';//线段结束的样式round是圆角样式 还有butt.square
+        // ctx.lineJoin='round';//连接线的位置是圆角形状   还有bevel斜角   miter直角
+        //标识当前鼠标是否按下
+        // colList.onclick = function(e){
+        //     // console.log('1');
+        //     // console.log(e.target);
+        //     if(e.target.classList.contains('item')){
+        //     var str = getComputedStyle(e.target).backgroundColor;
+        //     // console.log(str);
+        //     ctx.strokeStyle = str;
+        //         for(var i=0;i<colNode.length;i++){
+        //             colNode[i].style.width=50+'px';
+        //         }
+        //         // getComputedStyle(e.target).width=60+'px';
+        //         e.target.style.width='60px';
+        // }
+        // }
+        // var isDown = false;
+        // canvas.onmousedown=function(e){
+
+        //     ctx.beginPath();
+        //     ctx.moveTo(e.offsetX,e.offsetY);
+        //     isDown=true;
+
+        // }
+        // canvas.onmousemove=function(e){
+        //     if(!isDown)return;
+        //     ctx.lineTo(e.offsetX,e.offsetY);
+        //     ctx.stroke();
+            
+        // }
+        // //鼠标抬起
+        // canvas.onmouseup=function(){
+        //     isDown=false;
+        // }
+        //圆弧绘制
+        //圆形弧度1弧度=180/Π
+        // 1度=Π/180
+        //旋转的原点默认在右侧
+        //注意true 代表的是逆时针是负值       逆时针到达90度的位置
+        // ctx.arc(200,200,50,0,90/180*Math.PI,true);
+        //坐标x 坐标y 半径 起始角 结束角 顺逆时针方向 false是顺时针方向
+        //     ctx.stroke();
+            //封装一个函数      度数转换弧度
+            // function dzh(deg){
+            //     return deg/180*Math.PI;
+            // }
+            // ctx.beginPath();
+            // ctx.moveTo(100,100);
+            // ctx.arcTo(200,100,200,200,50);
+            // ctx.stroke();
+            //变形
+            //这是移动坐标系的位置  坐标系原点已经不是左上角了
+            // ctx.translate(300,200);
+            //当然在translate变形之前可以先保存原点的位置    就是ctx.save()
+            //在变形完毕之后    就可以还原坐标系了  就是ctx.restore();
+            //擦除指定的区域
+            // ctx.clearRect(0,0,200,200);
+            //时钟的封装
+         /*   new Clock('#canvas',{
+                winth:500,
+                height:400
+            });
+            
+            */
+           function Clock(selector,options){
+                
+                //获取元素
+                var canvas  = document.querySelector(selector);
+                //设置元素的宽高
+                canvas.width = options && options.width?options.width:500;
+                canvas.height = options && options.height?options.height:500;
+                var ctx = canvas.getContext('2d');
+                setInterval(function(){
+                //清空画布
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                ctx.save();
+            ctx.beginPath();
+            ctx.arc(canvas.width/2,canvas.height/2,150*canvas.width/400,0,360/180*Math.PI);
+            ctx.stroke();
+         
+            ctx.translate(canvas.width/2,canvas.height/2);
+            ctx.rotate(-90/180*Math.PI);
+            ctx.save();
+            for(var i =0;i<60;i++){
+                 ctx.rotate(6/180*Math.PI);
+                 if(i%5===4) continue;
+            ctx.beginPath();
+            ctx.strokeStyle='#999';
+            ctx.lineWidth=2*canvas.width/400;
+            ctx.moveTo(135*canvas.width/400,0);
+            ctx.lineTo(145*canvas.width/400,0);
+            ctx.stroke();
+            }
+          ctx.restore();
+          ctx.save();
+          for(var i=0;i<12;i++){
+          ctx.rotate(30/180*Math.PI);
+          ctx.beginPath();
+          ctx.lineWidth=4*canvas.width/400;
+          ctx.moveTo(120*canvas.width/400,0);
+          ctx.lineTo(145*canvas.width/400,0);
+          ctx.stroke();}
+           ctx.restore();
+           var date = new Date();
+var h= date.getHours();
+var m = date.getMinutes();
+var s = date.getSeconds();
+//时针的旋转角度
+var hRotate = (h*60+m)/60*30;
+//分针的旋转角度
+var mRotate = 6*(60*m+s)/60;
+//秒针的角度
+var sRotate = s*6;
+
+
+
+           //绘制秒针
+           ctx.save();
+           //旋转坐标系
+           ctx.rotate(sRotate/180*Math.PI);
+           ctx.beginPath();
+           ctx.moveTo(-20*canvas.width/400,0);
+           ctx.lineTo(100*canvas.width/400,0);
+           ctx.stroke();
+           ctx.restore();
+
+           ctx.save();
+           //旋转坐标系 分针
+           ctx.rotate(mRotate/180*Math.PI);
+           ctx.beginPath();
+           ctx.moveTo(-15*canvas.width/400,0);
+           ctx.lineTo(90*canvas.width/400,0);
+           ctx.lineWidth=2*canvas.width/400;
+           ctx.stroke();
+           ctx.restore();
+
+           ctx.save();
+           //旋转坐标系 时针
+           ctx.rotate(hRotate/180*Math.PI);
+           ctx.beginPath();
+           ctx.moveTo(-10*canvas.width/400,0);
+           ctx.lineTo(70*canvas.width/400,0);
+           ctx.lineWidth=3*canvas.width/400;
+           ctx.stroke();
+           ctx.restore();
+           //绘制中心小圆点
+           ctx.beginPath();
+           ctx.arc(0,0,5*canvas.width/400,0,360/180*Math.PI);
+           //设置填充颜色
+            // ctx.fillStyle='red';
+           ctx.fill();
+            ctx.restore();
+        //   ctx.beginPath();
+        //   ctx.moveTo(0,0);
+        //   ctx.lineTo(100,0);
+        //   ctx.stroke();
+    },1000)
+    
+            }
+            
+            //时钟的制作
+           new Clock('#c1');
+           new Clock('#c2',{
+               width:100,
+               height:100
+           });
+    </script> 
+</body>
+</html>

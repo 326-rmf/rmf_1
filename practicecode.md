@@ -1316,3 +1316,188 @@ $(function(){
 //居中对齐  他的一半    我的一半
 二次触发事件的时候  引起权重问题    那么可以设置一些值为空值
 0
+#   less练习
+@zero:0;
+*{margin:@zero;}
+变量
+@zero:0;
+@wrap:wrap;
+@w:width;
+#@{wrap}{}//用到了wrap名    相当于#wrap{}
+@{w}:200px;//作为属性值来使用
+li{width:200px;height:200px;line-height:40px;
+&:hover{background:pink;//**&代表当前元素li**}}
+# 独立实现栅格系统
+    <!-- 全局设置 -->
+    <!--在自己的myGrid.less里面 引入了normalize.less -->
+@import 'normalize';
+<!-- 清除浮动 -->
+.clearfix{
+    &:after{
+        content:'';
+        display:block;
+        clear:both;
+    }
+}
+<!-- 变量声明 -->
+@screen-lg:1200px;
+@screen-md:992px;
+@screen-sm:768px;
+<!-- container容器的宽度 -->
+@container-lg-width:1170px;
+@container-md-width:970px;
+@container-sm-width:750px;
+<!-- 列宽 -->
+@grid-gutter-width:30px
+<!-- 总的列数 -->
+@grid-columns:12;
+<!-- 实现容器 -->
+.make-container(){
+    <!-- container容器的实现 -->
+    .container{
+               .container-common-style();
+.clearfix();
+<!-- 等同于&.extend(.clearfix all);清除浮动 -->
+        @media(min-width:@screen-xs){
+            width:@container-xs-width;
+        }
+        @media(min-width:@screen-sm){
+            width:@container-sm-width;
+        }
+        @media(min-width:@screen-md){
+            width:@container-md-width;
+        }
+        @media(min-width:@screen-lg){
+            width:@container-lg-width;
+        }
+    }
+     .container-fluid{
+         .container-common-style();
+     }
+     <!-- 混合了一个通用的样式 -->
+     .container-common-style(){
+          margin-right:auto;
+        margin-left:auto;
+        padding-left:@grid-gutter-width/2;
+        padding-right:@grid-gutter-width/2;
+     }
+}
+.make-container();
+<!-- 行的设置 -->
+.make-row{
+    .row{
+        margin-left:-@grid.gutter.width/2;
+        margin-right:-@grid.gutter.width/2;
+    }
+}
+.make-row();
+<!-- 1-12列的设置 -->
+.make-grid-columns(){
+    .col(@index){
+        .col(@index+1,@index);
+    }
+    .col(@index,@list) when (@index <=@grid-columns){
+        <!-- 变量拼接 -->
+        @selector:~'@{list},@{index}';
+        .col(@index+1,@selector);
+    }
+    .col(@index,@list)when(@index>@grid-columns){
+        @{list}{
+            padding-left:@grid-gutter-width/2;
+            padding-right:@grid-gutter-width/2;
+        }
+    }
+    .col(1);
+}
+.make-grid-columns();
+<!-- 1-12列修改版的设置 -->
+.make-grid-columns(){
+    .col(@index){
+        @selector:~'.col-xs-@{index},.col-sm-@{index},.col-md-@{index},.col-lg-@{index}';
+        .col(@index+1,@selector);
+    }
+    .col(@index,@list) when (@index <=@grid-columns){
+        <!-- 变量拼接 -->
+        @selector:~'@{list},.col-xs-@{index}',.col-sm-@{index},.col-md-@{index},.col-lg-@{index};
+        .col(@index+1,@selector);
+    }
+    .col(@index,@list)when(@index>@grid-columns){
+        @{list}{
+            padding-left:@grid-gutter-width/2;
+            padding-right:@grid-gutter-width/2;
+            position:relative;
+            min-height:1px;
+            float:left;
+        }
+    }
+    .col(1);
+}
+.make-grid-columns();
+<!-- 超小屏幕的宽度设置 -->
+.make-xs-column-width(){
+    .col(@index) when(@index<=@grid-columns){
+        <!-- 拼接变量 -->
+        @selector:~'.col-xs-@{index}';
+        <!-- 样式 -->
+        @{selector}{
+            @w:@index/@grid-columns * 100;;
+            width: ~'@{w}%';
+            <!--等同于 width:percentage(@index/@grid-columns); -->
+        }
+        .col(@index+1);
+    }
+    .col(1);
+}
+.make-xs-column-width();
+<!-- 超小屏幕下的偏移设置 -->
+.make-xs-column-offser(){
+    .col(@index) when(@index<=@grid-columns){
+        @selector:~'.col-xs-offset-@{index}';
+        <!-- 样式控制 -->
+        @{selector}{
+            margin-left:percentage{@index/@grid-columns};
+        }
+        .col(@index+1);
+    }
+    .col(1);
+}
+.make-xs-column-offser();
+<!-- 媒体查询阶段 小屏幕情况 -->
+@media (min-width:@screen-sm){
+    .make-sm-column-width(){
+        .col(@index) when(@index<=@grid-columns){
+            @selector:~'.col-sm-@{index}';
+        }
+        @selector{
+            width:percentage(@index/@grid-columns);
+        }
+        .col(@index+1);
+    }.col(1);
+}
+<!-- 封装函数来随着屏幕大小的变换来变换 -->
+.make-column-width(@type){
+    .col(@index) when(@index<=@grid-columns){
+            @selector:~'.col-@{type}-@{index}';
+        }
+        @selector{
+            width:percentage(@index/@grid-columns);
+        }
+        .col(@index+1);
+    }.col(1);
+}
+.make-column-width(sm);
+------------------------------------------------
+var a = document.getElementByTagName('div');
+window.onclick = function(){
+	document.body.style.background='black';
+}
+------------------------------
+#   手机端练习
+var close = document.quertSelector('')
+close.addEventListener('touchstart',function(){
+    b.style.display='none';
+})
+##  解决点击穿透问题
+函数参数传递一个参数
+然后        e.preventDefault();-->解决了穿透问题
+##  

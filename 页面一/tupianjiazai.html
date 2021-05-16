@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html,body{
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        header{
+            height: 10vh;
+            background: rgb(0, 0, 0);
+            font-family: 宋体;
+            font-size: 36px;
+            line-height: 10vh;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+        main{
+            height: 90vh;
+        }
+        #content{
+            position: relative;
+            overflow: hidden;
+        }
+        li{
+            width: 46vw;
+            height: 46vw;
+            float: left;
+            margin: 2vw;
+            border-radius: 5vw;
+            overflow: hidden;
+        }
+        li img{
+            width: 100%;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- <img data-src="https://picsum.photos/id/151/400/300"   alt=""/>
+    <ul id="imgbox">
+
+    </ul> -->
+    <header>
+        三国女将
+    </header>
+    <main>
+        <div id="content">
+            <ul id="imgList">
+               
+            </ul>
+            <div class="pull-up-update">
+
+            </div>
+        </div>
+    </main>
+    <script src="js/transformCSS.js"></script>
+    <script src="js/tweenAnimation.js"></script>
+    <script src="js/touchscroll.js"></script>
+    <script>
+        var imgList = document.querySelector('#imgList');
+        var content = document.querySelector('#content');
+        var main = document.querySelector('main');
+        //每次呈现图片的数量
+        var num =6;
+        var page =1;//
+        document.documentElement.addEventListener('touchstart',function(e){
+            e.preventDefault();
+        },{
+            passive:false,
+        });
+        
+    //     window.onload=function(){
+    //     var imgbox = document.getElementById('imgbox');
+    //     console.log(imgbox.className);
+    //     for(var i=1;i<100;i++){
+    //         var imgNode = new Image();
+    //         var liNode = document.createElement('li');
+
+    //         imgNode.src='https://picsum.photos/id/'+i+'/400/300';
+    //         imgbox.appendChild(liNode);
+    //         liNode.appendChild(imgNode);
+    //     }
+    // }
+//触摸滑动效果
+new Touchscroll('main','#content');
+//初始化一个数据仓库
+var imgData = [];
+for(var i=0;i<100;i++){
+    imgData[i]='img/zsm'+(i%6+1)+'.jpg';
+}
+//声明函数
+function createLi(){
+    var start = (page-1)*num;
+    var end = page*num;
+    for(var i=start;i<end;i++){
+    var li  = document.createElement('li');
+        //标识i是一个未加载的情况
+        // li.dataset.isLoaded =  0;
+        li.setAttribute('loaded',0);
+    var img = document.createElement('img');
+    li.dataset.src = imgData[i];
+
+    // img.src=imgData[i];
+    //创建一个自定义属性
+    li.appendChild(img);
+    imgList.appendChild(li);}
+    page++;//下一次就是下一页
+    //检测图片状态
+    //遍历图片
+    var lis = document.querySelectorAll('#imgList li');
+        lis.forEach(function(li){
+            //获取元素相对于父级元素的偏移量
+            var oT = li.offsetTop;
+            //获取容器元素的高度
+            var h = main.offsetHeight;
+            //
+            var translateY  = -transformCSS(content,'translateY');
+            if(oT <= h+translateY){
+                if(li.getAttribute('loaded')=='1')return;
+                //加载图片
+                var img = li.querySelector('img');
+                var src = li.dataset.src;
+                //设置src
+                img.src = src;
+                // li.dataset.isLoaded = 1;
+                li.setAttribute('loaded',1);
+            }
+        })
+}
+createLi();
+//绑定事件
+main.addEventListener('touchmove',function(){
+    var start = (page-1)*num;
+    var end = page*num;
+    for(var i=start;i<end;i++){
+    var li  = document.createElement('li');
+    var img = document.createElement('img');
+    li.dataset.src = imgData[i];
+
+    // img.src=imgData[i];
+    //创建一个自定义属性
+    li.appendChild(img);
+    imgList.appendChild(li);}
+    page++;//下一次就是下一页
+    //检测图片状态
+    //检测每一个li 元素是否进入可视区域
+    // console.log('1');
+    var lis = document.querySelectorAll('#imgList li');
+        lis.forEach(function(li){
+            //获取元素相对于父级元素的偏移量
+            var oT = li.offsetTop;
+            //获取容器元素的高度
+            var h = main.offsetHeight;
+            //
+            var translateY  = -transformCSS(content,'translateY');
+           
+            if(oT <= h+translateY){
+                if(li.getAttribute('loaded')=='1')return;
+
+                //加载图片
+                var img = li.querySelector('img');
+                var src = li.dataset.src;
+                //设置src
+                img.src = src;
+                li.setAttribute('loaded',1);
+
+            }
+        })
+})
+    </script>
+</body>
+</html>

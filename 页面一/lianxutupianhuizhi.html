@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zsm</title>
+    <style>
+        #c1{
+            border: 1px solid black;
+            margin: 100px 100px;
+            /* position: absolute; */
+        }
+        img{
+            border: 10px solid white;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="c1"></canvas>
+    <script>
+        var canvas = document.querySelector('canvas');
+        canvas.width=600;
+        canvas.height=400;
+        var ctx = canvas.getContext('2d');
+       
+        //控制图片的宽度
+        // var w =200;
+        // var left = -w;
+        //显示图片下标
+        // var index = 1;
+        //颜色渐变
+        // var jianbian = ctx.createLinearGradient(0,0,canvas.width,canvas.height);
+        // var jianbian = ctx.createLinearGradient(0,0,500,200);
+        //设置颜色
+        // jianbian.addColorStop(0,'red');
+        // jianbian.addColorStop(0.5,'yellow');
+        // jianbian.addColorStop(1,'blue');
+        // ctx.fillStyle=jianbian;
+        // ctx.fillRect(0,0,canvas.width,canvas.height);
+    //     setInterval(function(){
+    //         //清除画布 多余的轮廓的被清除
+    //         ctx.clearRect(0,0,canvas.width,canvas.height);
+    //     //创建图片资源 
+    //     var img = document.createElement('img');
+    //     img.src = 'img/zsm'+(++index%6+1)+'.jpg';
+    //     img.onload = function(){
+    //         //绘制图形
+    //         ctx.drawImage(img,left++,100,w,img.height*w/img.width);
+    //     }
+    // },10)
+    //径向渐变
+    // var jingxiang = ctx.createRadialGradient(300,200,20,300,200,100);
+    // jingxiang.addColorStop(0,'red');
+    // jingxiang.addColorStop(0.5,'yellow');
+    // jingxiang.addColorStop(1,'blue');
+    // ctx.fillStyle = jingxiang;
+    // ctx.fillRect(0,0,canvas.width,canvas.height);
+    //文字颜色      绘制文字
+    // ctx.font = 'bold 30px 微软雅黑';
+    //绘制中心线
+    // ctx.beginPath();
+    // ctx.moveTo(100,0);
+    // ctx.lineTo(100,1000);
+    // ctx.stroke();
+    // ctx.beginPath();
+    // ctx.moveTo(0,100);
+    // ctx.lineTo(1000,100);
+    // ctx.stroke();
+
+    //文字水平对齐
+    // ctx.textAlign = 'left';
+        // ctx.textAlign='center';
+        // ctx.textAlign='right';
+        // ctx.textAlign='end';
+        // ctx.textAlign='start';
+//垂直对齐
+// ctx.textBaseline = 'top';
+// ctx.textBaseline = 'hanging';
+// ctx.textBaseline = 'middle';
+// ctx.textBaseline = 'bottom';
+// ctx.textBaseline = 'alphabetic';
+
+    //填充文字
+    // ctx.fillText('I Love You',100,100);
+        //镂空文字
+        // ctx.strokeText('I Love You',100,150);
+        //阴影设置
+        // var x = -20;
+        // var y = -20;
+        // var blur = 0;
+        // setInterval(function(){
+            //清除画布很重要
+        //     ctx.clearRect(0,0,1000,1000);
+        // ctx.shadowColor='#99d';
+        // ctx.shadowOffsetX=x++;
+        // ctx.shadowOffsetY=y++;
+        //阴影模糊程度
+        //数字越大  越来越模糊
+        // ctx.shadowBlur=blur+=0.2;
+        // ctx.fillRect(100,100,200,100);},100)
+    </script>
+</body>
+</html>
