@@ -11,6 +11,9 @@
             margin: 50px auto;
             min-height: 200px;
             background: #ccc;
+            transform-style: preserve-3d;
+            /* perspective: 1000px; */
+
         }
         .container li{
             width: 120px;
@@ -21,7 +24,7 @@
             align-items: center;
             overflow: hidden;
             position: relative;
-            transform-style: preserve-3d;
+            /* transform-style: preserve-3d; */
             transition:0.5s;
             background: #909;
         }
@@ -32,17 +35,22 @@
             width: 120px;
             height: 80px;
             display: flex;
+            /* transform-style: preserve-3d; */
+
             justify-content: center;
             align-items: center;
     
         }
-        li .fanmian{
+        li .fanmian{      
+                  /* transform-style: preserve-3d; */
+
             transform: rotateY(180deg);
         }
         #control{
             display: flex;
             flex-direction: column;
-
+            justify-content: center;
+            align-items: center;
         }
     </style>
 </head>
@@ -105,7 +113,8 @@
             </div>
         </li>
         <li id="control">
-            <div class="btn"><img src="img/gulihome.jpg" alt=""></div>
+            <div class="btn">
+                <img src="img/gulihome.jpg" alt=""></div>
             <span>换一换</span>
         </li>
 </ul>
@@ -127,10 +136,11 @@
             // var id = li.id;
             if(li.id)return;
             li.style.transform = 'rotateY('+liDeg+'deg)';
-            li.style.transition = 'transform 0.5s '+(key*40)+'ms'
+            // li.style.transition = 'transform 0.5s '+(key*40)+'ms'
         })
 
       }
   </script>
 </body>
 </html>
+3.44
