@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jsGet</title>
+</head>
+<body>
+    <h1>原生js发送ajax</h1>
+    <button id="btn">点击使用js发送ajaxget请求</button>
+    <script>
+        //使用原生js发送ajaxGet
+        //实例化一个XMLHttpRequest对象来发请求
+        //绑定一个名为onreadystatechange事件监听
+        //调用open方法
+        //调用send方法
+        btn.onclick = function(){
+        let xhr = new XMLHttpRequest()
+        xhr.onreadystatechange = function(){
+            //xhr对象上本身有5中状态0 1 2  3 4 
+            //0：xhr对象在实例化出来的那一刻    就是0状态   代表xhr的初始化状态
+            //1:send方法没有被调用     请求没有发出去   此时还可修改请求头
+            //2:send方法已经被调用了    请求已经发出去  不可修改请求头 
+            //3:已经回来一部分数据了    如果是比较小的数据  在此阶段一次性接收
+            //4：数据完美回来了
+            if(xhr.readyState === 4 && xhr.status === 200){
+                console.log(xhr.response)
+            }
+        }
+        xhr.open('get','http://localhost:3000/rmf?name=kobe')
+        xhr.send()
+        }
+</script>
+</body>
+</html>

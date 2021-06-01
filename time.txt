@@ -1,2 +1,21 @@
-64   5.3
-8	4.39
+56	封装弹簧..属性
+68  3.40
+69		mongoDB
+78		0.13
+
+
+c#基础	8	4.39
+
+
+
+c#		c#继承
+
+
+c#正则和反射和事件委托
+
+
+
+数据库
+https://blog.csdn.net/weixin_42757413/article/details/106396750
+链接：https://pan.baidu.com/s/1_cg5GjpjHPRGUSw28z89Yw
+提取码：9mzs

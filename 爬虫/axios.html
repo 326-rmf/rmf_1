@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>axios 发送 AJAX请求</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <button>GET</button>
+    <button>POST</button>
+    <button>AJAX</button>
+    <script>
+        const btns = document.querySelectorAll('button');
+        axios.defaults.baseURL = 'http://localhost:8000';
+        btns[0].onclick = function () {
+            axios.get('/axios-server', {
+                params: {
+                    id: 100,
+                    vip: 7
+                },
+                Headers: {
+                    name: 'atguigu',
+                    age: 20
+                }
+            }).then(value => {
+                console.log(value);
+            })
+        };
+        btns[1].onclick = function () {
+            axios.post('/axios-server', {
+                params: {
+                    id: 200,
+                    vip: 9
+                },
+                Headers: {
+                    height: 180,
+                    weight: 180
+                }
+
+            })
+        }
+    btns[2].onclick = function(){
+        axios({
+            method:'POST',
+            //url
+            url:'/axios-server',
+            params:{
+                vip:10,
+                level:30
+            },
+            Headers:{
+                a:100,
+                b:200
+            },
+            data:{
+                username:'admin',
+                password:'admin'
+            }
+        }).then(res =>{
+            console.log(res);
+            //响应状态码
+            console.log(res.status);
+            //响应状态字符串
+            console.log(res.statusText);
+            //响应头信息
+            console.log(res.headers);
+            //响应体
+            console.log(res.data);
+        })
+    }
+    </script>
+</body>
+
+</html>

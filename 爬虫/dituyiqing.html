@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>疫情地图</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.0.2/echarts.js"></script>
+    <script src="./china.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/fetch/3.6.2/fetch.js" type="module"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.js"></script>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+
+</head>
+
+<body>
+    <div id="main" style="width: 600px;height:400px; border: 1px solid red;margin: 100px auto;"></div>
+    <!-- <script src="pachong1.json">
+     fetch('pachong1.json').then(res => res.json()).then(data => 
+                console.log(data)
+            ).catch(err => console.log("Oh, error", err))//执
+</script> -->
+    <script type="text/javascript">
+// import axios from "axios";
+        // 基于准备好的dom，初始化echarts实例
+       
+ let container = document.getElementById('main')
+        var myChart = echarts.init(container)
+	
+			var option = {
+			    title: {
+			        text: "疫情地图",
+			        link: "https://www.baidu.com",
+			        textStyle: {
+			            fontSize: 30
+			        },
+			        // subtext: "@YiQing",
+			        left: "center",
+			        padding: 15
+			    },
+			    xAxis: {
+			        // data: ['a', 'a', 'a', 'a', 'a']
+			    },
+			    yAxis: {
+			        // data:['100','200','300']
+			        // splitNumber: 3
+			    },
+			    // legend: {
+			    //     bottom: 0,
+			
+			    // },
+			    tooltip: {},//悬浮提示
+			    series: [
+			        {
+			            name: '疫情地图',
+			            type: 'map',
+			            map: 'china',
+			            data: []
+			            // itemStyle:{
+			            //     areaColor:'blue',
+			
+			            // }
+			            //     data:[{
+			            //         name:'湖北',
+			            //         value:1000
+			            //     },
+			            // {
+			            //     name:'江苏',
+			            //     value:2000
+			            // }]
+			        }
+			    ]
+			};
+			
+			// 使用刚指定的配置项和数据显示图表。
+			myChart.setOption(option);
+			
+			
+			
+
+        // fetch('https://ncov.dxy.cn/ncovh5/view/pneumonia').then(res => res.json()).then(res => {
+        //     let data = res.map(r => {
+        //         return {
+        //             name: r.provinceName,
+        //             value: r.confirmedCount
+        //         }
+        //     })
+        //     console.log(arr1)
+        // })
+        //     .catch(err => console.log("error", err))//执
+
+
+        // console.log(fetchSelData.data)
+        // 指定图表的配置项和数据
+       
+    </script>
+</body>
+
+</html>
