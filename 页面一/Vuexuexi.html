@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VueXueXi</title>
+    <!-- 样式 -->
+    <style>
+        .classA {
+            color: red;
+        }
+
+        .classB {
+            background-color: blue;
+        }
+
+        .fade-enter-active,
+        .fade-leave-active {
+            transition: opacity 1s;
+        }
+
+        .fade-enter,
+        .fade-leave-to {
+            opacity: 0;
+        }
+
+        .bounce-enter-active {
+            animation: bounce-in .5s;
+        }
+
+        .bounce-leave-active {
+            animation: bounce-in .5s reverse;
+        }
+
+        @keyframes bounce-in {
+            0% {
+                transform: scale(0)
+            }
+
+            50% {
+                transform: scale(1.5);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="demo">
+
+<!-- 测试自定以组件开始 -->
+<button-counter></button-counter>
+
+
+
+
+<!-- 测试自定以组件结束 -->
+
+
+
+
+
+        <!-- 自定义插件使用开始 -->
+        <p v-my-directive="zdmsg"></p>
+        <!-- 自定义插件使用结束 -->
+
+
+
+
+
+        <!-- 自定义指令开始 -->
+        <p v-upper-text= "zdmsg"></p>
+        <p v-lower-text= "zdmsg"></p>
+
+        <!-- 自定义指令结束 -->
+
+
+
+
+        <!-- 测试文本开始 -->
+        <p v-text="testwenben"></p>
+        <p v-html="testwenben"></p>
+        <!-- 测试文本结束 -->
+
+
+
+        <!--显示格式化时间开始 -->
+        <h2>显示格式化时间</h2>
+        <p>{{startTime}}</p>
+        <!--显示格式化时间开始 -->
+
+
+        <!-- 使用过滤器的标签 -->
+        <p>{{startTime | dateFormate }}</p>
+        <p>{{startTime | dateFormate('YYYY-MM-DD') }}</p>
+        <p>{{startTime | dateFormate('HH:mm:ss') }}</p>
+
+
+
+        <!-- 隐约字体显示开始 -->
+        <button @click="show=!show">
+            FADE
+        </button><br />
+        <transition name="fade">
+            <p v-if="show">hello</p>
+        </transition>
+        <!-- 隐约字体显示结束 -->
+
+
+        <!--动画过渡效果开始 -->
+        <button @click="show2=!show2">
+            show2
+        </button><br />
+        <transition name="bounce">
+            <p v-if="show2" style="display: inline-block;">RMF</p>
+        </transition>
+        <!--动画过渡效果结束 -->
+
+
+
+        <!-- 双向单向数据绑定开始 -->
+        <h1 id="app">{{msg}}</h1>
+        firstName <input type="text" v-model="firstName"><br />
+        lastName <input type="text" v-model="lastName"><br />
+        fullName1singal <input type="text" v-model="fullName1"><br />
+        fullName2 <input type="text" v-model="fullName2"><br />
+        firstName <input type="text" v-model="firstName">
+        <!-- 双向单向数据绑定结束 -->
+
+
+
+        <!--动态class   类名不确定  但不确定有无 -->
+        <p :class="{classA:hasA ,  classB:hasB}">RMFRMFRMF</p>
+        <p :style="{color:myCol}">xxxxxxx</p>
+        <button @click="changeCol">changeCol</button>
+        <ul>
+            <li v-for="(p,index) in persons" :key="p.id">
+                {{p.id}}---{{p.name}}---{{p.age}}
+                <button @click='del'>delete</button>
+                <button @click="upd(index,{id:Date.now(),name:'xxx',age:23})">update</button>
+            </li>
+        </ul>
+
+
+
+        <!-- 数据过滤搜索问题开始 -->
+        <input type="text" v-model="searchName">
+        <ul>
+            <li v-for="(item,index) in filterPersons" :key="item.id">
+                {{item.id}}--{{item.name}}--{{item.age}}
+            </li>
+        </ul>
+        <button @click='sortType=2'>ageup</button>
+        <button @click='sortType=3'>agedown</button>
+        <button @click='sortType=1'>origin</button>
+        <!-- 数据过滤搜索问题结束 -->
+
+
+
+        <!-- 遍历对象开始 -->
+        <ul>
+            <li v-for="(value,key) in persons" :key="key">
+                {{key}} = {{value}}
+            </li>
+        </ul>
+        <!-- 遍历对象结束 -->
+
+
+
+        <!-- users总体表单v-model搜集数据开始 -->
+        <!-- v-model搜集表单数据 -->
+        用户名<input type="text" v-model="users.user" /><br />
+        密码<input type="text" v-model="users.pwd" /><br />
+        <!-- 单选是radio 模式是input加上label模式-->
+        性别<input type="radio" value="female" v-model="users.sex">
+        <label for="">female</label>
+        <input type="radio" value="male" v-model="users.sex">
+        <label for="">male</label><br />
+        <span>爱好:</span>
+        <!-- 多选是checkbox     模式也是input+label模式 -->
+        <input type="checkbox" value="basket" v-model="users.likes">
+        <label for="basket">basket</label>
+        <input type="checkbox" value="soccer" v-model="users.likes">
+        <label for="soccer">soccer</label>
+        <input type="checkbox" value="pingp" v-model="users.likes">
+        <label for="pingp">pingp</label><br />
+        <span>City</span>
+        <!-- 下拉选框是select标签   select+option模式 -->
+        <select v-model="users.cityId">
+            <option value="">未选择</option>
+            <!-- v-for循环的时候key值不可忘记添加 -->
+            <option v-for="(item,index) in users.allCitys" :key="item.id" :value="item.id">
+                {{item.name}}
+            </option><br />
+        </select><br />
+        <textarea name="" id="" cols="30" rows="10" v-model="users.info">
+        </textarea><br />
+        <!-- input的submit类型标识了变为提交按钮    添加方法 -->
+        <input type="submit" value="注册" @click="register"><br />
+        <!-- v-model搜集表单数据 结束-->
+        <!-- users总体表单v-model搜集数据结束 -->
+
+
+
+        <!-- 文本若隐若现展示 -->
+        <!-- <button @click="destroyVM">destroy vue</button><br/>
+        <p v-show="isShow" ref="content">{{isShow?'RMF':'rmf'}}</p> -->
+        <!-- 文本若隐若现展示 结束-->
+
+
+
+    </div>
+    <script type="text/javascript" src="./js/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.1/moment.js"></script>
+    <script type="text/javascript" src="./js/Vue-MyPlugin.js"></script>
+    <script type="text/javascript">
+
+
+
+        // 自定义一个新的组件开始
+        //组件的定义必须先于实力化引入
+        Vue.component('button-counter', {
+            data: function () {
+                return {
+                count: 0
+                }
+            },
+            template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+            })
+
+
+            Vue.component('blog-post',{
+                props:['title'],//声明接收属性
+                template:'<h3>{{title}}</h3>'
+            })
+
+
+            
+        // 自定义一个新的组件结束
+
+
+
+
+    //自定义 全局指令开始   没有在Vue实例里面定义
+        Vue.directive('upper-text',function(el,binding){
+            //el是指令属性所在的标签元素对象    标签
+            //binding是包含指令相关信息数据的对象   指令对象
+            el.innerText = binding.value.toUpperCase()
+        })
+    //自定义 全局指令结束
+
+
+
+
+
+
+
+        //自定义一个过滤器
+        Vue.filter('dateFormate', function (value, formatStr = 'YYYY-MM-DD HH:mm:ss') {//value是被处理的数据
+            // return moment(value).format(formatStr || 'YYYY-MM-DD HH:mm:ss')
+            //采用了es6的形参默认值的写法
+            return moment(value).format(formatStr)
+        })
+
+
+
+        //对Vue进行全局配置 在开发环境时候禁止生产环境提示
+        Vue.config.productionTip = false;
+
+
+        const p = {
+            firstName: 'A',
+            lastName: 'B'
+        }
+        p.fullName = p.firstName + p.lastName
+        //创建vue实例
+        const vm = new Vue({
+            el: '#demo',
+
+
+            //data数据区域
+            data: {
+
+
+                // 普通变量区域
+                searchName: '',
+                msg: 'h1',
+                firstName: 'A',
+                lastName: 'B',
+                hasA: true,
+                hasB: true,
+                isShow: true,
+                myCol: 'black',
+                sortType: 1,//排序类型 1代表不排序 2是升序 3是降序
+                show: true,
+                show2: true,
+                startTime: Date.now() - 10000,
+                testwenben: '<a href="https://www.baidu.com">去学习</a>',
+                zdmsg:"zDmSg",
+
+
+
+
+                //对象 数组变量区域 
+                users: {
+                    user: '',
+                    cityId: '1',
+                    pwd: '',
+                    info: "",
+                    sex: 'male',
+                    allCitys: [
+                        { id: 1, name: 'BJ' },
+                        { id: 2, name: 'SZ' },
+                        { id: 3, name: 'GZ' }
+                    ],
+                    likes: ['soccer']
+                },
+                persons: [
+                    { id: 1, name: 'Tom', age: 18 },
+                    { id: 3, name: 'Sa', age: 14 },
+                    { id: 2, name: 'li', age: 19 },
+                    { id: 5, name: 'Ra', age: 16 },
+                    { id: 4, name: 'xd', age: 20 }
+                ],
+                zujiandata:[
+                    {id:1,title:'my vue1'},
+                    {id:2,title:'my vue2'},
+                    {id:3,title:'my vue3'}
+                ]
+
+            },
+
+
+            //methods方法区域
+            methods: {
+                changeCol() {
+                    this.hasA = !this.hasA
+                    this.myCol = 'red'
+                },
+                del(index) {
+                    this.persons.splice(index, 1)
+                },
+                upd(index, newP) {
+                    //数组更新要用方法来更新    下标更新是不可的
+                    // this.persons[index] = newP
+                    this.persons.splice(index, 1, newP)
+                },
+                register() {
+                    console.log(this.users)
+                },
+                destroyVM() {
+                    this.$destroy();
+                }
+
+            },
+
+
+            //计算属性区域
+            computed: {
+                fullName1() {
+                    // console.log(this)
+                    return this.firstName + '-' + this.lastName
+                },
+                fullName2: {
+                    get() {//计算产生显示的值
+                        return this.firstName + '-' + this.lastName
+                    },
+                    set(value) {//监视值的变化
+                        const names = value.split('-')
+                        this.firstName = names[0]
+                        this.lastName = names[1]
+                    }
+                },
+
+
+                //过滤搜索的方法
+                filterPersons() {
+                    //得到data依赖数据
+                    const { sortType, searchName, persons } = this
+                    //进行计算处理  产生需要的结果数据   返回
+                    //过滤
+                    const arr = persons.filter((p, index) =>
+                        p.name.indexOf(searchName) >= 0
+                    )
+                    if (sortType !== 1) {
+                        arr.sort((p1, p2) => {
+                            if (sortType === 2) {//升序
+                                return p1.age - p2.age
+                            } else {//降序
+                                return p2.age - p1.age
+                            }
+                        })
+                    }
+                    //记得返回过滤之后的数组
+                    return arr
+                }
+
+            },
+
+
+            //监视属性区域
+            watch: {//指定监视每个属性的变化
+                firstName(value) {//当firstName发生改变的时候自动回调
+                    this.fullName2 = value + '-' + this.lastName
+                }
+            },
+
+
+
+
+            // 钩子函数区域开始
+            beforeCreate() {
+                console.log('beforeCreate')
+            },
+            //实现数据代理  可以通过vm读取data里面的数据
+            created() {
+                console.log('created')
+            },
+
+            beforeMount() {
+                console.log('beforeMount')
+            },
+
+            //在第一次显示之后执行一次
+            mounted() {
+                console.log('mounted')
+                this.timer = setInterval(() => {
+                    this.isShow = !this.isShow
+                }, 1000)
+            },//钩子函数设置定时器    文本若隐若现
+            //数据更新的时候调用
+            beforeUpdate() {
+                console.log('beforeUpdate', this.isShow, this.$refs.content.innerHTML)
+            },
+            updated() {
+                console.log('updated', this.isShow, this.$refs.content.innerHTML)
+            },
+            //在销毁之前执行一次
+            beforeDestroy() {
+                console.log('beforeDestroy')
+                clearInterval(this.timer)
+            },
+            destroyed() {
+                console.log('destroyed')
+            },
+            // 钩子函数区域结束
+
+
+
+
+            //局部指令定义开始      在Vue实例里面定义
+            directives:{
+                'lower-text' (el,binding){
+                    //lower-text有特殊字符 '-'  那么加上'' 否则报错
+                    el.innerText = binding.value.toLowerCase()
+                }
+            }
+            //局部指令定义结束
+
+
+
+        })
+        
+
+
+
+        console.log(vm.$data)//输出表单注册值
+
+
+
+        //自定义的插件开始
+        console.log(MyPlugin)
+        //声明使用vue插件
+        Vue.use(MyPlugin)//调用插件的install方法来安装插件
+        Vue.myGlobalMethod()
+        vm.$myMethod()
+        //自定义的插件结束
+
+
+
+       
+
+
+
+
+
+        //defineProperty函数设置set get方法来自动调用开始 
+//     Object.defineProperty(p,'fullName',{//匹配对象 属性描述符
+// 	//当读取属性值时候	自动调用
+// 	get(){
+//         return this.firstName + '-' + this.lastName
+// 	},
+// 	set(value){
+//          const names = value.split('-')
+//         this.firstName = names[0]
+//         this.lastName = names[1]
+// 	}
+// })	
+        //defineProperty函数设置set get方法来自动调用结束
+
+
+
+
+// console.log(p.fullName)
+//     p.firstName = 'C'
+//     p.lastName = 'D'
+//     console.log(p.fullName)
+
+    </script>
+
+</body>
+
+</html>

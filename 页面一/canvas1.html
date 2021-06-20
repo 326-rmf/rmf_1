@@ -265,15 +265,28 @@
 //     function onBack(res) {
 //         alert(JSON.stringify(res));
 //     }
-
+// ----------------ajax  jsonp--------------------------------------
 // $.ajax({
 //     url: 'https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5',
 //     type: 'get',
 //     dataType: 'jsonp',  // 请求方式为jsonp
 //      crossDomain: true,
-//      success: function(data) {console.log(data.data)},
+// //      success: function(data) {console.table(JSON.parse(data.data))},
+//      success: function(data) {console.log(JSON.parse(data.data))},
 //     data: {}
 // });
+// ----------------------------------------------------------
+// -------------------------fetch----------------------------
+// fetch('https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5')
+// .then(function(value){
+//    return value.json()
+// })
+// .then(function(data){
+//     console.log(data)
+// })
+// .catch(function(e){
+//     console.log('error')
+// })
 // console.log(Promise.resolve())
 // const p1 =  Promise.resolve(3)
 // const p0 =Promise.resolveDelay(7,200)
@@ -307,6 +320,8 @@
 //     console.log(4)
 // })
 // console.log(3)
+
     </script> 
+    
 </body>
 </html>
