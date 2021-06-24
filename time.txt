@@ -1,3 +1,5 @@
+56		音乐台效果		 弹簧效果
+57		三国女将
 56	封装弹簧..属性
 68  3.40
 69		mongoDB
@@ -5,20 +7,22 @@
 
 85		2.06
 
-111		3.15		api过期了好像	之后这集没看
 
 
 
-112   		2.33
 
-c#基础	8	4.39
+113   		3.46		MVVM分析解剖	库的嵌套调用可以再看一下	没看懂	但是主要说的是数据处理的流程	处理的思维就是调用内部定义的函数来实现数据绑定和处理
+114 		2.30		MVVM数据解析	没看懂
 
-
-
-c#		c#继承
+’115		1.24	
 
 
-c#正则和反射和事件委托
+
+
+
+
+
+
 
 
 
@@ -29,3 +33,31 @@ https://blog.csdn.net/weixin_42757413/article/details/106396750
 
 
 326-rmf.github.io
+
+
+
+解决git push 问题：
+下面两段代码是参考
+git config --global --unset http.proxy
+git config --global --unset https.proxy
+下面这句代码取消全局代理
+git  config --global http.sslVerify false
+dns更新:
+ipconfig /flushdns
+
+
+
+
+快捷键
+ctrl+shift+p		总命令行
+win+shift+s		快速截图
+ctrl+shift+k		快速删除选中行
+cmd	regedit		注册表
+
+
+
+# DPI越大		鼠标越灵活
+
+
+接口:
+https://picsum.photos/id/101/300/300		图片接口
