@@ -60,6 +60,7 @@
             <div class="co2 item"></div>
             <div class="co3 item"></div>
         </div></div> -->
+      
     <script>
         var canvas = document.querySelector('canvas');
         //获取渲染的上下文对象(画笔)
@@ -320,8 +321,21 @@
 //     console.log(4)
 // })
 // console.log(3)
+function fn(a,b){
+    this.xxx = 3
+    console.log(a,b,this,arguments.length);
+}
+fn(1,2)
+console.log(xxx);
+const obj = {m:0}
+fn.call(obj,1,2)
+fn.apply(obj,[1,2])
+fn.call(null,1,2)
+fn.bind(obj)(3,4)
+fn.bind(obj,5)(3,4)
+fn.bind(obj,5,6)(3,4)
 
     </script> 
-    
+
 </body>
 </html>
