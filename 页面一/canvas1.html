@@ -49,6 +49,8 @@
     </style>
 </head>
 <body>
+    <button id="b1">函数防抖</button>
+    <button id="b2">函数节流</button>
     <script src="./js/promise.js"></script>
 
     <!-- <div class="container"> -->
@@ -60,8 +62,70 @@
             <div class="co2 item"></div>
             <div class="co3 item"></div>
         </div></div> -->
-      
+
+        <!-- 写的是call   开始 -->
+      <!-- <script type="text/javascript">
+    Function.prototype.call = function(obj,...args){
+		//this(...args)//执行了函数		记得传入参数
+			//处理obj是undefined  null 的情况
+			if(obj===undefined || obj===null){
+				obj = window
+			}
+			//给obj添加一个方法	temFn:this
+			obj.tempFn = this
+			//调用obj的temFn方法		传入args参数 	
+			const result = obj.tempFn(...args)
+			//删除obj的temFn方法
+			delete obj.tempFn
+			//返回方法的返回值
+			return result
+		}
+    </script> -->
+ <!-- 写的是call   结束 -->
+
+ <!-- 函数节流      函数防抖书写  开始 -->
+ <script type="text/javascript">
+// 函数防抖     多次操作合并为一次操作
+    function debounce(callback,delay){
+        return function (event){
+            //回调函数设置了一个定时器属性  用定时器属性就清除定时器
+            if(callback.hasOwnProperty('timeoutId')){
+                clearTimeout(callback.timeoutId)
+            }
+            //函数防抖用到了定时器  setTimeout
+            //这个时候callback有了timeoutId的属性   只是会延迟时间执行  那么就实现了多次操作简化为了一次操作
+            callback.timeoutId = setTimeout(()=>{
+                callback.call(this,event)
+                delete callback.timeoutId
+            },delay)
+
+
+        }
+    }
+//函数节流      规定时间    执行一次
+    function throttle(callback,delay){
+        let pre = 0;//第一次直接调用执行
+        return function(event){
+            const currentTime = Date.now()
+            if(currentTime - pre > delay){
+                //时间到了一定的周期就会执行回调函数
+                callback(this,event)
+                //一个时间点的结束  是另一个时间点的开始
+                pre = currentTime
+            }
+        }
+    }
+
+</script>   
+ <!-- 函数节流      函数防抖书写  结束 -->
+
+
     <script>
+        function handleClick(event){
+            console.log('do it ',this,event);
+        }
+        document.getElementById('b1').onclick = debounce(handleClick,2000)
+        document.getElementById('b2').onclick = throttle(handleClick,2000)
         var canvas = document.querySelector('canvas');
         //获取渲染的上下文对象(画笔)
         // var colList=document.querySelector('.colorList');
@@ -321,19 +385,19 @@
 //     console.log(4)
 // })
 // console.log(3)
-function fn(a,b){
-    this.xxx = 3
-    console.log(a,b,this,arguments.length);
-}
-fn(1,2)
-console.log(xxx);
-const obj = {m:0}
-fn.call(obj,1,2)
-fn.apply(obj,[1,2])
-fn.call(null,1,2)
-fn.bind(obj)(3,4)
-fn.bind(obj,5)(3,4)
-fn.bind(obj,5,6)(3,4)
+// function fn(a,b){
+//     this.xxx = 3
+//     console.log(a,b,this,arguments.length);
+// }
+// fn(1,2)
+// console.log(xxx);
+// const obj = {m:0}
+// fn.call(obj,1,2)
+// fn.apply(obj,[1,2])
+// fn.call(null,1,2)
+// fn.bind(obj)(3,4)
+// fn.bind(obj,5)(3,4)
+// fn.bind(obj,5,6)(3,4)
 
     </script> 
 

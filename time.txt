@@ -17,7 +17,7 @@
 ’116		2.39		外卖项目从这个时间点开始就没看了
 
 
-122		0..40
+122		1.33
 
 
 
@@ -56,7 +56,8 @@ ctrl+shift+p		总命令行
 win+shift+s		快速截图
 ctrl+shift+k		快速删除选中行
 cmd	regedit		注册表
-
+ctrl+shift+f		中文简体繁体切换
+shift+alt+f		快速重排代码格式
 
 
 # DPI越大		鼠标越灵活
@@ -64,3 +65,13 @@ cmd	regedit		注册表
 
 接口:
 https://picsum.photos/id/101/300/300		图片接口
+
+
+npm账号:
+rmf_326
+75395184260rmf
+2405825227@qq.com
+
+
+VS里面的插件:
+LaTeX Words		统计字数
