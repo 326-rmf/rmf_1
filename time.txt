@@ -17,7 +17,7 @@
 ’116		2.39		外卖项目从这个时间点开始就没看了
 
 
-122		1.33
+124		0.47
 
 
 
@@ -47,6 +47,8 @@ git config --global --unset https.proxy
 git  config --global http.sslVerify false
 dns更新:
 ipconfig /flushdns
+还是不行的话
+电脑重启直接成功
 
 
 
