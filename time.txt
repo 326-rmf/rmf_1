@@ -73,7 +73,7 @@ ctrl+shift+esc		任务管理器
 接口:
 https://picsum.photos/id/101/300/300		图片接口
 https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5
-
+http://localhost:3000/disease
 
 
 npm账号:

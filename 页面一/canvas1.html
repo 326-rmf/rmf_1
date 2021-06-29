@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.js"></script>
     <style>
         .container{
             position: relative;
@@ -331,15 +332,21 @@
 //         alert(JSON.stringify(res));
 //     }
 // ----------------ajax  jsonp--------------------------------------
-// $.ajax({
-//     url: 'https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5',
-//     type: 'get',
-//     dataType: 'jsonp',  // 请求方式为jsonp
-//      crossDomain: true,
-// //      success: function(data) {console.table(JSON.parse(data.data))},
-//      success: function(data) {console.log(JSON.parse(data.data))},
-//     data: {}
-// });
+$.ajax({
+    url: 'https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5',
+    type: 'get',
+    dataType: 'jsonp',  // 请求方式为jsonp
+     crossDomain: true,
+//      success: function(data) {console.table(JSON.parse(data.data))},
+     success: function(res) {console.log(JSON.parse(res.data).chinaAdd);},
+    data: {}
+});
+axios({
+        url: "https://api.iyk0.com/6rtq/?city=%E5%8C%97%E4%BA%AC",
+        method: "get",
+      }).then(function (res) {
+        console.log(res);
+      });
 // ----------------------------------------------------------
 // -------------------------fetch----------------------------
 // fetch('https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5')
