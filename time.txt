@@ -49,6 +49,7 @@ dns更新:
 ipconfig /flushdns
 还是不行的话
 电脑重启直接成功
+git push --set-upstream origin main
 
 
 
@@ -60,6 +61,10 @@ ctrl+shift+k		快速删除选中行
 cmd	regedit		注册表
 ctrl+shift+f		中文简体繁体切换
 shift+alt+f		快速重排代码格式
+ctrl+shift+esc		任务管理器
+
+
+
 
 
 # DPI越大		鼠标越灵活
@@ -67,6 +72,8 @@ shift+alt+f		快速重排代码格式
 
 接口:
 https://picsum.photos/id/101/300/300		图片接口
+https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5
+
 
 
 npm账号:
@@ -77,3 +84,9 @@ rmf_326
 
 VS里面的插件:
 LaTeX Words		统计字数
+
+
+
+
+
+
