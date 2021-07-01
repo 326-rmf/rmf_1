@@ -7,6 +7,7 @@
     <title>Document</title>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.js"></script>
+    <script src="https://kit.fontawesome.com/9b5fb2dd65.js" crossorigin="anonymous"></script>
     <style>
         .container{
             position: relative;
@@ -50,6 +51,7 @@
     </style>
 </head>
 <body>
+    <i class="fas fa-thumbs-up fa-5x"></i>
     <button id="b1">函数防抖</button>
     <button id="b2">函数节流</button>
     <script src="./js/promise.js"></script>
@@ -338,15 +340,23 @@ $.ajax({
     dataType: 'jsonp',  // 请求方式为jsonp
      crossDomain: true,
 //      success: function(data) {console.table(JSON.parse(data.data))},
-     success: function(res) {console.log(JSON.parse(res.data).chinaAdd);},
+     success: function(res) {console.log(JSON.parse(res.data));},
     data: {}
 });
-axios({
-        url: "https://api.iyk0.com/6rtq/?city=%E5%8C%97%E4%BA%AC",
-        method: "get",
-      }).then(function (res) {
-        console.log(res);
-      });
+// axios({
+//         url: "https://api.iyk0.com/wbr",
+//         method: "get",
+//       }).then(function (res) {
+//         console.log(res);
+//       });
+$.ajax({
+    url:'https://api.iyk0.com/wbr', 
+    type:'get',
+    dataType:'jsonp',
+     crossDomain: true,
+    success:function(res){console.log(JSON.parse(res));}
+
+})
 // ----------------------------------------------------------
 // -------------------------fetch----------------------------
 // fetch('https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5')
