@@ -1,8 +1,9 @@
 56		音乐台效果		 弹簧效果
 57		三国女将
 56	封装弹簧..属性
-68  3.40
-69		mongoDB
+
+
+70		0.21
 83
 
 85		2.06
@@ -17,7 +18,6 @@
 ’116		2.39		外卖项目从这个时间点开始就没看了
 
 
-124		0.47
 
 
 
@@ -41,6 +41,7 @@ https://blog.csdn.net/weixin_42757413/article/details/106396750
 
 解决git push 问题：
 下面两段代码是参考
+1.	代理
 git config --global --unset http.proxy
 git config --global --unset https.proxy
 下面这句代码取消全局代理
@@ -50,7 +51,20 @@ ipconfig /flushdns
 还是不行的话
 电脑重启直接成功
 git push --set-upstream origin main
-
+win+R-->C:\WINDOWS\system32\drivers\etc-->notepad hosts-->达到host
+git config --global http.proxy
+git config --global https.proxy
+git config --global --unset http.proxy
+git config --global --unset https.proxy
+2.	ip
+得到github的ip
+http://github.com.ipaddress.com
+得到github fastly的ip 
+http://github.global.ssl.fastly.net.ipaddress.com/
+把得到的ip在host文件里面设置
+# GitHub Start
+140.82.112.3 githhub.com	
+199.232.69.194 github.global-ssl.fastly.net
 
 
 
