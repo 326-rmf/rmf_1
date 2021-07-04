@@ -3,10 +3,10 @@
 56	封装弹簧..属性
 
 
-70		0.21
+
 83
 
-85		2.06
+86		02.16.51
 
 
 
@@ -15,12 +15,31 @@
 113   		3.46		MVVM分析解剖	库的嵌套调用可以再看一下	没看懂	但是主要说的是数据处理的流程	处理的思维就是调用内部定义的函数来实现数据绑定和处理
 114 		2.30		MVVM数据解析	没看懂
 
-’116		2.39		外卖项目从这个时间点开始就没看了
+116		2.39		外卖项目从这个时间点开始就没看了
+
+
+"start":"react-app-rewired start",
+"build":"react-app-rewired build",
+"test":"react-app-rewired test",
+"eject":"react-scripts eject",
+"start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject",
 
 
 
-
-
+import React, {Component} from 'react'
+export default class Login extends Component {
+  render() {
+    return (
+      <div>
+        Login
+      </div>
+      
+    ) 
+  }
+}
 
 
 
@@ -76,6 +95,7 @@ cmd	regedit		注册表
 ctrl+shift+f		中文简体繁体切换
 shift+alt+f		快速重排代码格式
 ctrl+shift+esc		任务管理器
+shift+delete		直接永久性删除
 
 
 
@@ -104,3 +124,4 @@ LaTeX Words		统计字数
 
 
 
+    
