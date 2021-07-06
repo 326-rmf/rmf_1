@@ -26,5 +26,14 @@
 -   这是antd v3到v4升级导致的
     官方：
     从 4.0 开始，antd 不再内置 Icon 组件，请使用独立的包 @ant-design/icons。
-##      reducer里面不可修改传递过来的参数
-    
+##  reducer里面不可修改传递过来的参数
+##  做笔记的时候    文件引入错误
+##  queryString 可以将参数转换为urlencoded格式
+-   后端没有写json允许 并且 在后端不配合的情况下
+##  api文件夹
+    -   index.js
+    -   项目里面所有请求都是这个文件发出
+    -   export const reqLogin = ()=>{}//发送请求的函数
+    -   export const reqLogin = (username,password)=>axios.post('http://..',qs.stringify({username,password}))//发送请求的函数
+##  nprogress       进度条的js库
+-   引入样式nprogress.css
