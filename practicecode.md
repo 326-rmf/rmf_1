@@ -1500,4 +1500,3 @@ close.addEventListener('touchstart',function(){
 ##  解决点击穿透问题
 函数参数传递一个参数
 然后        e.preventDefault();-->解决了穿透问题
-##  
