@@ -83,6 +83,8 @@ http://github.global.ssl.fastly.net.ipaddress.com/
 140.82.112.3 githhub.com	
 199.232.69.194 github.global-ssl.fastly.net
 
+dev-sidecar	git加速
+
 
 
 快捷键
@@ -139,25 +141,32 @@ LaTeX Words		统计字数
 rmf326@163.com
 
 
-const q = n =>{
-const dp = [null,null,1];
-for(let i = 3;i <= n;i++){
-dp[i] = 0;
-for(let j = 1;j <= i-1;j++){
-dp[i] = Math.max(dp[i],(i - j)*j,dp[i - j] *j)}}
-return dp[n]
-}
 
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var convert = function(s, numRows) {
+     //行数是一行的 时候直接返回原来的字符串    不用z字形排列
+    if(numRows == 1)
+        return s;
 
-var cuttingRope = function (n) {
-    let dp = new Array(n).fill(BigInt(1));
-    for (let i = 0; i < n; i++) {
-        for (let j = i - 1; j >= 0; j--) {
-            dp[i] = max(dp[i], dp[j] * BigInt((i - j)), BigInt((j + 1) * (i - j)));
-        }
+    const len = Math.min(s.length, numRows);
+    const rows = [];
+    for(let i = 0; i< len; i++) rows[i] = "";
+    let loc = 0;
+    let down = false;
+
+    for(const c of s) {
+        rows[loc] += c;
+        if(loc == 0 || loc == numRows - 1)
+            down = !down;
+        loc += down ? 1 : -1;
     }
-    return dp[n - 1] % (1000000007n);
+
+    let ans = "";
+    for(const row of rows) {
+        ans += row;
+    }
+    return ans;
 };
-
-const max = (...args) => args.reduce((prev, curr) => prev > curr ? prev : curr)
-

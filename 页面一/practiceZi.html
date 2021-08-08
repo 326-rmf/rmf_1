@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img src="https://p1.pstatp.com/large/3ecd0004b6bdeff4c48d" alt="" id="img_1">
+    <div id="imgBox"></div>
+</body>
+</html>
+<script type="text/javascript">
+
+var img_1 = document.getElementById('img_1')
+var imgBox = document.getElementById('imgBox')
+img_1.onclick = function(){
+var newImage = document.createElement('img')
+newImage.src = '../picture/bootstrap.jpg'
+imgBox.appendChild(newImage)
+
+}
+</script>
