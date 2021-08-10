@@ -142,31 +142,19 @@ rmf326@163.com
 
 
 
-/**
- * @param {string} s
- * @return {string}
- */
-var convert = function(s, numRows) {
-     //行数是一行的 时候直接返回原来的字符串    不用z字形排列
-    if(numRows == 1)
-        return s;
+13469950843
+75395184260rmf.
 
-    const len = Math.min(s.length, numRows);
-    const rows = [];
-    for(let i = 0; i< len; i++) rows[i] = "";
-    let loc = 0;
-    let down = false;
 
-    for(const c of s) {
-        rows[loc] += c;
-        if(loc == 0 || loc == numRows - 1)
-            down = !down;
-        loc += down ? 1 : -1;
+
+
+var swapPairs = function(head) {
+    if (head === null|| head.next === null) {
+        return head;
     }
-
-    let ans = "";
-    for(const row of rows) {
-        ans += row;
-    }
-    return ans;
+    const newHead = head.next;
+    head.next = swapPairs(newHead.next);
+    newHead.next = head;
+    return newHead;
 };
+
