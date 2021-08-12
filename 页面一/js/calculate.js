@@ -1189,51 +1189,7 @@ return 0
 };
 
 
-//判断二叉树本身是不是镜像树
-var isSymmetric = function(root) {
-    //二叉树的根节点是空的  直接返回null        代表空二叉树
-    if(!root)return null
-    return res(root.left,root.right)
-    };
-    var res = function(L,R){
-        //函数的递归调用就是    一个函数产生两个自己的递归函数      最后增加的是二倍数增加的速度来增加      符合二叉树的概念
-        //左右节点都是空 的情况     说明比较到了最后为空 的情况 返回结果就是true
-    if(L===null && R===null)return true
-    //不满足上述条件说明有一个以上的树还有节点数据      那么其中有一个是空的就对应不上数据      就返回false
-    else if(L===null||R===null||L.val!==R.val)return false
-    //1--->2--->4----->8---->2**n           2的指数级增长速度       适应了二叉树的变化规则
-    return res(L.left,R.right)&&res(L.right,R.left)
-    }
 
 
-//[4,5,6,7,0,1,2]       0
-    var search = function(nums, target) {
-        let len = nums.length;
-        let L=0,R = len -1;
-        //数据/2
-        while(L<=R){
-        let mid = (L+R)>>1
-            if(target == nums[mid])return mid
-            if(nums[L] < nums[mid]){
-            if(target >= nums[L] && target <= nums[mid])R=mid -1
-            else L=mid+1}
-            else{if(target >= nums[mid] && target <= nums[R])L=mid +1
-            else R=mid-1}
-        }
-    return nums[L+1] == target?L+1:-1
-    };
 
 
-//数独的遍历
-var isValidSudoku = function(board, h = {}) {
-    //遍历一个熟读数据不重复        三目运算符
-    var v = (k, n) => h[k] ? (h[k][n] ? false : h[k][n] = 1) : (h[k] = [], h[k][n] = 1)
-    //双重for遍历       
-    for (var i = 0; i < 9; i++)
-        for (var j = 0, m = i / 3 | 0; n = j / 3 | 0, j < 9; j++) 
-            if (board[i][j] !== '.' && (
-               !v(18 + m * 3 + n, board[i][j]) ||
-               !v(i, board[i][j]) ||
-               !v(j + 9, board[i][j]))) return false
-    return true
-};    
