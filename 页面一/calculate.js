@@ -1237,3 +1237,55 @@ var isValidSudoku = function(board, h = {}) {
                !v(j + 9, board[i][j]))) return false
     return true
 };    
+
+
+
+//子数组和的最大值
+//类似做生意    及时止损        因为是连续的    有损失了就重头开始
+var maxSubArray = function(nums) {
+    let pre = 0, maxAns = nums[0];//第一个数字
+    //数据遍历
+    nums.forEach((x) => {
+        //第一个数据开始    连续变弱的话及时止损    选择当前    还是加上当前继续下去
+        //目前情况和以前一起的情况是一起的
+        pre = Math.max(pre + x, x);
+        maxAns = Math.max(maxAns, pre);
+    });
+    return maxAns;
+};
+
+
+
+
+//价值礼物的题目
+//一条道路获得最大的数据
+//有点像二维数组的叠加问题      先把第一行  第一列路径铺好
+const maxValue = grid => {
+    // 行、列
+    const [m, n] = [grid.length, grid[0].length];
+    // 创建行m列n的二维数组
+    const dp = new Array(m).fill(0).map(() => new Array(n).fill(0));
+    // const dp = new Array(m,n)
+    // (0,0)位置初始化
+    dp[0][0] = grid[0][0];
+    // 第一列初始化
+    for (let i = 1; i < m; i++) {
+        dp[i][0] = dp[i - 1][0] + grid[i][0];
+    }
+    // for(let i = 1;i < m;i++){
+    //     dp[i][0] = dp[i -1][0] + grid[i][0]
+    // }
+
+    // 第一行初始化
+    for (let j = 1; j < n; j++) {
+        dp[0][j] = dp[0][j - 1] + grid[0][j];
+    }
+    // 遍历，完善dp数组
+    for (let i = 1; i < m; i++) {
+        for (let j = 1; j < n; j++) {
+            dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];
+        }
+    }
+    return dp[m - 1][n - 1];
+};
+
