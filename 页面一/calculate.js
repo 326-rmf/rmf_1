@@ -1289,3 +1289,53 @@ const maxValue = grid => {
     return dp[m - 1][n - 1];
 };
 
+
+//dfs深度优先算法
+//0--->25对应了字母表示
+var translateNum = function(num) {
+    //数字转换为字符串运算
+    let str = num.toString()
+const dfs = (str,pointer)=>{
+    //字符串到达最后一个时候返回数据    是可以翻译的 
+    if(pointer>=str.length-1)return 1
+    //字符串转换为数据计算
+    let Num = Number(str[pointer]+str[pointer+1])
+    if(Num>=10&&Num<=25)
+    //可以两位数据翻译  数据结果        可以两位数据翻译就选择两位数据翻译      
+    //两位数据翻译里面包含了一位数据的翻译      返回数据相加
+    return dfs(str,pointer+1)+dfs(str,pointer+2)
+    else
+    return dfs(str,pointer+1)
+}
+return dfs(str,0)
+};
+
+
+
+//最长不重复字符串的长度    对象来获取相应字符属性记录出现次数      只可以出现一次
+//获取对象属性的长度        Object.keys(obj).length
+var lengthOfLongestSubstring = function(s) {
+    if(s.length == 0)
+    return 0
+    if(s.length == 1)
+    return 1
+    let obj = {}
+    let maxNum = 0
+    for(let i = 0;i < s.length;i++){
+    let j = i
+    while(j<s.length){
+    if(obj[s[j]]){
+        maxNum=Math.max(maxNum,Object.keys(obj).length)
+    for(let key in obj){
+        delete obj[key]
+    }
+        break
+    }else{
+        obj[s[j]]=1
+        j++
+    }
+    }
+    }
+    return maxNum
+};
+
