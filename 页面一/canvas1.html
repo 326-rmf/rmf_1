@@ -59,7 +59,7 @@
             width: 200px;
             height: 200px;
         }
-        .a{
+        #diva{
             width: 0;
             height: 0;
             border-width: 100px;
@@ -78,6 +78,11 @@
              align-items: center
 
             /* transform: rotate(90deg); 顺时针旋转90° */
+ }
+ #diva2{
+     width: 200px;
+     height: 100px;
+     border:1px solid black;
  }
     </style>
 </head>
@@ -102,7 +107,8 @@
     <button id="b1">函数防抖</button>
     <button id="b2">函数节流</button>
     <div class="div_1"></div> -->
-    <div class="a"></div>
+    <div id="diva"></div>
+    <div id="diva2"></div>
     <script src="./js/promise.js"></script>
 
     <!-- <div class="container"> -->
@@ -169,7 +175,11 @@
         }
     }
    
-
+var diva = document.getElementById('diva')
+var diva2 = document.getElementById('diva2')
+// console.log(diva.clientLeft);
+console.log(diva.hasAttribute);
+console.log(diva2.clientWidth);
         
 </script>   
  <!-- 函数节流      函数防抖书写  结束 -->
@@ -388,29 +398,29 @@ var sRotate = s*6;
 //         alert(JSON.stringify(res));
 //     }
 // ----------------ajax  jsonp--------------------------------------
-$.ajax({
-    url: 'https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5',
-    type: 'get',
-    dataType: 'jsonp',  // 请求方式为jsonp
-     crossDomain: true,
-//      success: function(data) {console.table(JSON.parse(data.data))},
-     success: function(res) {console.log(JSON.parse(res.data));},
-    data: {}
-});
+// $.ajax({
+//     url: 'https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5',
+//     type: 'get',
+//     dataType: 'jsonp',  // 请求方式为jsonp
+//      crossDomain: true,
+// //      success: function(data) {console.table(JSON.parse(data.data))},
+//      success: function(res) {console.log(JSON.parse(res.data));},
+//     data: {}
+// });
 // axios({
 //         url: "https://api.iyk0.com/wbr",
 //         method: "get",
 //       }).then(function (res) {
 //         console.log(res);
 //       });
-$.ajax({
-    url:'https://api.iyk0.com/wbr', 
-    type:'get',
-    dataType:'jsonp',
-     crossDomain: true,
-    success:function(res){console.log(JSON.parse(res));}
+// $.ajax({
+//     url:'https://api.iyk0.com/wbr', 
+//     type:'get',
+//     dataType:'jsonp',
+//      crossDomain: true,
+//     success:function(res){console.log(JSON.parse(res));}
 
-})
+// })
 // ----------------------------------------------------------
 // -------------------------fetch----------------------------
 // fetch('https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5')

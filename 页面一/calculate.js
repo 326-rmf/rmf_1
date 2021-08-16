@@ -1339,3 +1339,84 @@ var lengthOfLongestSubstring = function(s) {
     return maxNum
 };
 
+
+
+//输出链表的数据        倒数链表中的倒数k个数据
+var getKthFromEnd = function(head, k) {
+    //head1链表记录链表节点的个数
+    let head1 = new ListNode(-1)
+    //head3链表记录节点的开始和k的互补的关系
+    let head3 = new ListNode(-1)
+    //取出 链表的头部索引
+    head1.next = head
+    head3.next = head
+    //返回的链表的最终倒数的数据链表
+    let head2 = new ListNode(-1)
+    let count = 0
+    while(head1.next){
+    count++
+    head1 = head1.next
+    }
+    while(count){
+        //正面计算      到达最后倒数第k个数据的时候     记得改变head2来链表数据的指向问题
+        if(count==k){
+            head2.next = head3.next
+            return head2.next
+        }
+        head3 = head3.next
+        count--
+        
+    }
+    };
+
+
+//数组里面不可重复使用数字
+
+const combinationSum2 = (candidates, target) => {
+    candidates.sort((a,b) => a - b ); // 升序排序
+    const res = [];
+  
+    const dfs = (start, temp, sum) => { // start是索引 当前选择范围的第一个
+      if (sum >= target) {        // 爆掉了，不用继续选了
+        if (sum == target) {      // 满足条件，加入解集
+          res.push(temp.slice()); // temp是引用，所指向的内存后续还要操作，所以拷贝一份
+        }
+        return;                   // 结束当前递归
+      }
+      for (let i = start; i < candidates.length; i++) {             // 枚举出当前的选择
+        if (i - 1 >= start && candidates[i - 1] == candidates[i]) { // 当前选项和左邻选项一样，跳过
+          continue;
+        }
+        temp.push(candidates[i]);              // 作出选择
+        dfs(i + 1, temp, sum + candidates[i]); // 基于该选择，继续选择，递归
+        temp.pop();               // 上面的递归结束，撤销选择，回到选择前的状态，切入另一分支
+      }
+    };
+  
+    dfs(0, [], 0);
+    return res;
+  };
+  
+
+
+
+
+  var multiply = function(num1, num2) {
+      //为0的字符串返回的是'0'
+    if (num1 === '0' || num2 === '0') {
+        return '0'
+    }
+    //new 了一个新的数组
+    var l1 = num1.length, l2 = num2.length, p = new Array(l1 + l2).fill(0)
+    for (var i = l1; i--;) {
+        for (var j = l2; j--;) {
+            var tmp = num1[i] * num2[j] + p[i + j + 1]
+            p[i + j + 1] = tmp % 10
+            p[i + j] += 0 | tmp / 10
+        } 
+    }
+    while(p[0] === 0) {
+        p.shift()
+    }
+    return p.join('')
+};
