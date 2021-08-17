@@ -1420,3 +1420,46 @@ const combinationSum2 = (candidates, target) => {
     }
     return p.join('')
 };
+
+
+
+//奇数头插入    偶数未插入
+var exchange = function(nums) {
+    let nums2 = []
+    nums.filter((item,index)=>{
+        if(item%2){
+            nums2.unshift(item)
+        }else{
+            nums2.push(item)
+        }
+    })
+    return nums2
+};
+
+//值为偶数就向后面排列
+var exchange = function(nums){
+    let len = nums.length
+    let x = 0
+    for(let i = 0;i < len;i++){
+        if(nums[i]%2==0){
+            [nums[x],nums[len-x-1]]=[nums[len-x-1],nums[x]]
+            x++
+        }
+    }
+    return nums
+}
+
+
+
+//数据和等于target值
+//巧用L  R  L<R
+var twoSum = function(nums, target) {
+    let R = nums.length -1
+    let L = 0;
+    while(L < R){
+        let sum  =nums[L]+nums[R]
+        if(sum ==target)return [nums[L],nums[R]]
+        else if(sum > target)R--
+        else L++
+    }
+    };
