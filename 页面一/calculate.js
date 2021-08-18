@@ -1463,3 +1463,102 @@ var twoSum = function(nums, target) {
         else L++
     }
     };
+
+
+
+//机器人行走步数问题
+/**
+ * @param {number} m
+ * @param {number} n
+ * @param {number} k
+ * @return {number}
+ */
+ var movingCount = function(m, n, k) {
+    let total = 0
+    let obj = {}
+    function runing(i,j){
+      //边界直接返回
+      if(i < 0 || j < 0 || i >= m || j >= n) return
+      //变为数组        然后累加数据
+      let sum = (i + '' + j).split('').reduce((a,b) => +a + +b)
+      //变为JSON字符串来记录数据
+      let axis = JSON.stringify([i,j])
+      //JSON字符串不存在
+      if(sum <= k && !obj[axis]){  // 当该点还没走过 和 满足 不大于k 时 继续执行
+        total++
+        obj[axis] = true  // 标识该点已经走过, 下次不进
+        // 当前的继续 上下左右 走
+        runing(i + 1, j)
+        runing(i, j + 1)
+        runing(i - 1, j)
+        runing(i, j - 1)
+      }
+    }
+    runing(0,0)
+    return total
+  };
+
+
+
+//贪心算法
+//
+  var jump = function(nums) {
+    let curIndex = 0
+    let nexIndex = 0
+    let step = 0
+    for(let i = 0;i < nums.length-1;i++){
+        //包括了全部下一条  到达一个数据的结束末尾选择其中最大的数据跳数
+    nexIndex = Math.max(nums[i]+i,nexIndex)
+    if(i == curIndex){
+        curIndex = nexIndex
+        step++
+    }
+    }
+    return step
+    };
+  
+
+
+//回溯算法
+//全排列可用回溯的方法
+    var permute = function(nums) {
+
+        let res = []
+        let path = []
+        backtracking(nums,nums.length,[])
+        return res
+        function backtracking(n,k,used){
+        if(k==path.length)
+        {
+        res.push(Array.from(path))
+        return 
+        }
+        //循环次数的决定性操作
+        for(let i = 0;i < k;i++){
+            //将数据一个一个装入进去        用过就装下一个
+            if(used[i]) {continue;}
+            path.push(nums[i])
+            //标记数据已经被使用
+            used[i]=true
+            backtracking(n,k,used)
+            //一轮回溯结束取出后面的数据
+            path.pop()
+            used[i]=false
+        }        }}
+
+
+
+//这个函数的动作是里面包含了一个匿名函数自调用
+function perm(arr) {  
+    (function fn(n) { //为第n个位置选择元素  
+        for(var i=n;i<arr.length;i++) {  
+            //交换数据值
+            swap(arr,i,n);  
+            if(n+1<arr.length-1) //判断数组中剩余的待全排列的元素是否大于1个  
+                fn(n+1); //从第n+1个下标进行全排列  
+            else 
+                show(arr); //显示一组结果  
+            swap(arr,i,n);  
+        }  
+    })(0);  //匿名函数自调用的传递参数
+}

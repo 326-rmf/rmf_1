@@ -146,5 +146,10 @@ rmf326@163.com
 
 
 
-new Promise(function(){console.log('Promise')})
-console.log('main')
+
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+
+比较	全排列	跨域
