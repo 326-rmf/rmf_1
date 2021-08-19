@@ -1562,3 +1562,94 @@ function perm(arr) {
         }  
     })(0);  //匿名函数自调用的传递参数
 }
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} target
+ * @return {number[][]}
+ */
+var pathSum = function(root, target) {
+    const res = [];
+    const path = [];
+
+    if(!root) {
+        return []
+    }
+
+    function findPath(root, target) {
+        if(root.left) {
+            path.push(root.val);
+            findPath(root.left, target - root.val)
+            path.pop()
+        }
+        if(root.right) {
+            path.push(root.val);
+            findPath(root.right, target - root.val)
+            path.pop()
+        }
+        if(!root.left && !root.right) {
+            // 找到了一条路径
+            if(target === root.val) {
+                path.push(root.val);
+                // 注意这里是 path 的拷贝
+                res.push(path.slice())
+                path.pop();
+            }
+            return;
+        }
+    }
+
+    findPath(root, target);
+
+    return res
+};
+
+
+
+
+//字节跳动遍历数组数据
+let userNumber = readline()
+let likeArray = readline().split(' ')
+let searchNumber = readline()
+let searchGroup = []
+let arr = []
+let result = 0
+for(let i = 0;i < searchNumber;i++){
+    //数据变为二维数组
+searchGroup[i] =readline().split(' ')
+}
+likeArray.forEach((item,index)=>{
+if(arr[item] == undefined)
+arr[item] = []
+arr[item].push(index)
+})
+for(let i = 0;i <searchNumber;i++){
+    let start = searchGroup[i][0] - 1
+    let end = searchGroup[i][1] - 1
+    let value = searchGroup[i][2]
+    if(!arr[value])
+    {console.log(0)
+    }
+    else{
+        let result = 0
+    arr[value].forEach((item,index)=>{
+        if(item>=start&&item<=end){
+            result++
+        }
+    })
+    print(result)
+}
+}
+
+
+
+
