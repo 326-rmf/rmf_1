@@ -1564,14 +1564,8 @@ function perm(arr) {
 }
 
 
-/**
- * Definition for a binary tree node.
- * function TreeNode(val, left, right) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.left = (left===undefined ? null : left)
- *     this.right = (right===undefined ? null : right)
- * }
- */
+
+
 /**
  * @param {TreeNode} root
  * @param {number} target
@@ -1653,3 +1647,123 @@ for(let i = 0;i <searchNumber;i++){
 
 
 
+//字节跳动手艺人
+
+let ballNums,linkNums, colorNums, ballColor =[], sameColorBall = [], count = 0;
+[ballNums,linkNums, colorNums]=readline().split(' ');
+
+// 数组的每个元素都是一个数组，元素数组的第一位代表颜色个数，后续代表所用颜色
+for(let i = 0; i < ballNums; ++i) {
+    ballColor[i] = readline().split(' ').map(item => Number(item))
+}
+
+//将同一颜色出现的串珠序号进行收集
+//要求的sameColorBall是[,[1],[1,3,4],[1,3,5]]
+ballColor.forEach((item, index) => {
+    // 若该串珠所用颜色种类大于0
+    // console.log(item, 'item');
+    if(item[0] > 0) {
+        let colorArr = item.slice(1)
+        // 下面的item代表不同的颜色种类
+        colorArr.forEach(color => {    
+            // 如果之前已经保存过使用某颜色的串珠序号，则直接将其添加到数组中去
+            if(sameColorBall[color]) {
+                sameColorBall[color].push(index + 1)
+            } else {
+               sameColorBall[color] = [index + 1]
+            }
+        })
+    }
+})
+
+
+sameColorBall.forEach(item=>{
+    for(let i=0;i<item.length-1;i++){
+        //原答主用的是++i
+        if(item[i+1]-item[i]<linkNums){
+            ++count;
+            break;	//因为当前珠子已被检测出不符合要求，无需后续检测
+		}
+		//注意：这里的难点在于手串是一个圈，要考虑循环的情况，考虑头尾有没有出现不满足要求
+		if(ballNums+item[0]-item[item.length-1]<linkNums){	
+		//item.length-1也可以写成-1，即item[item.length-1]
+		//此时的第1颗珠子相当于第6颗珠子，即ballNums+item[0]
+			++count;
+			break;
+		}     
+    }    
+})
+
+console.log(count)
+
+
+
+
+
+//双向链表头尾的指向问题就是注意最后一个以及第一个
+//pre是最后一个pre.right = head     head.left = pre
+var treeToDoublyList = function(root) {
+    if(!root)return
+    let head = 0
+    let pre=0
+    dfs(root)
+    pre.right=head
+    head.left=pre
+    return head
+    function dfs(root){
+        if(!root)return
+        //递归算法找出二叉搜索树最左边  也就是最小的一个数字    
+        dfs(root.left)
+        if(pre)pre.right=root
+        //else执行一步来确定头节点
+        else head=root
+        root.left=pre
+        //保存当前节点去往下一个节点数据
+        pre=root
+        //不要忘记寻找右边节点数据
+        dfs(root.right)
+    
+    }
+    
+    }
+
+
+//字符串读取反转字符串返回
+let str = readline()
+let doNum = readline()
+for(var i=0;i<doNum;i++){
+let pl = readline().split(' ')
+let start  = pl[0]
+let len = pl[1]
+let temp = str.slice(start,len+start).reverse().join('')
+let str = str.slice(0,start)+temp+str.slice(start+len)
+}
+print(str)
+
+
+//数组数据拼接为最小的 数据
+var minNumber = function(nums) {
+    nums.sort((a,b)=>(a+''+b)-(b+''+a))
+    return nums.join('')
+    
+    };
+
+
+
+//set函数
+    //set对象是值的集合 你可以插入的顺序来迭代它的元素  set中 的元素只出现一次      就是set中的元素是唯一的
+    var isStraight = function(nums) {
+        let set = new Set()
+        let min = 13
+        let max = 0
+        for(const num of nums){
+        if(!num)continue
+        if(set.has(num))return false
+        set.add(num)
+        min = Math.min(min,num)
+        max = Math.max(max,num)
+        
+        }
+        return max-min<5
+        
+        };

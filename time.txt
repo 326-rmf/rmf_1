@@ -152,55 +152,41 @@ rmf326@163.com
 比较	全排列	跨域		设计模式		Promise
 不同页面之间进行通信		async/await	jquery.js
 dom的api	有顺序的ajax请求		fetch&&ajax
-移动端	redux	node	express
+移动端	redux	node	express		html5	css3
 
 
 
-let SearchGroup=[ ];
-let usernumber=readline(),
-    likearray=readline().split(' '),    //用户对应喜好，转化为数组
-    SearchN=readline();    //第三行输入，查询组数
 
-for(let i=0;i<SearchN;i++){
-    SearchGroup[i]=readline().split(' ');
-}
 
-//样例添加完后生成arr=[,[0],[1],[2,3],,[4]]
-//顺序遍历likearray数组，对每个item项进行数组创建和数组下标的添加
 
-let arr=[ ];
-likearray.forEach((item,index)=>{
-    if(arr[item]==undefined){    //找不到
-        arr[item]=[ ];    //新建数组
-    }
-    arr[item].push(index);    //arr是处理之后的数组
-});
 
-for(let j=0;j<SearchN;j++){
-    let start=SearchGroup[j][0]-1,
-        end=SearchGroup[j][1]-1,
-        value=SearchGroup[j][2],
-    result=0;    //一堆初始化
-    if(arr[value]==undefined){    //数组value值为空
-        console.log(0);
-    }else{
-        arr[value].forEach(e=>{
-            if(e>=start&&e<=end){
-                result++;
+var permuteUnique = function (nums) {
+    nums.sort((a, b) => {
+        return a - b
+    })
+    let result = []
+    let path = []
+
+    function backtracing( used) {
+        if (path.length === nums.length) {
+            result.push(path.slice())
+            return
+        }
+        for (let i = 0; i < nums.length; i++) {
+            if (i > 0 && nums[i] === nums[i - 1] && !used[i - 1]) {
+                continue
             }
-          })
-            print(result);
+            if (!used[i]) {
+                used[i] = true
+                path.push(nums[i])
+                backtracing(used)
+                path.pop()
+                used[i] = false
+            }
+
+
+        }
     }
-}
-
-//注意forEach的使用
-/*
-js中=>的作用
-(x) => x + 6
-function(x){
- return x + 6; }
-*/
-
-
-
-
+    backtracing([])
+    return result
+};
