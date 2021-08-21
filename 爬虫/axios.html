@@ -15,10 +15,29 @@
     <button>GET</button>
     <button>POST</button>
     <button>AJAX</button>
+    <div id="result">ok && result</div>
     <script>
         const btns = document.querySelectorAll('button');
         axios.defaults.baseURL = 'http://localhost:8000';
+        var result =document.getElementById('result')
         btns[0].onclick = function () {
+            const xhr = new XMLHttpRequest()
+            xhr.open('get','http://localhost:8000/axios-server')
+            xhr.setRequestHeader('Cache-Control','max-age=30')
+            // xhr.setRequestHeader('name','rmf')
+
+            xhr.send()
+            // xhr.setRequestHeader('name','rmf')   
+            xhr.onreadystatechange = function(){
+                // 判断 (服务端返回了所有的结果) 4
+                if(xhr.readyState === 4){
+                    // 再次判断——响应状态码  
+                    if(xhr.status >= 200 && xhr.status < 300){
+                        // 处理服务端返回的结果
+                        result.innerText = xhr.response;
+                    }else{}
+                }
+            }
             axios.get('/axios-server', {
                 params: {
                     id: 100,

@@ -1,55 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Document</title>
-<style type="text/css">
-table{
-/* border-collapse:separate;*/
-/* border: none; */
-border-spacing: 0;
-}
-td{
-position: relative;
-width: 50px;
-height: 50px;
-border: 5px solid blue;
-background: #fff;
-color: green;
-text-align: center;
-line-height: 50px;
-display: inline-block;
-}
-tr:not(:last-child) td{
-margin-bottom: -5px;
-}
-tr td:not(:first-child) {
-margin-left: -5px;
-}
-td:hover{
-border-color: red;
-cursor: pointer;
-z-index: 200;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
-<table>
-<tr>
-<td>1</td>
-<td>2</td>
-<td>3</td>
-</tr>
-<tr>
-<td>4</td>
-<td>5</td>
-<td>6</td>
-</tr>
-<tr>
-<td>7</td>
-<td>8</td>
-<td>9</td>
-</tr>
-</table>
+    <form action="javascript:;" name='form1' autocomplete="on">
+        <fieldset id`="个人信息表">
+            username:<input type="text" list="list1" required value="rmf">
+                <datalist id="list1">
+                    <option value="rmf"></option>
+                    <option value="wzj"></option>
+                    <option value="wp"></option>
+                    <option value="wk"></option>
+
+
+                </datalist>
+            <br>
+            password:<input type="password" value=""><br>
+            性别:
+            <input type="radio"  name="sex" value="male" checked>male
+            <br>
+            <input type="radio" name='sex' value='female'>female
+            <br>
+            have:
+            <input type="checkbox" name="vehicle" value="Bike">I have a bike
+            <br>
+            <input type="checkbox" name="vehicle" value="Car">I have a car 
+            <input type="search" name="googlesearch">
+            <input type="submit" name='subform1'>
+        </fieldset>
+
+    </form>
+    
+    
 </body>
 </html>

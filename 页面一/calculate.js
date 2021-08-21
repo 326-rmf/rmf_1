@@ -1767,3 +1767,101 @@ var minNumber = function(nums) {
         return max-min<5
         
         };
+
+
+
+//回溯方法来解决不重复的全排列
+        var permuteUnique = function(nums){
+            //数组升序排列
+            nums.sort((a,b)=>a-b)
+            let result = []
+            let path = []
+            function backtracing(used){
+            if(path.length === nums.length){
+            //path数组的长度等于原始数组的长度的时候	记得直接返回
+            result.push(path.slice())
+            return 
+            }
+            for(let i = 0;i < nums.length;i++){
+            //前面一个数据和当前的数据是相等的	并且前面的数据没有使用过
+            if(i>0&& nums[i] === nums[i-1]&&!used[i-1]){
+            continue
+            }
+            if(!used[i]){
+            //数据标记已经被使用了
+            used[i]=true
+            path.push(nums[i])
+            //继续回溯下一个元素
+            backtracing(used)
+            //数据返回的时候	记得就是取出最后一个数据
+            path.pop()
+            //并且标记数据没有被使用过
+            used[i]=false
+            }
+            }
+            }
+            backtracing([])
+            return result
+            }
+
+
+
+
+
+//一个函数来放置数据
+//放置数据的格式是数组  还是对象    记得加上this指向问题
+//var A = function(){this.data = []}
+var MedianFinder = function() {
+    this.data = []
+    };
+    
+    /** 
+     * @param {number} num
+     * @return {void}
+     */
+//函数原型对象上面加上对应的函数方法        也就是动作      一个函数要完成怎样的动作    实现怎样的功能
+//  A.prototype.functiona = function(){}        函数就是为实例对象添加要计算的属性
+    MedianFinder.prototype.addNum = function(num) {
+    this.data.push(num)
+    };
+    
+    /**
+     * @return {number}
+     */
+//函数要找出数据里面的中位数        
+//中位数的找出有一些情况        数据的个数是奇数个      数据的个数是偶数个
+//奇数个数据直接找出排序后的数据的最中间的数据来返回数据        medium = (len-1)/2 | 0---->操作就是对求得的原始数据进行向下取整数Math.floor()
+//用或的方法    比起        Math.floor()        更加快捷
+    MedianFinder.prototype.findMedian = function() {
+        const len = this.data.length
+    if(!len)return null
+    //忘记了数据要排序
+    this.data.sort((a,b)=>a-b)
+    //得出最中间的数据
+    const medium =Math.floor((len-1)/2)
+    //数据个数是奇数个
+    if(this.data.length%2){
+        return this.data[medium]
+    }
+    //数据个数是偶数个数据
+    return (this.data[medium] + this.data[medium+1])/2
+    };
+    
+
+
+
+//矩阵的翻转
+//找出对应的数学规律
+var rotate = function(matrix) {
+    let n = matrix.length
+    for(let i = 0;i < Math.floor(n/2);i++){
+    for(let j = 0;j < Math.ceil(n/2);j++){
+        let temp = matrix[i][j]
+        matrix[i][j]  = matrix[n-j-1][i]
+        matrix[n-j-1][i] = matrix[n-i-1][n-j-1]
+        matrix[n-i-1][n-j-1] = matrix[j][n-i-1]
+        matrix[j][n-i-1] = temp
+    }
+    
+    }
+    };
