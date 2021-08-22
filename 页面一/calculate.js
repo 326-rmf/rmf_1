@@ -1865,3 +1865,32 @@ var rotate = function(matrix) {
     
     }
     };
+
+
+
+
+
+//寻找一个二叉树最深的长度就是二叉树有多少层
+//根节点不可为0  1-->2--->4--->8
+//下一层二叉树有一个都要加1
+var maxDepth = function(root) {
+    if(!root)return 0
+    //计算最大的层数
+    return Math.max(maxDepth(root.left),maxDepth(root.right))+1
+    
+    }
+
+
+
+
+//平衡二叉树就是任意左右两个节点的层数相差是不大于1的
+var isBalanced = function(root) {
+    if(!root)return true
+    //任意两个节点的层数相差是不大于1的
+    return isBalanced(root.left)&&isBalanced(root.right)&&Math.abs(dfs(root.left)-dfs(root.right))<2
+    function dfs(root){
+        if(!root)return 0
+        //计算一个节点的最大的层数
+        return Math.max(dfs(root.left),dfs(root.right))+1
+    }
+}

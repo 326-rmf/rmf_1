@@ -160,5 +160,4 @@ dom的api	有顺序的ajax请求		fetch&&ajax
 
 
 
-var obj = {foo: 'bar'}
-Object.freeze(obj)
+return 

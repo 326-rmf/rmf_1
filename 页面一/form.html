@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+
+body
+{
+font-size:70%;
+font-family:verdana,helvetica,arial,sans-serif;
+}
+    </style>
+</head>
+<body>
+    <form action="javascript:;" name='form1' autocomplete="on" id="formid">
+        <fieldset id`="个人信息表">
+            username:<input type="text" list="list1" required value="" autofocus placeholder="username" >
+                <datalist id="list1">
+                    <option value="rmf"></option>
+                    <option value="wzj"></option>
+                    <option value="wp"></option>
+                    <option value="wk"></option>
+
+
+                </datalist>
+            <br>
+            password:<input type="password" value="" placeholder="password" required><br>
+            性别:
+            <input type="radio"  name="sex" value="male" checked>male
+            <br>
+            <input type="radio" name='sex' value='female'>female
+            <br>
+            have:
+            <input type="checkbox" name="vehicle" value="Bike">I have a bike
+            <br>
+            <input type="checkbox" name="vehicle" value="Car">I have a car 
+            <input type="search" name="googlesearch">
+            <input type="submit" name='subform1' formtarget="_blank">
+            <input type="file" value="fileSelect" multiple>
+        </fieldset>
+    </form>
+    form1的<input type="text" value="textWhat" form="formid">
+    <canvas id="ok" height="200" width="200" onmousemove="findIndex(event)"></canvas>
+    <canvas id="ok1" height="200" width="200" ></canvas>
+    <div id="div_1" ></div>
+    <iframe width="500" height="500" name="iframe_a"></iframe>
+<p><a href="http://www.w3school.com.cn" target="iframe_a">W3School.com.cn</a></p>
+    
+</body>
+</html>
+<script type="text/javascript">
+    var ok = document.getElementById("ok")
+    var ok1 = document.getElementById("ok1")
+    var cxt = ok.getContext("2d")
+    var cxt1 = ok1.getContext("2d")
+    cxt.fillStyle="#000000"
+    cxt1.fillStyle="#000000"
+    cxt.fillRect(0,0,150,75)
+ctx1.arc(50,50,50)
+function findIndex(e){
+var x = e.clientX
+var y = e.clientY
+document.getElementById('div_1').innerHTML = '坐标:'+x+'  '+y
+
+}
+    
+    </script>
+    
