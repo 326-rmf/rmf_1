@@ -1894,3 +1894,76 @@ var isBalanced = function(root) {
         return Math.max(dfs(root.left),dfs(root.right))+1
     }
 }
+
+
+
+
+//前面n个数据的总和
+var sumNums = function(n) {
+    return n && n+sumNums(n-1)
+    };
+
+
+
+//找搜索二叉树两个节点的最近的祖先节点
+//左边进去或者右边进去   会看成一颗新的树木来循环比较
+//因为两个节点分布在树的两边的时候会返回树的根节点
+var lowestCommonAncestor = function(root, p, q) {
+    if(!root)return
+    while(root){
+    if(p.val<root.val&&q.val<root.val){
+        root=root.left
+    }
+    else if(p.val>root.val&&q.val>root.val){
+        root = root.right
+    }
+    else{
+        return root
+    }
+    }
+};
+
+
+
+//找一个普通二叉树的最近的祖先元素就是要有充足 的条件来确定数据的存在与否
+var lowestCommonAncestor = function(root, p, q) {
+    let ans;
+    const dfs = (root, p, q) => {
+        if (root === null) return false;
+        const lson = dfs(root.left, p, q);
+        const rson = dfs(root.right, p, q);
+        //  返回的数据不可能是没有子节点的  至少是倒数第二层的数据
+        //保证倒数第二层数据的条件解释lson&&rson
+        //一个节点的左右节点有一个存在并且根节点的数值等于其中一个目标数值
+        //有两个节点值      或者        本身是节点值并且有一个节点值
+        if ((lson && rson) || ((root.val === p.val || root.val === q.val) && (lson || rson))) {
+            ans = root;
+        } 
+        //一个单独节点若是节点数据等于其中一个目标数据就是返回的true否则返回的是false
+        return lson || rson || (root.val === p.val || root.val === q.val);
+    }
+    dfs(root, p, q);
+    return ans;
+};
+
+
+
+//数组中的字母异位词-------》就是两个单词包含的字母是相同的  但是位置是错位的
+var groupAnagrams = function(strs) {
+    //使用map函数来
+    var myMap = new Map()
+    for(let str of strs){
+        //数组里面的数据用for of 来迭代
+        let arr1 = Array.from(str).sort()
+        //这步操作之后获得了str的字典序
+        let key = arr1.toString()
+        //把原来的数据获取出来   没有的话就重启一个字典序的集合数组
+        let list=myMap.get(key)?myMap.get(key):new Array()
+        list.push(str)
+        myMap.set(key,list)
+    }
+    //最后记得转换为数组
+    return Array.from(myMap.values())
+    };
+
+
