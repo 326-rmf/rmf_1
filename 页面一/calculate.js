@@ -1967,3 +1967,240 @@ var groupAnagrams = function(strs) {
     };
 
 
+//低效率的自己写的阶乘函数
+var myPow = function(x, n) {
+    if(n==0)return 1
+    if(n==1)return x
+    let sum = 1
+    if( x==-1 && n%2){
+        return -1
+    }
+    else if(x==1 || x==-1)return 1
+    while(n>0){
+    
+    sum=sum*x
+    n--
+    }
+        x=1/x
+    
+    while(n<0){
+        sum=sum*x
+        n++
+    }
+    return sum
+    
+    
+    }
+
+
+
+
+
+//判断一个数组数据（后序遍历）是不是二叉搜索树
+var verifyPostorder = function(postorder) {
+    //数组长度为2以下都是对的
+    if (postorder.length<=2) return true
+    //后序遍历最后一个数据是根节点
+    let root = postorder.pop()
+    let i = 0;
+    //小于节点的数据都在树的左边
+    while(postorder[i]<root)
+    {
+    i++
+    }
+    //剩余数据在节点的右边  都大于根节点
+    let rightRoot = postorder.slice(i).every(item=>item>root)
+    return rightRoot&&verifyPostorder(postorder.slice(0,i))&&verifyPostorder(postorder.slice(i))
+    };
+
+
+
+//树的前序遍历  中序遍历来重建一个树
+var buildTree = function(preorder, inorder) {
+    //前序遍历长度为0   return null
+    if(preorder.length==0)return null
+    //新建一个树的根节点
+    let cur = new TreeNode(preorder[0])
+    //获取树根节点在中序遍历的位置
+    let curIndex = inorder.indexOf(preorder[0])
+    //前序遍历左子树  中序遍历左子树
+     cur.left =  buildTree(preorder.slice(1,curIndex+1),inorder.slice(0,curIndex))
+     cur.right =  buildTree(preorder.slice(curIndex+1),inorder.slice(curIndex+1))
+    return cur
+    };
+
+
+
+
+//不用加减乘除实现两数的和运算  位运算就是自动将数据转换为二进制数据进行运算
+//用到的运算符是   &   ^   <<
+var add = function(a, b) {
+    while(b){
+    //计算ab的共同的数据位置        是加法的进一位 运算     当ab的共同位置和不同位置与 运算的时候结果是0就可以退出循环条件
+        let c = (a&b)<<1
+        //ab的不同位置的获取   ab的共同位置和不同位置的共同组成了ab的和
+        a^=b
+        //b获取ab的共同位置
+        b=c
+    }
+    return a
+    };
+
+
+//返回 一个二进制数据中数字为1的个数
+var hammingWeight = function(n) {
+    let res =0
+    //0到31来依次遍历数位上的数据是不是1  是的话就返回res加1  最后返回结果
+    //用到的运算符是&   <<左移到相应的位数上面去比较
+for(var i =0;i < 32;i++){
+if(n&(1<<i)){
+    res++
+}
+}
+return res
+};
+
+
+//自己的幂函数的写法就是
+//考虑指数的正负
+var myPow = function(x, n) {
+    // 最后递归结果
+    // 递归要有最终条件
+   if(n===0)return 1 // n=0直接返回1
+   if(n<0){   				//n<0时 x的n次方等于1除以x的-n次方分 -n负负得正
+    //负数的指数只是比整数的指数多了一个被除以1的操作  而后就是使用整数的写法去计算值
+       return 1/myPow(x,-n)
+   }
+   if(n%2){    // n是奇数时 x的n次方 = x*x的n-1次方 ===>转化为偶数
+    //奇数的时候拉出一个原数据
+    //剩下的偶数个数的数据来循环乘数
+       return x*myPow(x,n-1)
+   }
+   //利用2分的原理      减少运算的次数不断的运算结果    最后是二分结束的时候接的返回数据相乘的结果来拉出数据
+   return myPow(x*x,n/2) // n是偶数，使用分治，一分为二，等于x*x的n/2次方 （x*x）的n/2次方
+}
+
+
+
+
+//遍历一个matrix    m*n   要求顺时针输出数据值
+var spiralOrder = function(matrix) {
+    //矩阵的 行 或者  列为0的时候就会返回[]
+    if (!matrix.length || !matrix[0].length) {
+        return [];
+    }
+    //matrix的初始行数  列数
+    const rows = matrix.length, columns = matrix[0].length;
+    //初始化一个二维数组的方式
+    const visited = new Array(rows).fill(0).map(() => new Array(columns).fill(false));
+    //二维数组总的数据的长度
+    const total = rows * columns;
+    //new  一个新的数组长度是total  添加初始值是0
+    const order = new Array(total).fill(0);
+    //一个方向性问题        顺时针的顺序就是右边  下边  左边  上边      myNum%4     来实现方向的转变
+    //directionIndex来记录行的数据   改变s二维数组的行数  来操作数组的走向问题
+    let directionIndex = 0, row = 0, column = 0;
+    //[0,1]代表就是行数不变     列数到最后一列的数据  其他数据成员的操作是一样的    来操作数据是 行变化还是列变化的
+    //这个二维数组的确立        二维数组的一行的 数据就两个  第一个来操作行数据的变化   第二个来操作列的数据变化
+    const directions = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+    //数据的放入的操作就是依次去循环放入数据   判断数据有没有被使用过  到没到达边界位置数据
+    for (let i = 0; i < total; i++) { 
+        //放入数据   row  column
+        order[i] = matrix[row][column];
+        //标记数据被使用过了
+        visited[row][column] = true;
+        //判断是下一行  还是下一列的数据变化了
+        const nextRow = row + directions[directionIndex][0], nextColumn = column + directions[directionIndex][1];
+        //得到了行列的数据来判断有无到达边界值
+        if (!(0 <= nextRow && nextRow < rows && 0 <= nextColumn && nextColumn < columns && !(visited[nextRow][nextColumn]))) {
+            //数据的变化总共就四个方向 的变化       用除余的操作来记录数据是怎样的变化
+            directionIndex = (directionIndex + 1) % 4;
+        }
+        row += directions[directionIndex][0];
+        column += directions[directionIndex][1];
+    }
+    return order;
+};
+
+
+
+
+
+//计算数组当中只出现一次 的数据
+//两个数据装换为二进制数据的时候就是相同的数据位置异或的结果是0
+//找出不同的数据位置的特点就是要  num1^num2&1  那么相同的位置&1的操作结果就是0===0  
+//然后标记一个数据长度来记录数据的长度变化      也即是有多少个相同的位置  直到找到数据不同的位置来计算数据
+ var singleNumbers = function(nums) {  
+    // 把结果保存到x，y中
+    var x = 0
+    var y = 0
+    
+    //根据异或的性质，的到异或结果，保存到res 
+    //两个相同 的数据异或的结果是0 
+    //那么最终的结果就是两个不同的数据的异或的结果
+    var res = 0
+    for (item of nums) {
+      res ^= item
+    }
+  
+    // 根据异或的结果，找出分组的位置，保存到l
+    var l = 0
+    //while循环的目的就是找出数据相同的位置做出相应的标记来记录数据
+    //l++来记录数据的循环的 次数的 问题
+    while ((res & 1) === 0) {
+      res = res >>> 1
+      l++
+    }
+    //然后遍历数组，根据l位置的不同分组，这样两个不同的数就会分到不同的组 
+    for (var i = 0; i < nums.length; i++) {
+        //找出数据不同的位置        一个数据的位置是0   一个数据的位置是1
+        //l标记了相同的数据的长度  有多长的数据长度     直接右移来剪掉相同的数据的位置  来比较不同的数据的位置
+      if ((nums[i] >> l) & 1) {
+        x ^= nums[i]
+      } else {
+        y ^= nums[i]
+      }
+    }
+  
+    // 得到最终结果
+    return [x, y]
+  };
+
+
+
+
+
+//数据的 标志就是有着三种情况去书写数据的取值范围、
+//数据在最开始  结尾位置   以及中间位置的取舍
+var singleNumber = function(nums) {
+    nums.sort((a,b)=>a-b)
+    let len = nums.length
+        for(var i = 0;i < len;i++){
+            if((nums[i]<nums[i+1]&&i===0)||(nums[i]>nums[i-1]&&i===len-1)||((nums[i]<nums[i+1])&&(nums[i]>nums[i-1])))
+            return nums[i]
+    
+        }
+    };
+
+
+//算法分析
+//对于32位数据的分析就是将数据转换为32位数据去处理数据
+var singleNumber = function(nums) {
+            let res = 0;
+            for (let i = 0; i < 32; i++) {
+                //32位数据的处理方式就是0---->32的处理的方式   记住就是32数据要处理完毕
+                // 对于int每一位
+                let  bit = 0;
+                // 计算该位上的和
+                for (let num of nums) {
+                    //对于没一个数据都要进行&1的操作来记录不同的数据在32位数据当中  在这一位数据有无占有相应的位置
+                    //如果占有相应的位置  那么就会触发相应的响应的条件就是      原先右移的数据将会重新左移来恢复数据的存储
+                    bit += ((num >> i) & 1);
+                }
+                // 对3取余即为res在该位的值
+                res += ((bit % 3) << i);
+            }
+            return res;
+        }
+    
+    

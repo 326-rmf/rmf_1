@@ -13,6 +13,11 @@ body
 font-size:70%;
 font-family:verdana,helvetica,arial,sans-serif;
 }
+
+#textArea1{
+
+    color:orange
+}
     </style>
 </head>
 <body>
@@ -49,9 +54,15 @@ font-family:verdana,helvetica,arial,sans-serif;
     <div id="div_1" ></div>
     <iframe width="500" height="500" name="iframe_a"></iframe>
 <p><a href="http://www.w3school.com.cn" target="iframe_a">W3School.com.cn</a></p>
-    
+<input type="text" value="alertOk" id="alertInput" class="inputClass1">
+    <button onclick="alertOk()">alertOk</button>
+    <textarea name="" id="textArea1" cols="30" rows="10">
+
+    </textarea>
+    <button id="button2" onclick="textArea()">textArea</button>
 </body>
 </html>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 <script type="text/javascript">
     var ok = document.getElementById("ok")
     var ok1 = document.getElementById("ok1")
@@ -60,13 +71,26 @@ font-family:verdana,helvetica,arial,sans-serif;
     cxt.fillStyle="#000000"
     cxt1.fillStyle="#000000"
     cxt.fillRect(0,0,150,75)
-ctx1.arc(50,50,50)
+cxt1.arc(50,50,50)
 function findIndex(e){
 var x = e.clientX
 var y = e.clientY
 document.getElementById('div_1').innerHTML = '坐标:'+x+'  '+y
 
 }
-    
+let alertInput = document.getElementById('alertInput')
+function alertOk(){
+
+    // alert(document.getElementById('alertInput').value)
+    // alert($('#alertInput').val())
+    alert($('.inputClass1').val())
+}
+function textArea(){
+
+    // alert($('#textArea1').val())
+    var text = document.getElementById('textArea1').value
+    alert(text)
+}
+
     </script>
     
