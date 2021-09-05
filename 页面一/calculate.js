@@ -2204,3 +2204,222 @@ var singleNumber = function(nums) {
         }
     
     
+
+//记录一个数组当中数据的长度就是
+//用一个对象来记录key    value  
+//最后来比较value 的值的大小
+//当然也可以使用map函数来遍历数组  更快的速度
+var majorityElement = function(nums) {
+    let len = nums.length
+    if(len<=2)return nums[0]
+    let res = {}
+    nums.map((item,index)=>{
+        if(!res[item])res[item]=1
+        else res[item]+=1
+        })
+    // for(let num of nums){
+    // if(!res[num])res[num]=1
+    // else res[num]+=1
+    // }
+    for( const resNum in res){
+        if(res[resNum]>=Math.ceil(len/2))
+        return resNum
+    }
+    
+    };
+
+
+
+
+    var constructArr = function(a) {
+        let res = []
+        a.map((item1,index1)=>{
+            let sum = 1
+            a.map((item2,index2)=>{
+                if(index1!=index2){
+                    sum*=item2
+                }
+            })
+            res.push(sum)
+        })
+        return res
+        };
+
+
+            var constructArr = function(a) {
+                // 边界条件判断
+                    if (a == null || a.length == 0){
+                        return a
+                    }
+                    let  length = a.length;
+                    // 每个元素左边所有元素的乘积
+                    let resLeft = [];
+                    // 每个元素右边所有元素的乘积
+                    let resRight = [];
+                    // base case
+                    resLeft[0] = 1;
+                    resRight[length - 1] = 1;
+                    for (let  i = 1; i < length; i++) {
+                    // 状态转移方程 resLeft[i]表示 当前元素左边的所有元素乘积（不包含当前元素）
+                    // resLeft[i - 1]不包括a[i - 1] 乘以✖️a[i-1]就表示当前 resLeft[i]
+                        resLeft[i] = resLeft[i - 1] * a[i - 1];
+                    }
+                    // 当前元素右边的所有元素乘积（不包含当前元素）
+                    for (let  i = length - 2; i >= 0; i--) {
+                        resRight[i] = resRight[i + 1] * a[i + 1];
+                    }
+                    //左边乘以右边就是我们要求的结果
+                    let  res =  [];
+                    for (let  i = 0; i < length; i++) {
+                        res[i] = resLeft[i] * resRight[i];
+                    }
+                    return res;
+                };
+            
+
+//螺旋矩阵
+//方向的问题就是左到右   上到下     右到左   下到上
+//数据循环交叉
+var spiralOrder = function(matrix) {
+    let row = matrix.length
+    let col = matrix[0].length
+    let t = 0
+    let b = row - 1
+    let l = 0
+    let r = col - 1
+    //找出总的数据的个数
+    let sum = row * col
+    let res = []
+    //数据个数没有达标的情况
+    while(sum!==res.length){
+        //从左到右
+        for(let i = l;i <= r;i++){
+            res.push(matrix[t][i])
+        }
+        //下一次左到右的时候是从下一行开始  变换行数  既方便了下一次相同的变化  也方便了下次的遍历
+        t++
+        for(let i = t;i <= b;i++){
+            res.push(matrix[i][r])
+        }
+        //下一次上到下的时候是从倒数第二列开始
+        r--
+        if(res.length === sum)return res
+        for(let i = r;i >= l;i--){
+            res.push(matrix[b][i])
+        }
+        //下一次右到左的时候行数变化了
+        b--
+        for(let i = b;i >= t;i--){
+            res.push(matrix[i][l])
+        }
+        //下一次下到上的时候 列数变化了
+        l++
+    }
+    return res
+    }
+
+
+
+//数据模仿进栈出栈的操作
+var validateStackSequences = function(pushed, popped) {
+    let arr = []
+    let i = 0
+    pushed.forEach((item,index)=>{
+        arr.push(item)
+        //进栈的时候        长度大于0并且就是按可以按照出栈的顺序出栈
+        //栈就是先进后出        后进先出
+        while(arr.length>0&&arr[arr.length-1]===popped[i]){
+            arr.pop()
+            i++
+        }
+    })
+    return arr.length>0?false:true
+    }
+
+
+
+//匹配转换的数组
+var strToInt = function(str) {
+//正则既是正负号开头        数字结尾
+    str = str.trim().match(/^[+-]?\d+/)
+    let max = Math.max((-2)**31,str)
+    let min = Math.min(2**31-1,max)
+    return min
+    
+    
+    };
+
+
+//滑动窗口就是分为左边和右边        来记录合适的窗口
+//过了就缩小左边        少了就扩大右边
+    var findContinuousSequence = function(target) {
+        let l=1
+        let r=2
+        let sum = 3
+        let res=[]
+        // 滑动窗口框架
+        while(l<r){
+            if(sum===target){
+                let ans =[]
+                for(let k=l;k<=r;k++){
+                    ans[k-l]=k
+                }
+                res.push(ans)
+                // 等于的情况 我们可以继续窗口往右搜索 同时缩小左边的
+                 sum=sum-l
+                 l++
+            } else if(sum>target){
+                // 大于的条件 缩小窗口 sum已经加过了
+                sum=sum-l
+                l++
+            } else {
+                // 小于的情况 滑动窗口继续扩大
+                r++
+                sum=sum+r
+            }
+        }
+        return res
+    };
+    
+//字符的全排列就是深度优先算法
+var permutation = function(s) {
+    let len = s.length
+let res = []
+let visited = []
+function dfs(path){
+if(len === path.length)return res.push(path)
+for(var i = 0;i < len;i++){
+    //dfs每一层都有一个for循环去输出遍历    实现了全排列
+    if(visited[i])continue
+    visited[i]=true
+    dfs(path+s[i])
+    //使用完成之后标记为 没有使用过
+    visited[i]=false
+}
+}
+dfs('')
+return [...new Set(res)]
+};
+
+
+
+//字符串数据的二进制计算
+//用到了BigInt()函数来接收字符串        并且转换二进制数据      
+//最后是转换为二进制数据        并且是字符串形式
+//toString(2)
+//二进制数据是0b
+// return (BigInt('0b' + a) + BigInt('0b' + b)).toString(2)
+    
+
+//位运算就是
+//二进制数据的规律就是  
+//奇数的二进制数据的1的个数是前面一个数据 的1的个数加上1
+//偶数 的1的个数    是右移一位的数据的1的个数
+var countBits = function(n) {
+    const dp = new Array(n + 1);
+    dp[0] = 0;
+    for (let i = 1; i <= n; i++) {
+        dp[i] = i % 2 ? dp[i - 1] + 1 : dp[i >> 1];
+    }
+    return dp;
+};

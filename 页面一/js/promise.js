@@ -184,3 +184,27 @@ static rejectDelay = function (reason,time){
     }
     window.Promise = Promise
 })(window)
+
+
+// static all = function(promises){
+//     //返回promise对象
+//     return new Promise((res,rej)=>{
+//     //记录数据promise成功的个数
+//     let resolveCount = 0
+//     //装promise成功的状态数组
+//     const values = new Array(promises.length)
+//     //每一个promise来循环遍历一下  查看promise是成功状态还是失败状态
+//     promises.forEach((p,index)=>{
+//     p.then(value =>{
+//     resolveCount++
+//     values[index]=value
+//     if(resolveCount === promises.length){
+//     resolve(values)}
+//     },
+//     reason=>reject(reason)
+//     )
+    
+//     })
+//     })
+//     }
+    

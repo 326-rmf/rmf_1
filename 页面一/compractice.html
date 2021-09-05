@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice</title>
+    <script type="text/javascript" src="./js/vue.js"></script>
+
+</head>
+<body>
+    <div id="app">   
+        <button
+        v-for="selectedbutton in selectionButtons"
+        v-bind:key='selectedbutton'
+        v-on:click='selected = selectedbutton'
+        >
+        {{ selectedbutton }}
+        </button>
+        <keep-alive>
+        <component :is='selectContent' > </component>  
+        </keep-alive>
+    </div>
+    
+    <script type="text/javascript">
+        Vue.component('tab-posts',{
+        data:function(){
+            return{
+            posts:[
+                {id:1,text:'1 content show you'},
+                {id:2,text:'2 content show you'},
+                {id:3,text:'3 content show you'},
+                {id:4,text:'4 content show you'},
+            ],
+            selectedpost:null
+            }
+        },
+        template:`
+            <div>
+            <ul>
+                <li
+                v-for='post in posts'
+                :key='post.id'
+                v-on:click='selectedpost = post'
+                >
+                   {{post.id}}
+                </li>
+            </ul> 
+            <div
+            v-if='selectedpost'
+            >
+            <h1>{{selectedpost.id}}</h1>    
+            <p>{{selectedpost.text}}</p>   
+            </div>
+            </div>
+        `
+        })
+        Vue.component('tab-archive',{
+        template:`
+        <div>
+        <p>Archive Content</p>    
+        </div>
+        `
+        
+        })
+        new Vue({
+            el:'#app',
+            data:{
+                selected:"Posts",
+                selectionButtons:['Posts','Archive']
+            },
+            computed:{
+                selectContent:function(){
+                return 'tab-' + this.selected.toLowerCase()
+                }
+            }
+        })
+        
+        </script>
+</body>
+</html>

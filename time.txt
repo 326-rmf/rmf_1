@@ -13,6 +13,7 @@
 113   		3.46		MVVM分析解剖	库的嵌套调用可以再看一下	没看懂	但是主要说的是数据处理的流程	处理的思维就是调用内部定义的函数来实现数据绑定和处理
 114 		2.30		MVVM数据解析	没看懂
 
+
 116		2.39		外卖项目从这个时间点开始就没看了
 
 
@@ -157,3 +158,49 @@ dom的api	有顺序的ajax请求		fetch&&ajax
 
 
 
+/**
+ * @param {number} target
+ * @return {number[][]}
+ */
+// 没有参照物数组 但是可以根据下标
+// 滑动窗口（双指针）
+var findContinuousSequence = function(target) {
+    let l=1
+    let r=2
+    let sum = 3
+    let res=[]
+    // 滑动窗口框架
+    while(l<r){
+        if(sum===target){
+            let ans =[]
+            for(let k=l;k<=r;k++){
+                ans[k-l]=k
+            }
+            res.push(ans)
+            // 等于的情况 我们可以继续窗口往右搜索 同时缩小左边的
+             sum=sum-l
+             l++
+        } else if(sum>target){
+            // 大于的条件 缩小窗口 sum已经加过了
+            sum=sum-l
+            l++
+        } else {
+            // 小于的情况 滑动窗口继续扩大
+            r++
+            sum=sum+r
+        }
+    }
+    return res
+};
+
+
+
+百度招聘
+https://talent.baidu.com/external/baidu/campus.html
+9.10
+
+
+https://rmf-web-1-8gp3wim9d7222096-1306744005.ap-shanghai.app.tcloudbase.com
+
+
+ return (BigInt('0b' + a) + BigInt('0b' + b)).toString(2)

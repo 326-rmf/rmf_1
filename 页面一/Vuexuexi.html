@@ -47,19 +47,25 @@
                 transform: scale(1);
             }
         }
+
+        #div_1 {
+            border: 1px solid black;
+            height: 200px;
+            width: 200px;
+        }
     </style>
 </head>
 
 <body>
     <div id="demo">
 
-<!-- 测试自定以组件开始 -->
-<button-counter></button-counter>
+        <!-- 测试自定以组件开始 -->
+        <button-counter></button-counter>
 
 
 
 
-<!-- 测试自定以组件结束 -->
+        <!-- 测试自定以组件结束 -->
 
 
 
@@ -74,8 +80,8 @@
 
 
         <!-- 自定义指令开始 -->
-        <p v-upper-text= "zdmsg"></p>
-        <p v-lower-text= "zdmsg"></p>
+        <p v-upper-text="zdmsg"></p>
+        <p v-lower-text="zdmsg"></p>
 
         <!-- 自定义指令结束 -->
 
@@ -196,8 +202,8 @@
             <!-- v-for循环的时候key值不可忘记添加 -->
             <option v-for="(item,index) in users.allCitys" :key="item.id" :value="item.id">
                 {{item.name}}
-            </option><br/>
-        </select><br/>
+            </option><br />
+        </select><br />
         <textarea name="" id="" cols="30" rows="10" v-model="users.info">
         </textarea><br />
         <!-- input的submit类型标识了变为提交按钮    添加方法 -->
@@ -212,8 +218,63 @@
         <p v-show="isShow" ref="content">{{isShow?'RMF':'rmf'}}</p> -->
         <!-- 文本若隐若现展示 结束-->
 
+        <button v-on:click="alertU">alertU</button>
+        <button v-on:click="alertU1('ooooook')">alertU1</button>
+        <button v-on:click="alertU2($event)">alertU2</button>
+        <!-- <div v-on:click.alt='changeColor' id="div_1"></div> -->
+        <!-- <div v-on:click.shift='changeColor' id="div_1"></div> -->
+        <div v-on:click.ctrl.exact='changeColor' id="div_1"></div>
+        <textarea name="" id="" cols="30" rows="10" v-model='msg'></textarea>
+        <p>{{msg}}</p>
+        <input type="checkbox" v-model='checked' id="rmfBox" value='rmfBox'>
+        <label for='rmfBox'>disOr</label>
+        <span>checked:{{checked}}</span>
+        <br>
+        <input type="radio" name="" id="label2" value="rmfBox2" v-model='checked2'>
+        <label for="label2">label2</label>
+        <p>checked2:{{checked2}}</p>
+        <br>
+        <select name="" id="" v-model='checked3'>
+            <option value="a">A</option>
+            <option value="b">B</option>
+            <option value="c">C</option>
+        </select>
+        <br>
+        <p>checked3:{{checked3}}</p>
+        <br>
+        <select name="" id="" v-model='selected'>
+            <option v-for='item in checked4'>{{item.key}}</option>
+        </select>
+        <p>checked4:{{selected}}</p>
+        <rmfok></rmfok>
+        <button-counter></button-counter>
+        <rmf1 name='okok' age=12></rmf1>
+        <div :style="{fontSize:changeFontSize+'em'}">
+            <rmf2 v-for='postitem in post' :post='postitem' :key='postitem.id' v-on:enlarge-text='changeFontSize+=1'
+                v-on:unenlarge-text='changeFontSize-=1' v-on:zhidingchange='changeFontSize+=$event'>
 
+            </rmf2>
 
+        </div>
+        <!-- <p>{{comupp}}</p> -->
+        <rmf-rmf1 :comupp='datacomupp'></rmf-rmf1>
+        <base-input v-bind:value.sync='rmfNum1'></base-input>
+        <p>{{rmfNum1}}</p>
+
+        <rmf-slot-com :rmfxwq='rmfdata' :msg1='msg'>
+            <!-- <h1>rmf</h1>
+            <h2>rmf</h2>
+            <h3>rmf</h3> -->
+        </rmf-slot-com>
+        <rmf-slot-com inline-template>
+            <div>
+                <h1>rmf</h1>
+                <span>okok</span>
+            </div>
+        </rmf-slot-com>
+        <rmfok1 v-bind:rmfok1prop1='rmfok1prop1' v-slot="{ rmfok1prop1 }">{{ rmfok1prop1 }}</rmfok1>
+        <p v-uprmf='500'>uprmffixed</p>
+        <p v-uprmf2:[direction]='500'>uprmffixed</p>
     </div>
     <script type="text/javascript" src="./js/vue.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.1/moment.js"></script>
@@ -221,39 +282,137 @@
     <script type="text/javascript">
 
 
-
         // 自定义一个新的组件开始
         //组件的定义必须先于实力化引入
         Vue.component('button-counter', {
             data: function () {
                 return {
-                count: 0
+                    count: 0
                 }
             },
             template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
-            })
+        })
 
+        Vue.component('rmf-slot-com', {
+            props: ['rmfxwq', 'msg1'],
+            template: `
+            <div>
+            <p>{{rmfxwq}}</p>
+            <slot v-bind:msg1='msg1'>{{msg1}}</slot>
+            </div>
+            `
+        })
 
-            Vue.component('blog-post',{
-                props:['title'],//声明接收属性
-                template:'<h3>{{title}}</h3>'
-            })
+        Vue.directive('uprmf', {
+            bind: function (el, binding) {
+                el.style.position = 'fixed'
+                el.style.left = binding.value + 'px'
+                el.style.top = binding.value + 'px'
+            }
+        });
+        Vue.directive('uprmf2', {
+            bind: function (el, binding, vnode) {
+                el.style.position = 'fixed'
+                var s = (binding.arg == 'left' ? 'left' : 'top')
+                el.style[s] = binding.value + 'px'
+            }
+        })
 
+        Vue.component('base-input', {
+            inheritAttrs: false,
+            props: ['label', 'value'],
+            computed: {
+                inputListeners: function () {
+                    var vm = this
+                    // `Object.assign` 将所有的对象合并为一个新对象
+                    return Object.assign({},
+                        // 我们从父级添加所有的监听器       父级用到的 是this
+                        this.$listeners,
+                        // 然后我们添加自定义监听器，
+                        // 或覆写一些监听器的行为
+                        {
+                            // 这里确保组件配合 `v-model` 的工作
+                            input: function (event) {
+                                vm.$emit('input', event.target.value)
+                            }
+                        }
+                    )
+                }
+            },
+            template: `
+            <label>
+            {{ label }}
+            <input
+                v-bind="$attrs"
+                v-bind:value="value"
+                v-on="inputListeners"
+            >
+            </label>
+        `
+        })
+        Vue.component('blog-post', {
+            props: ['title'],//声明接收属性
+            template: '<h3>{{title}}</h3>'
+        })
 
-            
+        Vue.component('rmf1', {
+            props: ['name', 'age'],
+            template: '<div><p>{{name}}</p><button>{{age}}</button></div>'
+        })
+
         // 自定义一个新的组件结束
 
+        Vue.component('rmf2', {
+            props: ['post'],
 
+            template: `<div><span>{{post.id}}</span>
+    <button v-on:click="$emit('enlarge-text')">changeFontSize</button>
+    <button v-on:click="$emit('unenlarge-text')">smallchangeFontSize</button>
+    <button v-on:click="$emit('zhidingchange',0.2)">zhidingchange</button>
+                
+                <div>`
+        })
 
+        Vue.component('rmfok', {
+            data: function () {
+                return {
+                    count1: 0
+                }
+            },
+            template: '<button v-on:click="count1++">click {{ count1 }} times</button>'
+        })
+        Vue.component('rmf-rmf1', {
+            props: ['comupp'],
+            computed: {
+                datacomuppfun: function () {
+                    return this.comupp.toUpperCase()
+                }
+            },
+            template: '<div><p>{{datacomuppfun}}</p><p>{{comupp}}</p></div>'
 
-    //自定义 全局指令开始   没有在Vue实例里面定义
-        Vue.directive('upper-text',function(el,binding){
+        })
+
+        //自定义 全局指令开始   没有在Vue实例里面定义
+        Vue.directive('upper-text', function (el, binding) {
             //el是指令属性所在的标签元素对象    标签
             //binding是包含指令相关信息数据的对象   指令对象
             el.innerText = binding.value.toUpperCase()
         })
-    //自定义 全局指令结束
+        //自定义 全局指令结束
 
+
+        Vue.component('rmfok1', {
+            props: ['rmfok1prop1'],
+            template: `
+            <div>
+                <p>{{rmfok1prop1}}</p>
+                <slot v-bind:rmfok1prop1='rmfok1prop1'></slot>
+                </div>
+            `
+        })
+
+
+        // Vue.config.keyCodes.Ctrl = 326
 
 
 
@@ -301,8 +460,23 @@
                 show2: true,
                 startTime: Date.now() - 10000,
                 testwenben: '<a href="https://www.baidu.com">去学习</a>',
-                zdmsg:"zDmSg",
-
+                zdmsg: "zDmSg",
+                count: 0,
+                checked: [],
+                checked2: {},
+                checked3: [],
+                checked4: [
+                    { key: 'one', value: 'One' },
+                    { key: 'two', value: 'Two' },
+                    { key: 'three', value: 'Three' }
+                ],
+                selected: 'two',
+                datacomupp: 'rmf-rmf1-okokokokokok',
+                changeFontSize: 1,
+                rmfNum1: 100326,
+                rmfdata: 'rmfdata',
+                rmfok1prop1: 'rmfok1prop1data',
+                direction:'top',
 
 
 
@@ -327,10 +501,15 @@
                     { id: 5, name: 'Ra', age: 16 },
                     { id: 4, name: 'xd', age: 20 }
                 ],
-                zujiandata:[
-                    {id:1,title:'my vue1'},
-                    {id:2,title:'my vue2'},
-                    {id:3,title:'my vue3'}
+                zujiandata: [
+                    { id: 1, title: 'my vue1' },
+                    { id: 2, title: 'my vue2' },
+                    { id: 3, title: 'my vue3' }
+                ],
+                post: [
+                    { id: 1, content: 'rm1' },
+                    { id: 2, content: 'rm2' },
+                    { id: 3, content: 'rm3' }
                 ]
 
             },
@@ -338,6 +517,22 @@
 
             //methods方法区域
             methods: {
+                // onFocus(){
+                //     alert('1')
+                // },
+                changeColor() {
+                    alert('1')
+                },
+                alertU2(event) {
+                    // if(event)event.preventDefault()
+                    alert(count)
+                },
+                alertU(e) {
+                    alert(event.target.tagName)
+                },
+                alertU1(e) {
+                    alert(e)
+                },
                 changeCol() {
                     this.hasA = !this.hasA
                     this.myCol = 'red'
@@ -362,9 +557,13 @@
 
             //计算属性区域
             computed: {
+                // comupp(){
+                //     return this.datacomupp.toUpperCase()
+                // }
+                // ,
                 fullName1() {
                     // console.log(this)
-                    return this.firstName + '-' + this.lastName
+                    return this.firstName.toUpperCase() + '-' + this.lastName.toUpperCase()
                 },
                 fullName2: {
                     get() {//计算产生显示的值
@@ -454,8 +653,8 @@
 
 
             //局部指令定义开始      在Vue实例里面定义
-            directives:{
-                'lower-text' (el,binding){
+            directives: {
+                'lower-text'(el, binding) {
                     //lower-text有特殊字符 '-'  那么加上'' 否则报错
                     el.innerText = binding.value.toLowerCase()
                 }
@@ -465,7 +664,7 @@
 
 
         })
-        
+
 
 
 
@@ -483,7 +682,7 @@
 
 
 
-       
+
 
 
 
