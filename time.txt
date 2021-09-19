@@ -17,6 +17,8 @@
 116		2.39		外卖项目从这个时间点开始就没看了
 
 
+p21		7.54
+
 "start":"react-app-rewired start",
 "build":"react-app-rewired build",
 "test":"react-app-rewired test",
@@ -51,6 +53,14 @@ export default class Login extends Component {
 https://blog.csdn.net/weixin_42757413/article/details/106396750
 链接：https://pan.baidu.com/s/1_cg5GjpjHPRGUSw28z89Yw
 提取码：9mzs
+
+sqlserver密码
+123456rmf
+
+
+
+insert into dbo.rmfUser(userName,passWord) values (33,123244)
+
 
 
 326-rmf.github.io
@@ -158,42 +168,7 @@ dom的api	有顺序的ajax请求		fetch&&ajax
 
 
 
-/**
- * @param {number} target
- * @return {number[][]}
- */
-// 没有参照物数组 但是可以根据下标
-// 滑动窗口（双指针）
-var findContinuousSequence = function(target) {
-    let l=1
-    let r=2
-    let sum = 3
-    let res=[]
-    // 滑动窗口框架
-    while(l<r){
-        if(sum===target){
-            let ans =[]
-            for(let k=l;k<=r;k++){
-                ans[k-l]=k
-            }
-            res.push(ans)
-            // 等于的情况 我们可以继续窗口往右搜索 同时缩小左边的
-             sum=sum-l
-             l++
-        } else if(sum>target){
-            // 大于的条件 缩小窗口 sum已经加过了
-            sum=sum-l
-            l++
-        } else {
-            // 小于的情况 滑动窗口继续扩大
-            r++
-            sum=sum+r
-        }
-    }
-    return res
-};
-
-
+/
 
 百度招聘
 https://talent.baidu.com/external/baidu/campus.html
@@ -203,4 +178,117 @@ https://talent.baidu.com/external/baidu/campus.html
 https://rmf-web-1-8gp3wim9d7222096-1306744005.ap-shanghai.app.tcloudbase.com
 
 
- return (BigInt('0b' + a) + BigInt('0b' + b)).toString(2)
+
+
+
+
+//bind
+Function.prototype.myBind = function(obj){
+if(typeof this !== 'function'){
+throw new Error('Function.prototype error-what is tring to be bound')
+}
+var _this = this
+var fn = function(){}
+var objArgs = Array.prototype.slice.call(arguments,1)
+var bound = function(){
+let boundArgs =  Array.prototype.slice.call(arguments)
+return _this.apply(this.constructor === _this ? this:obj,objArgs.concat(boundArgs))
+}
+fn.prototype = this.prototype
+bound.rototype = new fn()
+return bound
+}
+//栈实现队列
+let stack1 = []
+let stack2 = []
+function pop(){
+if(stack2.length === 0){
+while(stack1.length)
+stack2.push(stack1.pop())
+}
+return stack2.pop()
+}
+function push(node){
+while(stack2.length){
+stack1.push(stack2.pop())
+}
+stack1.push(node)
+}
+//队列实现栈
+var myQueue = function(){var stack = []}
+myQueue.prototype.add = function(node){this.stack.push(node)}
+myQueue.prototype.poll = function(){
+var temp = []
+while(stack.length)temp.push(stack.pop())
+let res = temp.pop()
+while(temp.length)stack.push(temp.pop())
+return res
+}
+//indexOf函数的实现
+function myIndexOf(str1,str2,n){
+let len1 = str1.length
+let len2 = str2.length
+let i = 0
+if(n <= -1|| n === undefined || n === null){
+i = 0
+}else if(n > len2){
+return -1
+}else{
+i = n
+}
+if(len1 > len2)return -1
+for(var j = i;j < len2 - len1 + 1;j++){
+let target = str2.substr(j,len1)
+if(str1 === target)return j
+}
+return -1
+}
+
+
+//定时器的创建和清除	setInterval		setTimeout
+function b(){
+let timer = setInterval(()=>{
+//...doSomething
+clearInterval(timer)
+b()
+},50)
+}
+b()
+
+
+function b(time){
+return function c(){
+clearTimeout(timer)
+var timer = setTimeout(()=>{
+console.log(this)
+c()
+},time)
+}
+}
+b(500)()
+
+
+
+var flatten = function(root) {
+    const list = [];
+    preorderTraversal(root, list);
+    const size = list.length;
+    for (let i = 1; i < size; i++) {
+        const prev = list[i - 1], curr = list[i];
+        prev.left = null;
+        prev.right = curr;
+    }
+};
+
+const preorderTraversal = (root, list) => {
+    if (root != null) {
+        list.push(root);
+        preorderTraversal(root.left, list);
+        preorderTraversal(root.right, list);
+    }
+}
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/flatten-binary-tree-to-linked-list/solution/er-cha-shu-zhan-kai-wei-lian-biao-by-leetcode-solu/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。

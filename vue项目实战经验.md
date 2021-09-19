@@ -125,3 +125,77 @@
 	-	changeTheme(){
       document.getElementsByTagName('body')[0].className = this.currentTheme
     }
+-	忘记在app.vue里面添加	router-view
+-	页面加载不出来
+##	new RegExp(str)------->字面量正则变为了真正的正则表达式
+##	axios解决跨域问题
+-	vue.config.js		配置devServer:{proxy:{}}
+-	axios异步请求
+##	promise		async使用场景
+-	先来了解以下作用域
+-	function fn(){var a = 10}		fn()		console.log(a)		-->a is not defined		a不可跨函数
+-	var temp = null; function fn(){var a = 10;temp = a;}		fn();		console.log(temp)		-->可以拿到a的值		a
+-	var temp = null; function fn(){setTimeout(()=>{var a = 10;temp = a;})}		fn();		console.log(temp)		-->不可以拿到a的值		因为setTimeout是异步的 		那么先执行了console.log(temp)
+-	那么涉及到了**异步操作导出数据的方法**
+-	**callback**
+-	function fn(callback){setTimeout(()=>{var a = 10;callback(a)})}		a被callback抛出去了
+-	fn(function(a){console.log(a)})		fn里面有一个callback来获取抛出的数据		匿名函数接住了callback
+-	**promise**
+-	function fn(){
+	return new Promise((resolve,reject)=>{
+	setTimeout(()=>{
+		var a = 10
+		resolve(a)
+	})
+	})	}	
+	export default fn//记得暴露fn
+-	组件使用fn的操作
+-	fn().then((a)=>{console.log(a)})
+##	promsie 和async 的区别
+-	代码要封装处理的时候		用promise
+-	代码异步操作		通常await后面是一个promise的结果
+-	async function fn(){const res = await new Promise(()=>{})}//可以得到异步的数据res		用来处理
+##	vue-cli项目使用less		版本太高了		使用错误
+-	npm i less less-loader		
+-	less-loader@6.0.0
+##	div:nth-child(3){}
+-	伪类选择器设置属性
+##	localStorage.setItem()
+-	是向本地存储	存储数据
+-	getItem()		是向本地存储取出数据
+-	参数的设置		是res还是response		自己看清楚
+-	localStorage.setItem()		设置之后	是在application里面查看数据		开发者工具里面的application
+-	跳转之后		可以从localStorage里面取得存储的数据
+-	用到了created函数		进入页面调用了函数		做一些初始化处理
+-	created函数	里面使用methods里面的定义的函数功能		做一些拿取数据的操作		来完成页面数据的完整		
+-	发送一些		请求		用到了async await
+-	localStorage.getItem('')//setItem的时候设置的属性的名称			拿取 的时候	就用同样的名称
+-	localStorage.setItem('id',respones.data)		&& 	localStorage.getItem('id')
+-	id被存入的缓存		可以在页面设计 的时候来拿去	设置 的数据		这样异步获取的数据有了相应的作用
+-	在开发者工具		里面的application里面设置localStorage里面的属性的值		这样后端没有限制的情况		可能获取非本人的数据
+-	这样就必须要用到校验身份 的设置		一个是token
+-	token的使用用于造假信息的验证		保障了用户数据的安全		完成了网站的安全的设置要求
+-	用到token 的时候涉及到了请求头的使用限制
+-	利用请求头来发送token		headers:{}
+-	headers:{'Authorization':'后端要求的内容书写'+localStorage.getItem('token')}
+-	这样可以完成数据的校验任务		用户身份的验证就是发送请求头的时候		和服务端对接一下token是不是一样的数据
+-	是的话就会完成校验任务		允许用户通过		否则用户身份信息验证失败		导致验证失败	无法进一步获取数据
+-	后端验证token的方法是
+-	const token = String(req.headers.authorization || '').split(' ').pop()-->要么有token		要么直接返回空字符串
+-	后端拿到token 	来进行if验证		是否含有
+-	if()		后台验证token 		符合规则返回相应的数据		否则不返回数据
+-	用async		await 来接收请求的异步数据		async function f(){const res = await axios.get('url',{})}
+-	axios.defaults.baseURL = '基本相同的请求的URL的相同的部分'
+-	response.setHeader('Access-Control-Allow-Origin',*)
+-	response.setHeader("Access-Control-Allow-Headers", "Authorization");
+-	服务端设置响应头允许响应头带有Authorization
+-	
+##	axios的请求拦截器
+-	
+##	router.beforeEach((to,from,next)=>{
+	if(localStorage.getItem('token'))
+	next()
+	return
+	})
+-	router.beforeEach()是针对所有路由的		这样不合适
+-	是路由导航守卫

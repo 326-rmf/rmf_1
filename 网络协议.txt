@@ -21,3 +21,5 @@ HTTP是一个属于应用层的面向对象的协议，由于其简捷、快速�
 			Content-encoding: gzid
 空行
 体			<html>...</html>
+
+

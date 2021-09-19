@@ -2423,3 +2423,365 @@ var countBits = function(n) {
     }
     return dp;
 };
+
+
+
+//贪心算法      跳跃游戏就是求可以到达的最大的距离
+var canJump = function(nums) {
+    let len = nums.length
+    if(len === 1)return true
+    let num = 0
+    //i<=num        说明可以达到的距离是受到每一步 的限制的
+    for(var i = 0;i <= num;i++){
+    num = Math.max(num,i+nums[i])
+    if(num >= len-1)return true
+    }
+    return false
+    };
+
+
+//百度算法      计算优质奶牛
+let t  = parseInt(readline());
+while (t) {
+  const arr = [];
+  let n, m;
+  const line1 = readline();
+  n = parseInt(line1.split(' ')[0]);
+  m = parseInt(line1.split(' ')[1]);
+  let cur = m;
+  while (cur) {
+    let k = parseInt(readline());
+    let tempArr = (new Array(n+1)).fill(0);
+    while (k) {
+      const line2 = readline();
+      const left = parseInt(line2.split(' ')[0]);
+      const right = parseInt(line2.split(' ')[1]);
+      for (let i = left; i <= right; i++) {
+        tempArr[i] = 1;
+      }
+      k--;
+    }
+    arr.push(tempArr);
+    cur--;
+  }
+  const res = [];
+  for (let i = 1; i <= n; i++) {
+    let flag = 1;
+    for (let j = 0; j < m; j++) {
+      if (arr[j][i] == 0) {
+        flag = 0;
+      }
+    }
+    if (flag) {
+      res.push(i);
+    }
+  }
+  print(res.length);
+  print(res.join(' '));
+  t--;
+}
+
+
+
+//二维数组的排序就是加上第一个索引的值  这样来进行排序
+//放入数组的数据一直都是前面一个数据       
+//前面一个数据放进去    之后        前面的数据应该变为现在的没有放入数据
+var merge = function (intervals) {
+    intervals.sort((a, b) => a[0] - b[0]);
+    let prev = intervals[0]
+    let result = []
+    for(let i =0; i<intervals.length; i++){
+        let cur = intervals[i]
+        if(cur[0] > prev[1]){
+            result.push(prev)
+            prev = cur
+        }else{
+            prev[1] = Math.max(cur[1],prev[1])
+        }
+    }
+    //最后记得放入没有放入的数据
+    result.push(prev)
+    return result
+};
+
+
+
+//
+var generateMatrix = function(n) {
+    let total = n**2
+    let t = 0
+    let r = n - 1
+    let b = n - 1
+    let l = 0
+    let res = new Array(n).fill(0).map(() => new Array(n).fill(0))
+    let count = 1
+    while(count <= total){
+    for(let i = l;i <= r;i++){
+        res[t][i] = count
+        count++
+    }
+    t++
+    for(let i = t;i <= b;i++){
+        res[i][r] = count
+        count++
+    }
+    r--
+    for(let i = r;i >= l;i--){
+        res[b][i] = count
+        count++
+    }
+    b--
+    for(let i = b;i >= t;i--){
+        res[i][l] = count
+        count++
+    }
+    l++
+    }
+    return res
+    };
+
+
+
+//路径的匹配就是使用数组来取出特定的分隔符
+//遇到符号记得相应的操作
+var simplifyPath = function(path) {
+    const dir = path.split('/'), stack = []
+    for (const i of dir) {
+        if (i === '.' || i === '') continue
+        if (i === '..') {
+            stack.length > 0 ? stack.pop() : null
+            continue
+        }
+        stack.push(i)
+    }
+    return '/' + stack.join('/')
+    }
+
+
+
+//链表的整体移动
+//先将给定的链表连接成环，然后将指定位置断开
+//特殊情况是  0     1       
+var rotateRight = function(head, k) {
+    if (k === 0 || !head || !head.next) {
+        return head;
+    }
+    let n = 1;
+    let cur = head;
+    while (cur.next) {
+        cur = cur.next;
+        n++;
+    }
+    let add = n - k % n;
+    if (add === n) {
+        return head;
+    }
+    cur.next = head;
+    while (add) {
+        cur = cur.next;
+        add--;
+    }
+    const ret = cur.next;
+    cur.next = null;
+    return ret;
+};
+
+
+
+//链表数据的重复值的去除    重复 的数据全部清除
+//list1保存的是head链表的表头的地址值
+//cur拿到head链表来进行改变成合适的输出链表
+//list1就接着索引来输出合适的链表
+//const list1 = new ListNode(0,head)
+//let cur = list1
+//设定一个初始数据值    这样可以用到next来两两比较数据的值
+var deleteDuplicates = function(head) {
+    if(!head || !head.next)return head
+const list1 = new ListNode(0,head)
+let cur = list1
+while(cur.next && cur.next.next){
+if(cur.next.val === cur.next.next.val){
+const x = cur.next.val
+while(cur.next && cur.next.val === x){
+cur.next = cur.next.next
+}
+}else{
+cur = cur.next
+}
+}
+return list1.next}
+
+
+
+//链表数据的指向问题
+//清除的重复的数据只保留一个数据
+//使用链表的时候总是会用到辅助链表来完成    去除   的操作
+//const list1 = new ListNode(0,head)
+//let cur = list1
+//list1来获取索引链表的表头树
+//cur来实际操作来改变链表的数据
+var deleteDuplicates = function(head) {
+    if(!head || !head.next)return head
+    let cur = head
+    while(cur.next){
+        if(cur.val === cur.next.val){
+            cur.next = cur.next.next
+        }else{
+            cur = cur.next
+        }
+    }
+    return head
+    }
+
+
+
+//考察的是链表的数据的基本存放链接数据
+//小数值链表    的头信息的存储      链表具体数据的改变
+//最后获取的是链表改变数据的值的最后的结果      也就是  list.next
+//多余的0的数据直接记得省略这个多余无用的数据
+//数据的存放结束之后记得指向下一个数据的地址
+var partition = function(head, x) {
+    let smallList = new ListNode()
+   const smallHead = smallList
+let largeList = new ListNode()
+const largeHead = largeList
+while(head !== null){
+if(head.val < x){
+smallList.next = head;
+smallList = smallList.next
+}else{
+largeList.next = head
+largeList = largeList.next
+}
+head = head.next
+}
+largeList.next  = null
+smallList.next = largeHead.next
+return smallHead.next
+};
+
+
+
+//
+var reverseBetween = function(head, left, right) {
+    // 因为头节点有可能发生变化，使用虚拟头节点可以避免复杂的分类讨论
+    const dummyNode = new ListNode(-1);
+    dummyNode.next = head;
+    let pre = dummyNode;
+    // 第 1 步：从虚拟头节点走 left - 1 步，来到 left 节点的前一个节点
+    // 建议写在 for 循环里，语义清晰
+    for (let i = 0; i < left - 1; i++) {
+        pre = pre.next;
+    }
+    // 第 2 步：从 pre 再走 right - left + 1 步，来到 right 节点
+    let rightNode = pre;
+    for (let i = 0; i < right - left + 1; i++) {
+        rightNode = rightNode.next;
+    }
+    // 第 3 步：切断出一个子链表（截取链表）
+    let leftNode = pre.next;
+    let curr = rightNode.next;
+    // 注意：切断链接
+    pre.next = null;
+    rightNode.next = null;
+    // 第 4 步：同第 206 题，反转链表的子区间
+    reverseLinkedList(leftNode);
+    // 第 5 步：接回到原来的链表中
+    pre.next = rightNode;
+    leftNode.next = curr;
+    return dummyNode.next;
+};
+const reverseLinkedList = (head) => {
+    let pre = null;
+    let cur = head;
+    while (cur) {
+        const next = cur.next;
+        cur.next = pre;
+        pre = cur;
+        cur = next;
+    }
+}
+
+
+//链表数据的中间数据的翻转
+//前面后面链表的链接部分是需要断开连接的    在来对中间需要翻转的链表来进行操作
+//断开连接  接上翻转的链表的时候原来链表左边的数据接上翻转之后链表的右边的节点数据  
+//返回虚拟节点的数据链表        拿取链表头节点的数据的索引的next
+var reverseBetween = function(head, left, right) {
+    let vNode = new ListNode()
+    vNode.next = head
+    let pre = vNode
+    for(let i = 0;i < left - 1;i++){
+        pre = pre.next
+    }
+    let rightNode = pre
+    for(let i = 0;i < right - left + 1;i++)
+    {
+        rightNode = rightNode.next
+    }
+    let leftNode = pre.next
+    let cur = rightNode.next
+    pre.next = null
+    rightNode.next = null
+    let preNode = null
+    let curNode = leftNode
+    while(curNode){
+        const nextNode = curNode.next
+        curNode.next = preNode
+        preNode = curNode
+        curNode = nextNode
+    }
+    pre.next = rightNode
+    leftNode.next = cur
+    return vNode.next
+    
+    }
+
+
+//链表转换为树数据
+//链表的数据装入数组
+//利用位运算来提高计算的速度
+//不断获取中间数据  来个节点数据赋值
+//链表本身就是一个有序链表  不用装入数组之后再来重新排序数组
+//赋值树的根节点来依次向下赋值数组中的数据
+var sortedListToBST = function(head) {
+    const arr = []
+    while(head){
+        arr[arr.length] = head.val
+        head = head.next
+    }
+    function rmfCreateTree(start,end){
+        if(start > end)return null
+        const mid = (start + end) >>> 1
+        const root = new TreeNode(arr[mid])
+        root.left = rmfCreateTree(start,mid - 1)
+        root.right = rmfCreateTree(mid + 1,end)
+        return root
+    }
+    return rmfCreateTree(0,arr.length - 1)
+    };
+
+
+
+//扁平化链表的数据
+//链表数据按照前序遍历放入一个数组中
+//得到前序遍历的数组的数据再来操作  二叉树左右节点的数据
+var flatten = function(root) {
+    const list = []
+    setData(root,list)
+    const len = list.length
+    for(let i = 1;i < len;i++){
+        let pre = list[i - 1]
+        let cur = list[i]
+        pre.left = null
+        pre.right = cur
+    }
+    }
+    function setData(root,list){
+    if(root){
+        list[list.length]=root
+        setData(root.left,list)
+        setData(root.right,list)
+    }
+    
+    }

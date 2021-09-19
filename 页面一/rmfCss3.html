@@ -1,0 +1,289 @@
+ <!-- <!DOCTYPE html>
+<html>
+  <head>
+    <title>Vue Component Blog Post Example</title>
+    <script type="text/javascript" src="./js/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div id="dynamic-component-demo">
+      <button
+        v-for="tab in tabs"
+        v-bind:key="tab"
+        v-bind:class="['tab-button', { active: currentTab === tab }]"
+        v-on:click="currentTab = tab"
+      >
+        {{ tab }}
+      </button>
+
+      <keep-alive>
+        <component v-bind:is="currentTabComponent" class="tab"></component>
+      </keep-alive>
+    </div>
+
+    <script>
+      Vue.component("tab-posts", {
+        data: function() {
+          return {
+            posts: [
+              {
+                id: 1,
+                title: "Cat Ipsum",
+                content:
+                  "<p>Dont wait for the storm to pass, dance in the rain kick up litter decide to want nothing to do with my owner today demand to be let outside at once, and expect owner to wait for me as i think about it cat cat moo moo lick ears lick paws so make meme, make cute face but lick the other cats. Kitty poochy chase imaginary bugs, but stand in front of the computer screen. Sweet beast cat dog hate mouse eat string barf pillow no baths hate everything stare at guinea pigs. My left donut is missing, as is my right loved it, hated it, loved it, hated it scoot butt on the rug cat not kitten around</p>"
+              },
+              {
+                id: 2,
+                title: "Hipster Ipsum",
+                content:
+                  "<p>Bushwick blue bottle scenester helvetica ugh, meh four loko. Put a bird on it lumbersexual franzen shabby chic, street art knausgaard trust fund shaman scenester live-edge mixtape taxidermy viral yuccie succulents. Keytar poke bicycle rights, crucifix street art neutra air plant PBR&B hoodie plaid venmo. Tilde swag art party fanny pack vinyl letterpress venmo jean shorts offal mumblecore. Vice blog gentrify mlkshk tattooed occupy snackwave, hoodie craft beer next level migas 8-bit chartreuse. Trust fund food truck drinking vinegar gochujang.</p>"
+              },
+              {
+                id: 3,
+                title: "Cupcake Ipsum",
+                content:
+                  "<p>Icing dessert soufflé lollipop chocolate bar sweet tart cake chupa chups. Soufflé marzipan jelly beans croissant toffee marzipan cupcake icing fruitcake. Muffin cake pudding soufflé wafer jelly bear claw sesame snaps marshmallow. Marzipan soufflé croissant lemon drops gingerbread sugar plum lemon drops apple pie gummies. Sweet roll donut oat cake toffee cake. Liquorice candy macaroon toffee cookie marzipan.</p>"
+              }
+            ],
+            selectedPost: null
+          };
+        },
+        template: `
+  	<div class="posts-tab">
+      <ul class="posts-sidebar">
+        <li
+          v-for="post in posts"
+          v-bind:key="post.id"
+          v-bind:class="{ selected: post === selectedPost }"
+					v-on:click="selectedPost = post"
+        >
+          {{ post.title }}
+        </li>
+      </ul>
+      <div class="selected-post-container">
+      	<div 
+        	v-if="selectedPost"
+          class="selected-post"
+        >   
+          <h3>{{ selectedPost.title }}</h3>
+          <div v-html="selectedPost.content"></div>
+        </div>
+        <strong v-else>
+          Click on a blog title to the left to view it.
+        </strong>
+      </div>
+    </div>
+  `
+      });
+
+      Vue.component("tab-archive", {
+        template: "<div>Archive component</div>"
+      });
+
+      new Vue({
+        el: "#dynamic-component-demo",
+        data: {
+          currentTab: "Posts",
+          tabs: ["Posts", "Archive"]
+        },
+        computed: {
+          currentTabComponent: function() {
+            return "tab-" + this.currentTab.toLowerCase();
+          }
+        }
+      });
+    </script>
+  </body>
+</html> 
+
+
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+
+
+.flex {
+    display: flex;
+    /* width: 200px; */
+    /* background: yellow; */
+    /* height: 100px; */
+    justify-content: center;
+    align-items: center;
+}
+.left {
+    /* flex: 3 2 50px; */
+    width: 100px;
+    height: 100px;
+    background: red;
+}
+.right {
+  width: 100px;
+    height: 100px;
+    /* flex: 2 1 200px; */
+    background: blue; 
+}
+.rmfDiv{
+  column-gap: 500px;
+  column-width: 200px;
+  column-count: 3;
+}
+.linearGradient{
+  width: 200px;
+  height: 200px;
+  background:  linear-gradient(135deg, black, white);
+  /* background: linear-gradient(to left top, blue, red);;
+  background: linear-gradient(0deg, blue, green 40%, red);; */
+}
+.radialGradient{
+  width: 200px;
+  height: 200px;
+  background:  radial-gradient(#000, #fff);
+}
+.pStyle{
+  text-shadow: 5px 5px #558ABB;;
+  text-shadow: 2px 2px 2px green;
+
+}
+.divStyle{
+  width: 200px;
+  height: 200px;
+  box-shadow: inset 5px 5px 2px  green;
+  box-shadow:
+       inset 0 -3em 3em rgba(0,0,0,0.1),
+             0 0  0 2px rgb(255,255,255),
+             0.3em 0.3em 1em rgba(0,0,0,0.3);
+             /* box-shadow: inset 5em 1em gold; */
+
+}
+.rmfTran{
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(#000,#fff);
+  transition:all 1s ease-out
+}
+.rmfTran:hover{
+  width: 100px;
+  background-color: green;
+}
+input:invalid {
+  border: 2px solid red;
+}
+/* p:lang(en){
+  color: green;
+} */
+.testCss p:nth-child(1){
+color: green;
+}
+.testCss p:last-child{
+  color: red;
+}
+.testCss a:first-of-type{
+  color: blue;
+}
+.flex-container {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.flex-item {
+    margin: 5px;
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    line-height: 300px;
+    background-color: gold;
+}
+.box{
+   width:200px;
+   height:200px;
+   background:-webkit-linear-gradient(left,red,yellow,green);
+   transform:scale(-1,1);
+   -webkit-box-reflect:below 10px -webkit-linear-gradient(transparent,transparent 50%,rgba(0,0,0,.8)); 
+}
+  </style>
+</head>
+<body>
+<div class="flex">
+    <div class="left"></div>
+    <div class="right"></div>
+</div>
+ <button class="btn">btn1</button>
+        <button class='btn'>btn2</button>
+        <p id="ok">okok</p>
+        <div class="rmfDiv">人民网北京2月24日电 (记者 刘阳)国家发展改革委近日发出通知，决定自2月25日零时起将汽、柴油价格每吨分别提高300元和290元，折算到90号汽油和0号柴油（全国平均）每升零售价格分别提高0.22元和0.25元。
+
+          此次国内成品油价格调整幅度，是按照现行国内成品油价格形成机制，根据国际市场油价变化情况确定的。去年11月16日国内成品油价格调整以来，受市场预期欧美经济复苏前景向好以及中东局势持续动荡等因素影响，国际市场原油价格先抑后扬，2月上旬WTI和布伦特原油期货价格再次回升至每桶95美元和115美元以上。虽然近两日价格有所回落，但国内油价挂钩的国际市场三种原油连续22个工作日移动平均价格上涨幅度已超过4%，达到国内成品油价格调整的边界条件。
+          
+          通知指出，这次成品油调价后，国家将按照已建立的补贴机制，继续对种粮农民、渔业（含远洋渔业）、林业、城市公交、农村道路客运（含岛际和农村水路客运）等给予补贴。同时，为保证市场物价基本稳定，防止连锁涨价，对与居民生活密切相关的铁路客运、城市公交、农村道路客运（含岛际和农村水路客运）价格不作调整。
+          
+          通知要求，中石油、中石化、中海油三大公司要组织好成品油生产和调运，保持合理库存，加强综合协调和应急调度，保障成品油供应。各级价格主管部门要加大市场监督检查力度，依法查处不执行国家价格政策，以及囤积居奇、造谣惑众、合谋涨价、搭车涨价等违法行为，维护正常市场秩序。</div>
+          <br>
+          <div class="linearGradient"></div>
+          <div class="radialGradient"></div>
+          <p class="pStyle">品油价格形成机制，根据国际市场油价变化情况确定的。去年11月16日国内成品油价格调整以来，受市场预期欧美经济复苏前景向好以及中东局势持续动荡等因素影响，国际市场原油价格先抑后扬，2月上旬WTI和布伦特原油期货价格再次回升至每桶95美元和115美元以上。虽然近两日价格有所回落，但国内油价挂钩的国际市场三种原油连续22个工作日移动平均价格上涨幅度已超过4%，达到国内成品油价格调整的边界条件。
+          
+            通知指出，这次成品油调价后，国家将按照已建立</p>
+            <div class="divStyle">okok</div>
+            <div class="rmfTran"></div>
+            <h1>演示 :invalid 选择器</h1>
+​
+<input type="email" value="supportEmail">
+​<p lang="en">wen ben green</p>
+<div class="testCss">
+<p>1</p>
+<a href="javascript:;">okok</a>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+
+</div>
+
+
+<ul class="flex-container">
+  <li class="flex-item">1</li>
+  <li class="flex-item">2</li>
+  <li class="flex-item">3</li>
+  <li class="flex-item">4</li>
+  <li class="flex-item">5</li>
+  <li class="flex-item">6</li>
+</ul>
+<div class="box"></div>
+<input type="hidden">
+ <!-- <ul id='ulName'>
+  <li>1</li>
+  <li>2</li>
+  <li>3</li>
+ </ul> -->
+ <script type="text/javascript">
+ var btns = document.getElementsByClassName('btn'); // 6 elements
+            var ok = document.getElementById('ok');
+            var events = [1,2];
+            // Case 1
+            for (var  i = 0; i < btns.length; i++) {
+            // btns[i].onclick = function() {
+            //     console.log('1')
+            //     ok.innerHTML = 'Clicked ' + events[i];
+            // };
+            btns[i].onclick = (function(i){return function(){ok.innerHTML = 'Clicked ' + events[i]}})(i)
+            }
+// var ul = document.getElementById('ulName')
+// ul.onclick = function(event){
+//   const eveTar = event.target
+//   if(eveTar.nodeName.toLowerCase() === 'li')
+//   console.log(eveTar.innerText)
+// }
+// ul.addEventListener('click',(e)=>{
+//   var eveTar = e.target
+//   if(eveTar.nodeName.toLowerCase() === 'li')
+//   console.log(eveTar.innerText)
+// },false)
+</script>
+</body>
+</html>

@@ -44,7 +44,7 @@
 <div v-on:click.self="doThat">...</div>
 不像其它只能对原生的 DOM 事件起作用的修饰符，.once 修饰符还能被用到自定义的组件事件上。
 
-##  使用修饰符时，顺序很重要；相应的代码会以同样的顺序产生。因此，用 v-on:click.prevent.self 会阻止所有的点击，而 v-on:click.self.prevent 只会阻止对元素自身的点击。
+##  使用修饰符时，顺序很重要；相应的代码会以同样的顺序产生。因此，用 v-on:click.prevent.self 会阻止所有的点击，而 v-on:click.self.prevent **只会阻止对元素自身的点击**。
 
 -	webpack官方建议局部安装		不要全局安装	因为不同的项目可以基于不同的webpack版本来打包项目		那么webpack全局安装会影响项目的开发		建议不同的项目就用对应需求需要用到的webpack版本打包文件
 -	async	await语法远端获取数据的时候就是要加入对应的配置
@@ -71,12 +71,12 @@
 	-	发布者 observer对象	包含了监视data数据的setter
 	-	订阅器 dep对象	每个属性的setter都引用对应的dep
 ## for in遍历数组的毛病
-    1.index索引为字符串型数字，不能直接进行几何运算
-    2.遍历顺序有可能不是按照实际数组的内部顺序
-    3.使用for in会遍历数组所有的可枚举属性，包括原型。例如原型方法method和name属性
-    所以for in更适合遍历对象，不要使用for in遍历数组
--   for of遍历的只是数组内的元素，而不包括数组的原型属性method和索引name
--   for in 可以遍历到myObject的原型方法method,如果不想遍历原型方法和属性的话，可以在循环内部判断一下,hasOwnPropery方法可以判断某属性是否是该对象的实例属性
+1.	index索引为**字符串型数字**，不能直接进行几何运算
+2.	遍历顺序有可能**不是按照实际数组的内部顺序**
+3.	使用for in会遍历数组所有的可枚举属性，包括原型。例如原型方法method和name属性
+所以for in更适合遍历对象，不要使用for in遍历数组
+-   for of遍历的只是数组内的元素，而**不包括数组的原型属性method**和索引name
+-   for in 可以遍历到**myObject的原型方法method**,如果不想遍历原型方法和属性的话，可以在循环内部判断一下,hasOwnPropery方法可以判断某属性是否是该对象的实例属性
 ##	每个 Vue 实例在被创建时都要经过一系列的初始化过程——例如，需要设置**数据监听、编译模板、将实例挂载到 DOM**并在数据变化时更新 DOM 等。同时在这个过程中也会运行一些叫做生命周期钩子的函数，这给了用户在不同阶段添加自己的代码的机会。
 -	Vue.js 使用了**基于 HTML 的模板语法**，允许开发者声明式地将 DOM 绑定至底层 Vue 实例的数据。所有 Vue.js 的模板都是合法的 HTML，所以能被遵循规范的浏览器和 HTML 解析器解析
 -	v-on 事件	v-on:xx		@:		v-bind	属性   :xx		v-bind:xx
@@ -105,7 +105,7 @@
 	}
 -	<h1 v-if='isOK'>if</h1>
 	<h2 v-else>else</h2>
--	因为 v-if 是一个指令，所以必须将它添加到一个元素上。但是如果想切换多个元素呢？此时可以把一个 <template> 元素当做不可见的包裹元素，并在上面使用 v-if。最终的渲染结果将不包含 <template> 元素。
+-	因为 v-if 是一个指令，所以必须将它添加到一个元素上。但是如果想切换多个元素呢？此时可以把一个 **<template> 元素当做不可见的包裹**元素，并在上面使用 v-if。最终的渲染结果将不包含 <template> 元素。
 -	<template v-if="ok">
 	<h1>Title</h1>
 	<p>Paragraph 1</p>
@@ -204,6 +204,7 @@
 -   passive
     一个布尔值，如果true，表示由 指定的函数listener永远不会调用 preventDefault()。如果被动侦听器确实调用了preventDefault()，则用户代理除了生成控制台警告之外什么也不做。
 -   <input v-on:keyup.enter='submit'>//打出enter键的时候来submit
+-	v-on:keyup.enter=''
 -   为了在必要的情况下支持旧浏览器，Vue 提供了绝大多数常用的按键码的别名：
     .enter
     .tab
@@ -456,7 +457,7 @@
 -	注意带有 .sync 修饰符的 v-bind **不能和表达式一起使用** (例如 v-bind:title.sync=”doc.title + ‘!’” 是无效的)	
 -	当我们用一个对象同时**设置多个 prop 的时候**，也可以将这个 **.sync 修饰符和 v-bind 配合使用**
 -	<text-document v-bind.sync="doc"></text-document>//doc是一个对象	
--	v-bind可以绑定多个也可以一个		v-model只可以一个
+-	v-bind可以绑定多个也可以一个		**v-model只可以一个**
 -	将 v-bind.sync **用在一个字面量的对象上**，例如 v-bind.sync=”{ title: doc.title }”，是无法正常工作的，因为在解析一个像这样的复杂表达式的时候，有很多边缘情况需要考虑。
 ##	插槽	
 -	插槽内可以包含任何模板代码，包括 HTML
@@ -471,7 +472,7 @@
 	Your Profile
 	</navigation-link>
 -	<slot></slot> 将会被替换为“Your Profile”
--	如果 <navigation-link> 的 template 中**没有包含一个 <slot> 元素**，则该组件起始标签和结束标签之间的任何内容都会被抛弃。
+-	如果 <navigation-link> 的 template 中**没有包含一个 <slot> 元素**，则该组件**起始标签和结束标签之间的任何内容都会被抛弃。**
 -	当你想在一个插槽中使用数据时
 -	该插槽跟模板的其它地方一样可以访问相同的实例 property (也就是相同的“作用域”)，而**不能访问 <navigation-link> 的作用域**。例如 url 是访问不到的
 -	**父级模板里的所有内容都是在父级作用域中编译的**；子模板里的所有内容都是在子作用域中编译的。
