@@ -17,7 +17,7 @@
 116		2.39		外卖项目从这个时间点开始就没看了
 
 
-p21		7.54
+p23		2.00
 
 "start":"react-app-rewired start",
 "build":"react-app-rewired build",
@@ -131,7 +131,8 @@ VS里面的插件:
 LaTeX Words		统计字数
 
 
-
+浏览器暗黑
+-	chrome://flags/
 
 
 
@@ -269,26 +270,4 @@ b(500)()
 
 
 
-var flatten = function(root) {
-    const list = [];
-    preorderTraversal(root, list);
-    const size = list.length;
-    for (let i = 1; i < size; i++) {
-        const prev = list[i - 1], curr = list[i];
-        prev.left = null;
-        prev.right = curr;
-    }
-};
-
-const preorderTraversal = (root, list) => {
-    if (root != null) {
-        list.push(root);
-        preorderTraversal(root.left, list);
-        preorderTraversal(root.right, list);
-    }
-}
-
-作者：LeetCode-Solution
-链接：https://leetcode-cn.com/problems/flatten-binary-tree-to-linked-list/solution/er-cha-shu-zhan-kai-wei-lian-biao-by-leetcode-solu/
-来源：力扣（LeetCode）
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+<van-icon name="browsing-history-o" />
