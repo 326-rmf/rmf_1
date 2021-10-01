@@ -6,7 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Practice</title>
     <script type="text/javascript" src="./js/vue.js"></script>
-
+    <style>
+    .news {
+        background-color: gray;
+        border: solid 1px black;
+        }
+      
+      .news img {
+        float: left;
+        }
+      
+      .news p {
+        float: right;
+        }
+      
+      .content{
+        clear:both;
+        
+        }
+    </style>
 </head>
 <body>
     <div id="app">   
@@ -20,7 +38,22 @@
         <keep-alive>
         <component :is='selectContent' > </component>  
         </keep-alive>
+       
+          
+          <div class="news">
+          <img src="#" />
+          <p>some text</p>
+          <div class="content"></div>
+          </div>
+          <em>nihao</em>
+          <strong>nihao</strong>
+          <cite>nihao</cite>
+          <samp>nihao</samp>
+          <center>nihao</center>
+          <dfn>okok</dfn>
+          <kbd>keyboard</kbd>
     </div>
+    
     
     <script type="text/javascript">
         Vue.component('tab-posts',{
@@ -63,7 +96,7 @@
         `
         
         })
-        new Vue({
+        new Vue({   
             el:'#app',
             data:{
                 selected:"Posts",

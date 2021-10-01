@@ -17,30 +17,33 @@
 116		2.39		外卖项目从这个时间点开始就没看了
 
 
-p23		2.00
-
-"start":"react-app-rewired start",
-"build":"react-app-rewired build",
-"test":"react-app-rewired test",
-"eject":"react-scripts eject",
-"start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "react-scripts eject",
+p24		
 
 
+服务器ip
+101.35.143.191
+windows登录
+3389
+R123r-->ftp密码
+id_rsa_2048
+:wq	保存退出
+sudo rm -rf /etc/..
 
-import React, {Component} from 'react'
-export default class Login extends Component {
-  render() {
-    return (
-      <div>
-        Login
-      </div>
-      
-    ) 
-  }
-}
+宝塔的下载使用
+下载安装宝塔的时候记得
+通过8888端口的防火墙
+外网面板地址: http://101.35.143.191:8888/e792bb67
+内网面板地址: http://10.0.4.4:8888/e792bb67
+username: nclby2m4
+password: 48dce32a
+netstat -ntlp-->查看网络状态
+101.35.143.191
+navicat破解版
+https://github.com/shaofeng666/Navicat-for-MySQL-/tree/master
+
+
+
+
 
 
 
@@ -270,4 +273,64 @@ b(500)()
 
 
 
-<van-icon name="browsing-history-o" />
+const arr = new Array(m).fill(0)map(()=>new Array(n).fill(0))
+
+
+
+.detailparent{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    .detailitem{
+        width:9.375rem;
+        height: 9.375rem;
+        margin: 0.625rem 0;
+        text-align: center;
+        font-size:0.75rem;
+        
+        .imgparent{
+            position: relative;
+            .bottom{
+                padding: 0 2.778vw;
+                margin-bottom: 1.389vw;
+                position: absolute;
+                bottom:0px;
+                background: linear-gradient(0deg,rgba(0,0,0,.85),transparent);
+                justify-content: space-between;
+                color: white;
+                display: flex;
+                left: 0;
+                right: 0;
+                 span{
+                    float: right;
+                    transform: translateY(15%);
+                }
+            }
+            
+        }
+    }
+   
+   
+}
+
+
+
+
+
+
+<div class="detailitem">
+           <div class="imgparent">
+       <img :src='detailitem.path' alt="ok" style='width:100%'>
+       <div class="bottom">
+           <div class="video">
+        <van-icon name="browsing-history-o" size="1.125rem" />
+       <span >11</span>
+       </div>
+       <div class="comment">
+        <van-icon name="chat-o" class="comment" size="1.125rem"/>
+       <span >22</span>
+       </div>
+       </div>
+       </div>
+        <p>故意的故意的</p>
+       </div>
