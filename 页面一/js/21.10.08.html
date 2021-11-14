@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       
+        .div_1{
+            width: 100px;
+            height: 100px;
+            /* position: absolute; */
+            /* float:left; */
+            /* margin-top:calc(50%); */
+            /* margin-top:calc(50% - 50px); */
+            /* margin-left:calc(50% - 50px); */
+            
+    /* top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    margin:auto 0;
+    position: absolute; */
+
+
+
+    /* top: 50%;
+    transform: translateY(-50px); 
+    position: absolute;*/
+
+
+
+
+                float: left;
+
+
+
+
+            background-color: black;
+            /* transform: translateY(50%); */
+        }
+
+
+        .boxOut{
+            border: 1px solid black;
+            /* width: 200px;
+            height: 200px; */
+            background-color: orange;
+
+
+
+            overflow: hidden;
+            float: left;
+        }
+        /* .boxOut::after{
+            content: '';
+            display: table;
+            clear: both;
+        } */
+        /* .addBox{
+            clear: both;
+        }
+         */
+
+
+         .divAfter{
+             width: 100px;
+             height: 100px;
+             margin-left: 200px;
+             background-color: red;
+         }
+         .div_2{
+             width: 200px;
+             height: 200px;
+             background-color: black;
+         }
+         .div_3{
+             width: 200px;
+             height: 200px;
+             /* background-color: rgba(0,0,0  ,1); */
+             background-color: black;
+             /* visibility: hidden; */
+             /* display: none; */
+             z-index: 100;
+             position: absolute;
+             /* opacity: 0; */
+         }
+         .div_4{
+             width: 200px;
+             height: 200px;
+             background-color: orange;
+             /* visibility: hidden; */
+         }
+    </style>
+</head>
+<body>
+    <div class="div_2"></div>
+    <div class="boxOut">
+    <div class="div_1"></div>
+    <div class="div_1"></div>
+    <!-- <div class="addBox"></div> -->
+</div>
+<div class="divAfter"></div>
+<div class="div_3" id="div-3"></div>
+<div class="div_4"></div>
+</body>
+</html>
+<script type='text/javascript'>
+    document.getElementById('div-3').onclick = function(){
+        alert('')
+    }
+</script>

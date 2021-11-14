@@ -1032,6 +1032,23 @@ var swapPairs = function(head) {
 
 
 
+//算法指针  判断链表是否存在闭环
+//使用的是快慢指针的对比
+function isCycle(head){
+    let slow = head,
+        fast = head;
+        while(fast && fast.next){
+            slow = slow.next
+            fast = fasr.next.next
+            if(slow == fast)return true
+        }
+        //不存在闭环    返回false
+        return false
+}
+
+
+
+
 //链表反转链表节点      1->2->3->4      4->3->2->1
 //head是 1      tail是4
 const myReverse = (head, tail) => {
@@ -2782,6 +2799,27 @@ var flatten = function(root) {
         list[list.length]=root
         setData(root.left,list)
         setData(root.right,list)
-    }
-    
-    }
+    }}
+
+
+
+//理解一个链表 数据结构     链表数据结构是val  next   random
+//现在要创造一个链表的复制函数
+//Node(val,next,random){this.val=val;this.next= next;this.random=random}
+//map的数据结构是(key,val)      set的数据结构是(val,val)
+function copyList(head){
+    let cur = head,
+        res = new Map();
+        while(cur){
+            res = res.set(cur,new Node(cur.val))
+            cur = cur.next
+        }
+        //链表遍历之后再还原遍历一遍
+        cur = head
+        while(cur){
+            res.get(cur).next = res.get(cur.next) || null
+            res.get(cur).random = res.get(cur.random) || null
+            cur = cur.next
+        }
+        return res.get(head)
+}

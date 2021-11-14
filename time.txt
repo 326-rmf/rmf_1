@@ -29,7 +29,7 @@ id_rsa_2048
 :wq	保存退出
 sudo rm -rf /etc/..
 
-宝塔的下载使用
+宝塔的下载使用s
 下载安装宝塔的时候记得
 通过8888端口的防火墙
 外网面板地址: http://101.35.143.191:8888/e792bb67
@@ -62,8 +62,7 @@ sqlserver密码
 
 
 
-insert into dbo.rmfUser(userName,passWord) values (33,123244)
-
+	
 
 
 326-rmf.github.io
@@ -160,7 +159,8 @@ rmf326@163.com
 75395184260rmf.
 
 
-
+高德地图key
+25ffac494a3a526e14b33e38d002ad7a
 
 
 
@@ -174,9 +174,6 @@ dom的api	有顺序的ajax请求		fetch&&ajax
 
 /
 
-百度招聘
-https://talent.baidu.com/external/baidu/campus.html
-9.10
 
 
 https://rmf-web-1-8gp3wim9d7222096-1306744005.ap-shanghai.app.tcloudbase.com
@@ -199,9 +196,15 @@ let boundArgs =  Array.prototype.slice.call(arguments)
 return _this.apply(this.constructor === _this ? this:obj,objArgs.concat(boundArgs))
 }
 fn.prototype = this.prototype
-bound.rototype = new fn()
+bound.prototype = new fn()
 return bound
 }
+
+
+
+
+
+
 //栈实现队列
 let stack1 = []
 let stack2 = []
@@ -218,6 +221,9 @@ stack1.push(stack2.pop())
 }
 stack1.push(node)
 }
+
+
+
 //队列实现栈
 var myQueue = function(){var stack = []}
 myQueue.prototype.add = function(node){this.stack.push(node)}
@@ -228,6 +234,9 @@ let res = temp.pop()
 while(temp.length)stack.push(temp.pop())
 return res
 }
+
+
+
 //indexOf函数的实现
 function myIndexOf(str1,str2,n){
 let len1 = str1.length
@@ -273,64 +282,26 @@ b(500)()
 
 
 
+
+
 const arr = new Array(m).fill(0)map(()=>new Array(n).fill(0))
 
 
 
-.detailparent{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    .detailitem{
-        width:9.375rem;
-        height: 9.375rem;
-        margin: 0.625rem 0;
-        text-align: center;
-        font-size:0.75rem;
-        
-        .imgparent{
-            position: relative;
-            .bottom{
-                padding: 0 2.778vw;
-                margin-bottom: 1.389vw;
-                position: absolute;
-                bottom:0px;
-                background: linear-gradient(0deg,rgba(0,0,0,.85),transparent);
-                justify-content: space-between;
-                color: white;
-                display: flex;
-                left: 0;
-                right: 0;
-                 span{
-                    float: right;
-                    transform: translateY(15%);
-                }
-            }
-            
+
+
+101.35.143.191/#/
+
+
+var detectCycle = function(head) {
+    const visited = new Set();
+    while (head !== null) {
+        if (visited.has(head)) {
+            return head;
         }
+        visited.add(head);
+        head = head.next;
     }
-   
-   
-}
+    return null;
+};
 
-
-
-
-
-
-<div class="detailitem">
-           <div class="imgparent">
-       <img :src='detailitem.path' alt="ok" style='width:100%'>
-       <div class="bottom">
-           <div class="video">
-        <van-icon name="browsing-history-o" size="1.125rem" />
-       <span >11</span>
-       </div>
-       <div class="comment">
-        <van-icon name="chat-o" class="comment" size="1.125rem"/>
-       <span >22</span>
-       </div>
-       </div>
-       </div>
-        <p>故意的故意的</p>
-       </div>

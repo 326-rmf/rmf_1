@@ -52,10 +52,30 @@
           <center>nihao</center>
           <dfn>okok</dfn>
           <kbd>keyboard</kbd>
+          <tt>
+              ok 
+              computer 
+              code
+          </tt>
+          <ol>
+            <li>第一项</li>
+            <li>第二项</li>
+            <li>第三项</li>
+            <li>第四项</li>
+        </ol>
     </div>
     
     
     <script type="text/javascript">
+    window.onload = function() {  //  函数1
+    var lis = document.getElementsByTagName('li');
+    for (var i = 0; i < lis.length; i++) {
+        lis[i].onclick = function() {  //  函数2
+            alert(i);
+        }
+    }
+}
+
         Vue.component('tab-posts',{
         data:function(){
             return{
