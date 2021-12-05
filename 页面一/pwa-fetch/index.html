@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+
+    <script type='text/javascript'>
+        //window对象上面就有fetch属性
+        fetch('data.json')
+        .then((data)=>{
+            //data是请求得到的响应的内容        是二进制流
+            //data.json是一个promsie对象
+            // console.log(data.json())
+            //流数据对象只能转换一次    不能转换两次    
+            //犯的错误是console.log     和   return 了两次数据
+            return data.json()
+        })
+        .then(data=>
+        {
+            console.log(data)
+        })
+    </script>
+</body>
+</html>

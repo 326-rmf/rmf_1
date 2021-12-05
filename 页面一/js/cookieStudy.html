@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="addCookie()">add cookie</button>
+    <button onclick="deleteCookie()">delete cookie</button>
+    <button onclick="updateCookie()">update cookie</button>
+    <script type='text/javascript'>
+        function addCookie(){
+            console.log('1')
+            var userName  = 'uername'
+            var key = 'rmf'
+            // document.cookie = name + "="+userName
+            // document.cookie = name + "=" + userName + ";expires=" +50 + ";path=/"; 
+            // document.cookie = name + "=" + escape(userName) + ";expires=" + 60 + ";path=/"; 
+            // document.cookie = userName + "=" + key 
+           window.document.cookie = "name=Kyle;path=/;domain=kylebing.cn;max-age=60;secure=https;samesite=strict"
+            // document.cookie="username=John Doe";
+            var myCookie = document.cookie
+            console.log(myCookie)
+            // document.cookie = name+'=userName'+';max-age='+60
+        }
+
+
+        // document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=/"; 
+// 输入参数：cookie 名称，cookie 的值，time 有效果时间，单位为秒    
+// function setCookie(name, value, time) { 
+//     var strsec = time * 1000; 
+//     var exp = new Date(); 
+//     exp.setTime(exp.getTime() + strsec * 1); 
+//     document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=/"; 
+// }
+    </script>
+</body>
+</html>

@@ -1,13 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
+<!-- <html lang="en"  manifest="cache.manifest"> -->
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- <script type='text/javascript'>
+        //  window.location="https://www.baidu.com";
+        function Redirect()
+{
+//   window.location.href="https://www.baidu.com";
+top.location='https://www.baidu.com'
+}
+ 
+document.write("You will be redirected to main page in 5 sec.");
+setTimeout('Redirect()', 5000);
+    </script> -->
     <style>
-       
-        .div_1{
+        .div_1 {
             width: 100px;
             height: 100px;
             /* position: absolute; */
@@ -15,8 +27,8 @@
             /* margin-top:calc(50%); */
             /* margin-top:calc(50% - 50px); */
             /* margin-left:calc(50% - 50px); */
-            
-    /* top:0;
+
+            /* top:0;
     right:0;
     bottom:0;
     left:0;
@@ -25,24 +37,28 @@
 
 
 
-    /* top: 50%;
+            /* top: 50%;
     transform: translateY(-50px); 
-    position: absolute;*/
+    position: absolute; */
+
+ /* position: absolute;
+        top: calc(50% - 50px); */
+        /* left: calc(50% - 50px); */
+
+
+
+            float: left;
 
 
 
 
-                float: left;
-
-
-
-
-            background-color: black;
+            background-color: yellow;
+            z-index: 230;
             /* transform: translateY(50%); */
         }
 
 
-        .boxOut{
+        .boxOut {
             border: 1px solid black;
             /* width: 200px;
             height: 200px; */
@@ -53,6 +69,7 @@
             overflow: hidden;
             float: left;
         }
+
         /* .boxOut::after{
             content: '';
             display: table;
@@ -64,50 +81,420 @@
          */
 
 
-         .divAfter{
-             width: 100px;
-             height: 100px;
-             margin-left: 200px;
-             background-color: red;
-         }
-         .div_2{
-             width: 200px;
-             height: 200px;
-             background-color: black;
-         }
-         .div_3{
-             width: 200px;
-             height: 200px;
-             /* background-color: rgba(0,0,0  ,1); */
-             background-color: black;
-             /* visibility: hidden; */
-             /* display: none; */
-             z-index: 100;
-             position: absolute;
-             /* opacity: 0; */
-         }
-         .div_4{
-             width: 200px;
-             height: 200px;
-             background-color: orange;
-             /* visibility: hidden; */
-         }
+        .divAfter {
+            width: 100px;
+            height: 100px;
+            margin-left: 200px;
+            background-color: red;
+        }
+
+        .div_2 {
+            width: 200px;
+            height: 200px;
+            background-color: black;
+        }
+
+        .div_3 {
+            width: 200px;
+            height: 200px;
+            /* background-color: rgba(0,0,0  ,1); */
+            background-color: black;
+            /* visibility: hidden; */
+            /* display: none; */
+            z-index: 100;
+            /* position: absolute; */
+            position: relative;
+            /* opacity: 0; */
+        }
+
+        .div_4 {
+            width: 200px;
+            height: 200px;
+            background-color: orange;
+            /* visibility: hidden; */
+        }
+
+        .textShow {
+            width: 200px;
+            height: 200px;
+            border: 1px solid black;
+            line-height: 200px;
+            /* position: relative; */
+        }
+
+        .textInner {
+            width: 10px;
+            height: 10px;
+            border: 1px solid black;
+            /* position: absolute; */
+            /* display: inline-block; */
+            display: inline-block;
+        }
+
+
+
+        .div0 {
+            width: 200px;
+            height: 150px;
+            border: 1px solid #000;
+            text-align: center;
+        }
+
+        .div0::after {
+            vertical-align: middle;
+            height: 100%;
+            display: inline-block;
+            /* width: 0; */
+            content: '';
+        }
+
+        /* .div0::after {
+            content: '';
+            width: 0;
+            height: 100%;
+            display: inline-block;
+            position: relative;
+            vertical-align: middle;
+            background: #f00;
+        } */
+
+        .redbox {
+            width: 30px;
+            height: 30px;
+            background: #c00;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .greenbox {
+            width: 30px;
+            height: 60px;
+            background: #0c0;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .bluebox {
+            width: 30px;
+            height: 40px;
+            background: #00f;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .div5 {
+            width: 200px;
+            height: 150px;
+            border: 1px solid #000;
+            position: relative;
+        }
+
+        .redbox1 {
+            width: 30px;
+            height: 30px;
+            background: #c00;
+            /* float: left; */
+            position: absolute;
+            top: calc(50% - 15px);
+            /* margin-left: calc(50%); */
+            /* margin-left: calc(50% - 15px); */
+        }
+        .shuiP{
+            width:200px;
+            height: 200px;
+            border: 1px solid black;
+            /* line-height: 200px; */
+            /* position: relative; */
+        }
+        .shuiT{
+            width: 10px;
+            height: 10px;
+            border: 1px solid black;
+            /* display: inline-block; */
+            /* position: absolute; */
+            /* left:50%; */
+            /* left: calc(50% -  5px); */
+            
+/* background-color: yellow; */
+
+
+/* top: 0;
+right: 0;
+bottom: 0;
+left: 0;
+margin: auto; */
+
+/* display: table; */
+/* margin: auto; */
+
+
+
+/* display: inline-block;
+position: relative;
+left: 50%; */
+
+
+
+
+            /* transform:translateX(-50%) */
+                /* margin:0 auto */
+                /* margin:auto 0 */
+
+                /* margin:auto */
+            }
+
+
+
+            .showW{
+                height: 100px;
+                border: 1px solid black;
+                display: inline;
+            }
+            a::after{
+    /* content:''; */
+    content:attr(style);
+}
+
+
+h1:before{
+    content:counter(biaoti)".";
+}
+h1{
+    counter-increment:biaoti;
+}
+
+
+.outer {
+  height: 100px;
+}
+.left {
+  float: left;
+  width: 200px;
+  background-color: tomato;
+}
+.right {
+  margin-left: 200px;
+  width: auto;
+  background-color: gold;
+}
+.div_5{
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    transition: all 1s;
+}
+.div_5:hover{
+    /* 平移的固定写法       只和最后两个数字相关*/
+    /* transform: matrix(1,0,0,1,10,10); */
+
+
+    /* 缩放的固定写法 */
+    /* 只和第一个   第四个数据相关 */
+    /* transform: matrix(2,0,0,2,0,0); */
+
+
+    /* 旋转的固定写法    */
+    /* 和旋转的角度的正弦值     余弦值是相关的 */
+    transform:matrix(0.75,-0.75,0.75,0.75,0,0)
+
+}
+
+
+.div_6{
+    width:300px;
+    height: 300px;
+    border: 1px solid black;
+    transition: all 0.1s;
+}
+.div_6_inner{
+    width: 10px;
+    height: 10px;
+    border: 1px solid black;
+    position: relative;
+    transform: translateY(50%);
+}
     </style>
 </head>
+
 <body>
     <div class="div_2"></div>
     <div class="boxOut">
-    <div class="div_1"></div>
-    <div class="div_1"></div>
-    <!-- <div class="addBox"></div> -->
-</div>
-<div class="divAfter"></div>
-<div class="div_3" id="div-3"></div>
-<div class="div_4"></div>
+        <div class="div_1"></div>
+        <div class="div_1"></div>
+        <!-- <div class="addBox"></div> -->
+    </div>
+    <div class="divAfter"></div>
+    <div class="div_3" id="div-3"></div>
+    <div class="div_4"></div>
+    <div class="textShow">
+        <span>nihao</span>
+        <div class="textInner"></div>
+    </div>
+    <div class="div0">
+        <div class="redbox"></div>
+        <div class="greenbox"></div>
+        <div class="bluebox"></div>
+    </div>
+    <div class="div5">
+        <div class="redbox1"></div>
+    </div>
+    <div class="shuiP">
+        <div class="shuiT"></div>
+    </div>
+    <div class="showW"></div>
+    <a href="http://www.baidu.com" style="color: red"></a>
+        <h1>标题</h1>
+        <p>文字</p>
+        <h1>标题</h1>
+        <p>文字</p>
+        <h1>标题</h1>
+        <p>文字</p>
+        <h1>标题</h1>
+        <p>文字</p>
+        <!-- <button onclick="getDea()">ok</button> -->
+        <div class="outer">
+            <div class="left"></div>
+            <div class="right"></div>
+        </div>
+        <div class="div_5"></div>
+        <a href="#">top</a>
+        <p> 
+            <input id='control' value="想要隐藏的控件"> 
+            </p> 
+            <p> 
+            隐藏上面的控件，并使其不占用页面上的位置 
+            <input type="button" value='隐藏' onclick='displayHide_control()'> 
+            <input type="button" value='显示' onclick='displayShow_control()'> 
+            <br /> 
+            仅仅隐藏控件，其位置仍然占用 
+            <input type="button" value='隐藏' onclick='visibilityHide_control()'> 
+            <input type="button" value='显示' onclick='visibilityShow_control()'> 
+            </p> 
+            <title>JavaScript设置表单上传时的文件个数</title>
+<input type="button" name="button" value="添加附件" onclick="addInput()">
+<input type="button" name="button" value="删除附件" onclick="deleteInput()">
+<span id="upload"></span>
+<button onclick="getAPath()">getAPath</button>
+<a   href="ok2.html"   onclick="openwin()">open</a>
+<INPUT   TYPE='BUTTON'   value='关闭'   onClick='window.close()'>
+    <div class="div_6" id="div-6">
+        <div class="div_6_inner"></div>
+    </div>   
+    <button  id="addThisId">addEventListener</button>
+    <button  onclick="boxtranslate()">boxtranslate</button>
+        <script type='text/javascript'>
+            function boxtranslate(){
+                document.getElementById('div-6').style.marginLeft=100+'px'
+            }
+           document.getElementById('addThisId').addEventListener('click',(e)=>{
+               console.log(e)
+               console.log(this)
+           })
+
+
+        //    document.getElementById('addThisId').addEventListener('click',function(e){
+        //        console.log(e)
+        //        console.log(this)
+        //    })
+
+//            var myWorker = new Worker('./myworker.js')
+//            var uInt8Array = new Uint8Array(new ArrayBuffer(10));
+// for (var i = 0; i < uInt8Array.length; ++i) {
+//   uInt8Array[i] = i * 2; // [0, 2, 4, 6, 8,...]
+// }
+// worker.postMessage(uInt8Array);
+
+            // function getDea(){
+    //         fetch('https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5',{
+    //             mode:"cors",
+    //             method:"GET",
+    //             "Access-Control-Allow-Origin" : "*",
+    // "Access-Control-Allow-Credentials" : true
+    //         })
+    //         .then(data=>data.json())
+    //         .then(data=>console.log(data.data))
+    //         .catch(err=>console.log(err))
+    //     }
+    // window.open   ('ajaxGet.html',   'newwindow',   'height=100,   width=400,   top=0,   left=0,   toolbar=no,   menubar=yes,   scrollbars=yes,   resizable=yes,location=no,   status=no')   //这句要写成一行    
+    function   openwin()   {      
+  　　window.open("ajaxGet.html","","width=200,height=200")      
+// window.showModelessDialog("ajaxGet.html","","dialogWidth:300px;dialogHeight:300px;scroll:no;status:no")
+  　　}      
+
+    function getAPath(){
+        var div = document.createElement('div');
+div.innerHTML = '<a href="./"></a>'
+alert(div.firstChild.href);
+div = null;
+    }
+
+    var attachname = "attach";
+ var i=1;
+  function addInput(){
+  if(i>0){
+   var attach = attachname + i ;
+   if(createInput(attach))
+    i=i+1;
+  }
+  } 
+  function deleteInput(){
+   if(i>1){
+   i=i-1;
+   if(!removeInput())
+    i=i+1;
+   }
+  } 
+  function createInput(nm){ 
+  var aElement=document.createElement("input"); 
+  aElement.name=nm;
+  aElement.id=nm;
+  aElement.type="file";
+  aElement.size="50";
+  //aElement.value="thanks"; 
+  //aElement.onclick=Function("asdf()"); 
+//   document.getElementById("upload").appendChild(aElement)
+   if(document.getElementById("upload").appendChild(aElement) == null)
+    return false;
+   return true;
+  } 
+  function removeInput(nm){
+   var aElement = document.getElementById("upload");
+//    console.log('1')
+
+//    aElement.removeChild(aElement.lastChild)
+//    console.log('1')
+
+   if(aElement.removeChild(aElement.lastChild) == null)
+   return false;
+   return true; 
+  } 
+        </script>
+    
 </body>
+
 </html>
 <script type='text/javascript'>
-    document.getElementById('div-3').onclick = function(){
+    document.getElementById('div-3').onclick = function () {
         alert('')
     }
+    function displayHide_control() 
+            { 
+            var _control = document.getElementById("control"); 
+            _control.style.display="none"; 
+            } 
+            function displayShow_control() 
+            { 
+            var _control = document.getElementById("control"); 
+            _control.style.display="block"; 
+            } 
+            function visibilityHide_control() 
+            { 
+            var _control = document.getElementById("control"); 
+            _control.style.visibility="hidden"; 
+            } 
+            function visibilityShow_control() 
+            { 
+            var _control = document.getElementById("control"); 
+            _control.style.visibility="visible"; 
+            } 
 </script>

@@ -854,5 +854,109 @@ this.country = CodeToText(val[2])
 	-	使用涉及 的用法
 		-	this.$i18n.locale	组件里面使用可以更改语言类型
 		-	$t('string')		$t(parameter)
+##	input输入框的边框的默认样式清除
+-	outline:none
+##	事件的绑定和传参
+-	@focus			@blur
+-	输入框有着焦点		
+##	input框的双向数据绑定
+-	v-model
+-	ref
+	-	this.refs.refName.xx
+-	router-view必须是要被驱动才会被触发
+##	keep-alive来缓存一些具体的组件的名字
+-	可以设置一些属性来书写缓存具体的组件	注意是组件的名称
+	-	也就是说是组件的name属性
+	-	**include的属性是组件的name属性**
+	-	组件自己设置一个自己的 name属性
+		-	name:'componentName1'
+	-	include='componentName1,componentName2'
+-	keep-alive遇到多层嵌套路由会出现问题
+	-	多层嵌套路由keep-alive只会嵌套第一层路由展示的信息	不会缓存第二层及以下的页面信息
+	-	那么需要将内部的组件进行一个缓存的时候就需要将不需缓存的路由进行过滤删除的操作
+		-	function deleUnuse(to){
+			if(to.matched && to.matched.length > 2)
+			{
+				for(let i = 0;i < to.matched.length;i++){
+					const element = to.matched[i]
+					//element可以去匹配要删除的组件的name属性
+					if(element.components.default.name === 'layout')
+					{
+						to.matched.splice(i,1)
+						deleUnuse(to)
+					}
+				}
+			}
+		}
+-	函数deleUnuse来对无用的组件进行删除的操作	多层嵌套的外层的组件删除的操作
+-	尝试用路由来进行对应想要的组件缓存信息
+	-	路由组件的属性增加一个属性是meta:{
+		keepAlive:true//true代表的是缓存组件		false代表的是不缓存组件
+	}
+-	数据库的操作的时候	数据库名称是小写数据库名称		但是服务端书写的时候写成了大写的数据库名称
+	耽误了一个半小时
+	-	数据库的名称书写错误返回了502错误
+	-	服务器收到了无效的响应		不意味上游服务器关闭(无响应网关/代理)	而是上游服务器和网关/代理使用不统一的协议交换数据
+		意味一个或者两个机器不正确或者不完全编程
+-	502返回码
+	-	web服务器接收响应的http数据流	数据流包括状态编码	和其他有用的信息	
+		502错误是客户端收到http状态编码  并且识别其为502错误
+-	固定的502错误
+	-	ISP出现了重大的设备故障/过载(网络服务供应商)		--》502
+		-	互联网服务供应商
+			-	接入服务
+				-	用户接入互联网
+			-	导航服务
+				-	帮助用户在互联网中找到需要的信息
+			-	信息服务
+				-	建立数据服务系统	搜集 加工 存储信息	定期维护更新	通过网络向用户提供信息内容服务
+	-	内部的互联网连接你的防火墙无法正常工作				--》502
+-	调制解调器
+	-	modem(猫)主要的功能是将数据的数字信号和模拟信号之间的转换	实现在电话线上的传输
+	-	这种接入的方式	通常所说是拨号上网	主机通过**调制解调器**和电话线路与ISP网络服务器的**调制解调器**相连实现主机和网络服务器的连接
+##	时间格式化
+-	function getTime(){setInterval(fn,1000)}
+	fn中含有fn2来格式时间		fn2(m){return m<10?"0"+m:m}
+##	改变数据库中数据的类型
+-	varchar		--> double
+-	maxLength		-->input框的字数限制
+-	**中文输入法状态下输入的回车键，检测的 keyCode为 229 而不是13**
+-	@input一边输入		一边进行一些逻辑运算		**比如字数限制**
+	-	字数限制用v-model拿取input框的数据	
+-	**flex布局小技巧之让某个子元素靠右或靠左显示**
+	-	margin-left: auto		元素向右边靠
+	-	margin-right: auto		元素向左边靠
+-	span元素的文字溢出问题
+	-	overflow:hidden;width:200px;(限制span元素的宽度);white-space:nowrap;(span元素不可换行)
+		text-overflow:ellipsis(省略符号表示溢出元素)
+-	elementui		消息提示	弹框提示	**局部引入方法的时候**		需要在vue原型上面来
+	局部引入方法
+	-	Vue.prototype.$alert = MessageBox.alert
+		Vue.prototype.$notify = Notification
+	-	这样使用方法才不会报错
+##	express中url参数动态获取
+-	
+##	数据库操作就是不能使用一些保留字段index  
+-	使用之后	会发生识别错误	耗时4小时
+-	**字段的使用尽量避开保留字段**
+##	选中不是不是最后一个元素的其他子元素
+-	father:not(:last-child)
+##	首屏优化
+-	图片压缩
+	-	cnpm install --save-dev  image-webpack-loader   
+	-	vue.config.js
+		-	config.module
+			.rule('images')
+			.test(/\.(png|jpe?g|gif|svg)(\?.*)?$/)
+			.use('image-webpack-loader')
+			.loader('image-webpack-loader')
+			.options({
+				bypassOnDebug: true
+			}) 
+			.end()
+-	overflow-x:none		overflow-y:none		
+	outline:none//鼠标聚焦的时候外边框不出现
+
+
 
 
