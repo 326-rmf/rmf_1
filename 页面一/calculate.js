@@ -4055,3 +4055,52 @@ var compareVersion = function(version1, version2) {
     return 0;
 };
 
+
+
+
+
+
+//初始化数据最大的      最小的数据      当前数据都是初始化的数组的第一个数据
+//继续向后面进行数据的计算  不断选取最大值最小值
+//每一次循环新建三个数据来装载最大值    最小值      当前值
+//当前数据的来源是上一次数据的依据
+
+ var maxProduct = function(nums) {
+    if (nums.length == 0) return 0
+  
+  //       [   2,    3,    -2,    4,    5,    -10,    -1   ]
+  // curMax    2     6     -2     4     20     2400   200
+  // curMin    2     3     -12    -48   -240   -200   -2400
+  
+    let cur = 0
+    // 把 cur 处理掉时，能得到的最小值
+    let curMin = nums[cur]
+  
+    // 把 cur 处理掉时，能得到的最大值
+    let curMax = nums[cur]
+  
+    // 所有 curMax 中最大的值，最后的 curMax 不一定是答案
+    let resMax = nums[cur]
+  
+    for(let i = 1; i < nums.length; ++i) {
+  
+      let tmp1 = nums[i] * curMax
+      let tmp2 = nums[i] * curMin
+      let tmp3 = nums[i] // 不与过往的最大、最小数相乘，自己自立门户，说不定就是最值
+  
+      curMax = Math.max(tmp1, tmp2, tmp3)
+      curMin = Math.min(tmp1, tmp2, tmp3)
+  
+      if (curMax > resMax) {
+        resMax = curMax
+      }
+  
+      // console.log(`${curMax}  ${curMin}`)
+    }
+  
+    return resMax
+  };
+
+
+
+  
