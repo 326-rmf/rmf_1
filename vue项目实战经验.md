@@ -956,7 +956,41 @@ this.country = CodeToText(val[2])
 			.end()
 -	overflow-x:none		overflow-y:none		
 	outline:none//鼠标聚焦的时候外边框不出现
-
+##	拖拽代办事项时候的坑位
+-	首先是添加事件
+	-	数组里面放置对象数据的时候
+		-	var obj = {}
+				obj.para = xx
+			this.arr.push(obj)
+		-	sessionStorage里面放置数据的时候放置的是json格式的数据		JSON.stringify()
+		-	去除JSON格式的数据的时候		将数据转换为		js对象		JSON.parse()
+-	拖拽事件元素的变化
+	-	一个div里面由ul			ul里面有li			拖拽的数据可能会碰到的数据有div   ul  li这三种元素
+		这三种节点碰到的时候 		分不同的情况来区分		最后都是找到ul元素来appendChild
+	-	遇到li 
+		-	**e.target.parentNode**.parentNode.appendChild()
+	-	遇到ul
+		-	e.target.parentNode.appendChild()
+	-	遇到div
+		-	e.target.**children**[ulindex].appendChild()
+-	删除事件
+	-	取出事件指定的id
+	-	var ulId = document.getElementById('ulId')
+	-	ulId.removeChild(ulId.**childNodes**[0])
+	-	在原有的数据里面寻找需要删除的数据元素
+	-	这种数据对象更改的时候	需要双向数据绑定的方法
+		-	this.$set(this.arr,newArr)
+		-	如果**直接赋值是不会成功的**
+	-	可能this.$set之后的 数据没有怎么改变		还是要newArr来改变其他数据
+##	拖拽事件元素
+-	被拖拽元素在上方		allowdrop(e)
+	-	e.preventDefault()
+-	被拖拽元素被放置		drop(e)
+	-	e.preventDefault()
+		var data = 	e.dataTransfer.getData("Text")
+		e.target.appendChild(document.getElementById(data))
+-	被拖放的元素		@drag="drag($event)"
+	-	e.dataTransfer.setData("Text",e.target.id)
 
 
 
