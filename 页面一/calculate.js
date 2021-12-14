@@ -4104,3 +4104,101 @@ var compareVersion = function(version1, version2) {
 
 
   
+
+//字符串形式返回小数
+//小数循环部分放在括号里面
+//得出的数据符号首先是看两个数据的符号的        异或的结果
+//
+var fractionToDecimal = function(numerator, denominator) {
+    if (numerator % denominator == 0) {
+        return '' + Math.floor(numerator / denominator);
+    }
+
+    const sb = [];
+    //异或得出结果数据的符号
+    if (numerator < 0 ^ denominator < 0) {
+        sb.push('-');
+    }
+
+    // 整数部分
+    numerator = Math.abs(numerator);
+    denominator = Math.abs(denominator);
+    const integerPart = Math.floor(numerator / denominator);
+    sb.push(integerPart);
+    sb.push('.');
+
+    // 小数部分
+    const fractionPart = [];
+    const remainderIndexDic = new Map();
+    let remainder = numerator % denominator;
+    let index = 0;
+    while (remainder !== 0 && !remainderIndexDic.has(remainder)) {
+        remainderIndexDic.set(remainder, index);
+        remainder *= 10;
+        fractionPart.push(Math.floor(remainder / denominator));
+        remainder %= denominator;
+        index++;
+    }
+    if (remainder !== 0) { // 有循环节
+        let insertIndex = remainderIndexDic.get(remainder);
+        fractionPart.splice(insertIndex, 0, '(');
+        fractionPart.push(')');
+    }
+    sb.push(fractionPart.join(''));
+
+    return sb.join('');
+}
+
+
+
+
+
+
+//二分法来查找数组中是否存在合适的数据值
+//left      right       (right-left)/2|0
+//mid+1         mid-1           mid         return -1
+//每一行数据的搜索
+var searchMatrix = function(matrix, target) {
+    for (const row of matrix) {
+        const index = search(row, target);
+        if (index >= 0) {
+            return true;
+        }
+    }
+    return false;
+};
+
+const search = (nums, target) => {
+    let low = 0, high = nums.length - 1;
+    while (low <= high) {
+        const mid = Math.floor((high - low) / 2) + low;
+        const num = nums[mid];
+        if (num === target) {
+            return mid;
+        } else if (num > target) {
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    }
+    return -1;
+}
+
+
+
+
+//列表数据的搜索
+//数据具有规律性    每一次比较数据      交换的 是行数据     列数据
+//左下角数据的转化
+ var searchMatrix = function(matrix, target) {
+    const m = matrix.length, n = matrix[0].length;
+    for(let i=m-1,j=0;i>=0&&j<n;){
+        if(matrix[i][j] == target)
+            return true;
+        else if(matrix[i][j] < target)
+            j += 1;
+        else
+            i -= 1;
+    }
+    return false;
+};

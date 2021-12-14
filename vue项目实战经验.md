@@ -982,6 +982,13 @@ this.country = CodeToText(val[2])
 		-	this.$set(this.arr,newArr)
 		-	如果**直接赋值是不会成功的**
 	-	可能this.$set之后的 数据没有怎么改变		还是要newArr来改变其他数据
+-	childNodes		children
+	-	childNodes**文本节点也访问到了**	(空格被视为文本节点)
+	-	children只访问了**元素标签节点**
+
+-	**vue不能检测以下变动的数组**：
+	1、当你利用索引直接设置一个项时，vm.items[indexOfItem] = newValue
+	2、当你修改数组的长度时，例如： vm.items.length = newLength
 ##	拖拽事件元素
 -	被拖拽元素在上方		allowdrop(e)
 	-	e.preventDefault()
@@ -991,6 +998,9 @@ this.country = CodeToText(val[2])
 		e.target.appendChild(document.getElementById(data))
 -	被拖放的元素		@drag="drag($event)"
 	-	e.dataTransfer.setData("Text",e.target.id)
+-	object.assign方法用于将**所有可枚举属性的值从一个或多个源对象复制到目标对象**，并返回目标对象
+	-	vm.object = Object.assign( { } , vm.object , {a:' 1 ', b:' 2 ' })  
+
 
 
 
