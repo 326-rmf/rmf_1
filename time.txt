@@ -190,7 +190,7 @@ https://rmf-web-1-8gp3wim9d7222096-1306744005.ap-shanghai.app.tcloudbase.com
 
 
 
-const arr = new Array(m).fill(0)map(()=>new Array(n).fill(0))
+const arr = new Array(m).fill(0).map(()=>new Array(n).fill(0))
 
 
 
@@ -207,7 +207,7 @@ http://39.104.22.73:67/#/BlogDetail?ID=5c1702c623c1400eb8d42f10
 
 
 
-
-12		1.02
-
-
+var largestNumber = function(nums) {
+    const res = nums.sort((a, b) =>  (b + '' + a) - (a + '' + b)).join('')
+    return res.startsWith('0') ? '0' : res
+};

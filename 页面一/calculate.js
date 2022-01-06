@@ -2940,13 +2940,13 @@ function getNode(head) {
 //dp[m-1][n-1] = dp[m-2][n-1] + dp[m-1][n-2]
 //当前到达的地点条件    是前面两个步骤达到地点添加的和数
 var uniquePathsWithObstacles = function (obstacleGrid) {
-//矩阵行数
+    //矩阵行数
     let m = obstacleGrid.length,
-    //矩阵列数
+        //矩阵列数
         n = obstacleGrid[0].length,
-//实例化一个二维矩阵        fill   map
+        //实例化一个二维矩阵        fill   map
         dp = Array(m).fill().map((item) => Array(n).fill(0))
-        //第一行可以达到的添加是没有障碍物
+    //第一行可以达到的添加是没有障碍物
     for (let i = 0; i < n && obstacleGrid[0][i] === 0; ++i) {
         dp[0][i] = 1
     }
@@ -2966,31 +2966,31 @@ var uniquePathsWithObstacles = function (obstacleGrid) {
 
 
 //状态压缩
- var uniquePathsWithObstacles = function(obstacleGrid) {
+var uniquePathsWithObstacles = function (obstacleGrid) {
     //矩阵行数
     let m = obstacleGrid.length,
-    //矩阵列数
+        //矩阵列数
         n = obstacleGrid[0].length,
         dp = Array(n).fill(0);
-        dp[0] = 1
-        for(let i = 0;i < m;i++){
-            for(let j = 0;j < n;j++){
-                if(obstacleGrid[i][j] === 1){
-                    dp[j] = 0
-                }else if(j > 0){
-                    dp[j] += dp[j-1]
-                }
+    dp[0] = 1
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            if (obstacleGrid[i][j] === 1) {
+                dp[j] = 0
+            } else if (j > 0) {
+                dp[j] += dp[j - 1]
             }
         }
-        return dp[n-1]
-    };
+    }
+    return dp[n - 1]
+};
 
 
 
 //A-Z  对应的是1-->26     的编码和解码的条件
 //一个字符解析是不为0   两个字符解析是前面一个字符不为0并且两个字符的数值是小于26
 //状态方程  当前步数是前面两步步数的和      那么采取条件限制        注意数据的格式
- var numDecodings = function(s) {
+var numDecodings = function (s) {
     const n = s.length;
     const f = new Array(n + 1).fill(0);
     f[0] = 1;
@@ -3013,35 +3013,35 @@ var uniquePathsWithObstacles = function (obstacleGrid) {
 
 var generateTrees = function (n) {
     function buildTree(start, end) {
-      let _result = []
-      // 指针交错递归终止
-      if (start > end) return [null] // 原来如此 
-      // i指针滑动，枚举left和right分段的所有可能
-      for (let i = start; i <= end; i++) {
-        // 左侧和右侧生成树的集合 返回为数组
-        let left = buildTree(start, i - 1)
-        let right = buildTree(i + 1, end)
-        // 循环左右两侧的树集合 分别拼接到新树上，并且存储到结果数组中
-        // 从左子树集合中选出一棵左子树，从右子树集合中选出一棵右子树，拼接到根节点上
-        for (const leftNode of left) {
-          // left为空是这样的[null] 还是可以进来这个循环的 因为有这种场景你要想通 1==>2==>3 都是右子节点的情况
-          for (const rightNode of right) {
-            let node = new TreeNode(i)
-            node.left = leftNode
-            node.right = rightNode
-            _result.push(node)
-          }
+        let _result = []
+        // 指针交错递归终止
+        if (start > end) return [null] // 原来如此 
+        // i指针滑动，枚举left和right分段的所有可能
+        for (let i = start; i <= end; i++) {
+            // 左侧和右侧生成树的集合 返回为数组
+            let left = buildTree(start, i - 1)
+            let right = buildTree(i + 1, end)
+            // 循环左右两侧的树集合 分别拼接到新树上，并且存储到结果数组中
+            // 从左子树集合中选出一棵左子树，从右子树集合中选出一棵右子树，拼接到根节点上
+            for (const leftNode of left) {
+                // left为空是这样的[null] 还是可以进来这个循环的 因为有这种场景你要想通 1==>2==>3 都是右子节点的情况
+                for (const rightNode of right) {
+                    let node = new TreeNode(i)
+                    node.left = leftNode
+                    node.right = rightNode
+                    _result.push(node)
+                }
+            }
         }
-      }
-      // 返回指定范围生成的树集合
-      return _result
+        // 返回指定范围生成的树集合
+        return _result
     }
     // n 为 0 是返回[]
     if (n === 0) return []
     // 指定最大范围
     return buildTree(1, n)
-  }
-  
+}
+
 
 
 //1-n二叉搜索树的不同树     的      总数
@@ -3050,7 +3050,7 @@ var generateTrees = function (n) {
 //因为遍历n个节点   那么数组是n+1个节点     
 //零个节点  一个节点可以组成一个二叉树
 //那么从两个节点开始
-var numTrees = function(n) {
+var numTrees = function (n) {
     const G = new Array(n + 1).fill(0);
     G[0] = 1;
     G[1] = 1;
@@ -3073,27 +3073,27 @@ var numTrees = function(n) {
 //第三个字符串是否是前面两个字符串交叉组成的
 //先要初始化第一行  第一列
 //然后从第二行第二列开始查找数据
-var isInterleave = function(s1, s2, s3) {
-    let n1= s1.length
+var isInterleave = function (s1, s2, s3) {
+    let n1 = s1.length
     let n2 = s2.length
-    if (n1+n2!=s3.length) return false
+    if (n1 + n2 != s3.length) return false
 
-    let dp = Array.from(new Array(n1+1), () => new Array(n2+1))
+    let dp = Array.from(new Array(n1 + 1), () => new Array(n2 + 1))
     dp[0][0] = true
     // 初始化   第一行和第一列初始化    类似机器人走达到终点
-    for(let i=1;i<=n1;i++) {
-        dp[i][0] = dp[i-1][0] && s1[i-1] == s3[i-1]
+    for (let i = 1; i <= n1; i++) {
+        dp[i][0] = dp[i - 1][0] && s1[i - 1] == s3[i - 1]
     }
-    for(let i=1;i<=n2;i++) {
-        dp[0][i] = dp[0][i-1] && s2[i-1] == s3[i-1]
+    for (let i = 1; i <= n2; i++) {
+        dp[0][i] = dp[0][i - 1] && s2[i - 1] == s3[i - 1]
     }
 
-    for(let i =1;i<=n1;i++) {
-        for(let j=1;j<=n2;j++) {
+    for (let i = 1; i <= n1; i++) {
+        for (let j = 1; j <= n2; j++) {
             //从第二行的第二列开始查找
             //行数据满足条件        也就是第一个字符串满足条件
             //列数据满足条件        也就是第一个字符串满足条件
-            dp[i][j] = dp[i-1][j] && s1[i-1] == s3[i-1+j] || dp[i][j-1] && s2[j-1] ==s3[i+j-1]
+            dp[i][j] = dp[i - 1][j] && s1[i - 1] == s3[i - 1 + j] || dp[i][j - 1] && s2[j - 1] == s3[i + j - 1]
         }
     }
 
@@ -3105,7 +3105,7 @@ var isInterleave = function(s1, s2, s3) {
 
 
 //杨辉三角      左上角[i-1][j-1]        右上角[i-1][j]
-var generate = function(numRows) {
+var generate = function (numRows) {
     const ret = [];
 
     for (let i = 0; i < numRows; i++) {
@@ -3128,25 +3128,25 @@ var generate = function(numRows) {
 //首先初始化第一行      第一列的数据        数据初始化  是目标移动到对应的地方所需要的步数
 //然后从第二行  第二列的数据开始遍历选择行走的最短的路径步数
 //两边向中心包围的趋势来获取最终最短的路径
-var minPathSum = function(grid) {
+var minPathSum = function (grid) {
     let m = grid.length,
         n = grid[0].length
-        //遍历初始化第一行数据      
-        for(let i = 1;i < m;i++){
-            grid[i][0]+=grid[i-1][0]
+    //遍历初始化第一行数据      
+    for (let i = 1; i < m; i++) {
+        grid[i][0] += grid[i - 1][0]
+    }
+    //
+    for (let i = 1; i < n; i++) {
+        grid[0][i] += grid[0][i - 1]
+    }
+    for (let i = 1; i < m; i++) {
+        for (let j = 1; j < n; j++) {
+            let top = grid[i][j] + grid[i - 1][j]
+            let left = grid[i][j] + grid[i][j - 1]
+            grid[i][j] = top > left ? left : top
         }
-        //
-        for(let i = 1;i < n;i++){
-            grid[0][i]+=grid[0][i-1]
-        }
-        for(let i = 1;i < m;i++){
-            for(let j = 1;j < n;j++){
-                let top = grid[i][j]+grid[i-1][j]
-                let left = grid[i][j]+grid[i][j-1]
-                grid[i][j]=top>left?left:top
-            }
-        }
-        return grid[m-1][n-1]
+    }
+    return grid[m - 1][n - 1]
 };
 
 
@@ -3179,7 +3179,7 @@ var isPalindrome = function (s) {
 
 //分割字符串    每个字符串都是回文字符串
 //不懂
-var partition = function(s) {
+var partition = function (s) {
     const dfs = (i) => {
         if (i === n) {
             ret.push(ans.slice());
@@ -3193,11 +3193,11 @@ var partition = function(s) {
             }
         }
     }
-    
+
     const n = s.length;
     const f = new Array(n).fill(0).map(() => new Array(n).fill(true));
     let ret = [], ans = [];
-    
+
     for (let i = n - 1; i >= 0; --i) {
         for (let j = i + 1; j < n; ++j) {
             f[i][j] = (s[i] === s[j]) && f[i + 1][j - 1];
@@ -3215,32 +3215,32 @@ var partition = function(s) {
 //写成代码逻辑  便是        dp[j-woreLen] + word === str        还需要有长度的限制
 var wordBreak = function (s, wordDict) {
     let len = s.length;
-  
+
     //初始化为''        这种后面    是前面数据组成的思想是需要多初始化一个元素的
     let dp = new Array(len + 1).fill('');
-  
+
     //j从1至len保证字符串能从第一位截取到最后一位
     for (let j = 1; j <= len; j++) {
-      let str = s.slice(0, j);
-  
-      //遍历wordDict
-      for (let word of wordDict) {
-        let wlen = word.length;
-        //
-        if (wlen <= j &&  dp[j - wlen] + word === str) {
-  
-          //判断成功，更新状态
-          dp[j] += dp[j - wlen] + word;
+        let str = s.slice(0, j);
+
+        //遍历wordDict
+        for (let word of wordDict) {
+            let wlen = word.length;
+            //
+            if (wlen <= j && dp[j - wlen] + word === str) {
+
+                //判断成功，更新状态
+                dp[j] += dp[j - wlen] + word;
+            }
         }
-      }
     }
     return dp[len] === s;
-  };
-  
+};
+
 
 
 //链表存在环的时候		返回环相遇的节点
-var detectCycle = function(head) {
+var detectCycle = function (head) {
     const visited = new Set();
     while (head !== null) {
         if (visited.has(head)) {
@@ -3255,66 +3255,66 @@ var detectCycle = function(head) {
 
 
 手写forEach()
-Array.prototype.myEach = function(callback,thisArg){
-if(!Array.isArray(this) || typeof(callback)!=='function'){
-throw new Error('wrong...')
-}
-let T = thisArg
-for(let i of this){
-callback.call(T,i)
-}
+Array.prototype.myEach = function (callback, thisArg) {
+    if (!Array.isArray(this) || typeof (callback) !== 'function') {
+        throw new Error('wrong...')
+    }
+    let T = thisArg
+    for (let i of this) {
+        callback.call(T, i)
+    }
 }
 
 
 
 //手写
-if(!Array.prototype.myEach){
-	Array.prototype.myEach = function(callback,thisArg){
-		var T ,k;
-		console.log("this===",this,thisArg)
-		if(this === null){
-			throw new TypeError('this is null or not defined');
-		}
-		
-		var O = Object(this);
-		console.log("O===",O,O.length >>> 0)
-		var len = O.length >>> 0;
-		if(typeof callback !== "function"){
-			throw new TypeError(callback + 'is not a function');
-		}
-		
-		if(arguments.length>1){
-			T = thisArg;
-		}
-		
-		k = 0;
-		
-		while(k<len){
-			var kValue;
-			if(k in O){
-				kValue = O[k];
-				callback.call(T,kValue,k,O);
-			}
-			k++;
-		}
-	}
+if (!Array.prototype.myEach) {
+    Array.prototype.myEach = function (callback, thisArg) {
+        var T, k;
+        console.log("this===", this, thisArg)
+        if (this === null) {
+            throw new TypeError('this is null or not defined');
+        }
+
+        var O = Object(this);
+        console.log("O===", O, O.length >>> 0)
+        var len = O.length >>> 0;
+        if (typeof callback !== "function") {
+            throw new TypeError(callback + 'is not a function');
+        }
+
+        if (arguments.length > 1) {
+            T = thisArg;
+        }
+
+        k = 0;
+
+        while (k < len) {
+            var kValue;
+            if (k in O) {
+                kValue = O[k];
+                callback.call(T, kValue, k, O);
+            }
+            k++;
+        }
+    }
 }
 
-let a = [1,2,3,4];
-a.myEach((value,index)=>{
-	console.log(value,index)
+let a = [1, 2, 3, 4];
+a.myEach((value, index) => {
+    console.log(value, index)
 })
 
 
-	
+
 
 //手写forEach函数
-arr.myEach((i)=>console.log(i))
-Array.prototype.myEach = function(callback){
-if(!Array.isArray(this)){throw new Error('wrong...')}
-let T = this
-for(let i of this)
-callBack.call(this,i)
+arr.myEach((i) => console.log(i))
+Array.prototype.myEach = function (callback) {
+    if (!Array.isArray(this)) { throw new Error('wrong...') }
+    let T = this
+    for (let i of this)
+        callBack.call(this, i)
 
 }
 
@@ -3329,22 +3329,22 @@ callBack.call(this,i)
 
 //手写call
 //例子obj1.fn.call(obj2,...args)
-Function.prototype.myCall = function(target){
+Function.prototype.myCall = function (target) {
     //target为空的时候会指向window对象
-if(target === 'undefined' || target === null){
-    target = window
-}
+    if (target === 'undefined' || target === null) {
+        target = window
+    }
 
 
-//target的函数      来改变调用者的指针指向
-target.fn = this
-//获取myCall函数的传入的参数
-var getArgs = [...arguments].slice(1)
-//最后对象上面是不能平白无故多出一个函数的      那么我们用一个变量来存储函数并且返回
-//并且记得删除平白无故多出的函数
-var res = target.fn(getArgs)
-delete target.fn
-return res
+    //target的函数      来改变调用者的指针指向
+    target.fn = this
+    //获取myCall函数的传入的参数
+    var getArgs = [...arguments].slice(1)
+    //最后对象上面是不能平白无故多出一个函数的      那么我们用一个变量来存储函数并且返回
+    //并且记得删除平白无故多出的函数
+    var res = target.fn(getArgs)
+    delete target.fn
+    return res
 }
 
 
@@ -3353,34 +3353,34 @@ return res
 
 //手写apply
 //obj1.fn.apply(target,[args])
-Function.prototype.myApply = function(target){
-if(typeof this !== 'function'){
-    throw new Error('wrong...')
+Function.prototype.myApply = function (target) {
+    if (typeof this !== 'function') {
+        throw new Error('wrong...')
+    }
+    target = target || window
+    target.fn = this
+    var getArgs = arguments[1]
+    var res = target.fn(getArgs)
+    delete target.fn
+    return res
 }
-target = target || window
-target.fn = this
-var getArgs = arguments[1]
-var res = target.fn(getArgs)
-delete target.fn
-return res
-}
 
 
 
 
-Function.prototype.myBind = function(target){
-if(typeof this !== 'function'){throw new Error('TypeError')}
-var that = this
-var args1 = [].slice.call(arguments,1)
-var bind2 = function(){
-var args2 = [].slice.call(arguments)
-return that.apply(typeof this.constructor === that ? this:target,args1.concat(args2))
-}
-var fn = function(){}
-fn.prototype = this.prototype
-bind2.prototype = new fn()
-bind2.prototype.constructor = bind2
-return bind2
+Function.prototype.myBind = function (target) {
+    if (typeof this !== 'function') { throw new Error('TypeError') }
+    var that = this
+    var args1 = [].slice.call(arguments, 1)
+    var bind2 = function () {
+        var args2 = [].slice.call(arguments)
+        return that.apply(typeof this.constructor === that ? this : target, args1.concat(args2))
+    }
+    var fn = function () { }
+    fn.prototype = this.prototype
+    bind2.prototype = new fn()
+    bind2.prototype.constructor = bind2
+    return bind2
 
 }
 
@@ -3392,20 +3392,20 @@ return bind2
 
 
 //bind
-Function.prototype.myBind = function(obj){
-if(typeof this !== 'function'){
-throw new Error('Function.prototype error-what is tring to be bound')
-}
-var _this = this
-var fn = function(){}
-var objArgs = Array.prototype.slice.call(arguments,1)
-var bound = function(){
-let boundArgs =  Array.prototype.slice.call(arguments)
-return _this.apply(this.constructor === _this ? this:obj,objArgs.concat(boundArgs))
-}
-fn.prototype = this.prototype
-bound.prototype = new fn()
-return bound
+Function.prototype.myBind = function (obj) {
+    if (typeof this !== 'function') {
+        throw new Error('Function.prototype error-what is tring to be bound')
+    }
+    var _this = this
+    var fn = function () { }
+    var objArgs = Array.prototype.slice.call(arguments, 1)
+    var bound = function () {
+        let boundArgs = Array.prototype.slice.call(arguments)
+        return _this.apply(this.constructor === _this ? this : obj, objArgs.concat(boundArgs))
+    }
+    fn.prototype = this.prototype
+    bound.prototype = new fn()
+    return bound
 }
 
 
@@ -3416,75 +3416,75 @@ return bound
 //栈实现队列
 let stack1 = []
 let stack2 = []
-function pop(){
-if(stack2.length === 0){
-while(stack1.length)
-stack2.push(stack1.pop())
+function pop() {
+    if (stack2.length === 0) {
+        while (stack1.length)
+            stack2.push(stack1.pop())
+    }
+    return stack2.pop()
 }
-return stack2.pop()
-}
-function push(node){
-while(stack2.length){
-stack1.push(stack2.pop())
-}
-stack1.push(node)
+function push(node) {
+    while (stack2.length) {
+        stack1.push(stack2.pop())
+    }
+    stack1.push(node)
 }
 
 
 
 //队列实现栈
-var myQueue = function(){var stack = []}
-myQueue.prototype.add = function(node){this.stack.push(node)}
-myQueue.prototype.poll = function(){
-var temp = []
-while(stack.length)temp.push(stack.pop())
-let res = temp.pop()
-while(temp.length)stack.push(temp.pop())
-return res
+var myQueue = function () { var stack = [] }
+myQueue.prototype.add = function (node) { this.stack.push(node) }
+myQueue.prototype.poll = function () {
+    var temp = []
+    while (stack.length) temp.push(stack.pop())
+    let res = temp.pop()
+    while (temp.length) stack.push(temp.pop())
+    return res
 }
 
 
 
 //indexOf函数的实现
-function myIndexOf(str1,str2,n){
-let len1 = str1.length
-let len2 = str2.length
-let i = 0
-if(n <= -1|| n === undefined || n === null){
-i = 0
-}else if(n > len2){
-return -1
-}else{
-i = n
-}
-if(len1 > len2)return -1
-for(var j = i;j < len2 - len1 + 1;j++){
-let target = str2.substr(j,len1)
-if(str1 === target)return j
-}
-return -1
+function myIndexOf(str1, str2, n) {
+    let len1 = str1.length
+    let len2 = str2.length
+    let i = 0
+    if (n <= -1 || n === undefined || n === null) {
+        i = 0
+    } else if (n > len2) {
+        return -1
+    } else {
+        i = n
+    }
+    if (len1 > len2) return -1
+    for (var j = i; j < len2 - len1 + 1; j++) {
+        let target = str2.substr(j, len1)
+        if (str1 === target) return j
+    }
+    return -1
 }
 
 
 //定时器的创建和清除	setInterval		setTimeout
-function b(){
-let timer = setInterval(()=>{
-//...doSomething
-clearInterval(timer)
-b()
-},50)
+function b() {
+    let timer = setInterval(() => {
+        //...doSomething
+        clearInterval(timer)
+        b()
+    }, 50)
 }
 b()
 
 
-function b(time){
-return function c(){
-clearTimeout(timer)
-var timer = setTimeout(()=>{
-console.log(this)
-c()
-},time)
-}
+function b(time) {
+    return function c() {
+        clearTimeout(timer)
+        var timer = setTimeout(() => {
+            console.log(this)
+            c()
+        }, time)
+    }
 }
 b(500)()
 
@@ -3492,12 +3492,12 @@ b(500)()
 
 
 //promise封装ajax
-function promiseAJAX(url){
-    return new Promise((resolve,reject)=>{
+function promiseAJAX(url) {
+    return new Promise((resolve, reject) => {
         var xhr = new XMLHttpRequest()
-        xhr.open('GET',url)
+        xhr.open('GET', url)
         xhr.send()
-        xhr.onreadystatechange=function(){
+        xhr.onreadystatechange = function () {
             //数据的流程        因为没有写上这一句流程语句      报错不能正确获取数据
             //因为这个readyState状态不是4的话       说明数据还是在传输的过程        那么直接return 
             //否则传输的数据是不完整不正确 的       那么这个时候需要填上这一句流程控制最后获取正确的数据
@@ -3506,11 +3506,11 @@ function promiseAJAX(url){
             //0请求还没有初始化     1服务器连接已经建立     2请求已经接收   3请求处理中     4请求已经完成  响应已经就绪
             //我没有设置readyState监视其状态值的改变        只有正确的状态才能够得到正确的结果
 
-            if(this.readyState!==4)return//没有正确的状态   会直接返回      状态的改变自然会触发onreadystatechange函数的执行
+            if (this.readyState !== 4) return//没有正确的状态   会直接返回      状态的改变自然会触发onreadystatechange函数的执行
 
-            if(this.status < 300 && this.status >= 200){
+            if (this.status < 300 && this.status >= 200) {
                 resolve(JSON.parse(this.responseText))
-            }else{
+            } else {
                 reject(new Error('wrong...'))
             }
         }
@@ -3518,14 +3518,14 @@ function promiseAJAX(url){
 }
 
 promiseAJAX('https://api.apiopen.top/getJoke?page=1&count=2&type=video')
-.then(
-    data => {
-        console.log('yes',data)//正确数据的输出
-    },
-    error => {
-        alert(error.message)//错误数据的输出
-    }
-)
+    .then(
+        data => {
+            console.log('yes', data)//正确数据的输出
+        },
+        error => {
+            alert(error.message)//错误数据的输出
+        }
+    )
 
 //promise基础版本
 //三个状态      resolved   rejected  pending        promise状态变化执行
@@ -3537,44 +3537,44 @@ promiseAJAX('https://api.apiopen.top/getJoke?page=1&count=2&type=video')
 const RESOLVE = 'resolved'
 const REJECT = 'rejected'
 const PENDING = 'pending'
-class myPromise{
+class myPromise {
     //promise的初始状态是pending 
-status = PENDING;
+    status = PENDING;
 
-//改变状态函数的默认参数
-result = undefined
-reject = undefined
-//promise的构造函数
-constructor(excution){
-    //promise的两个改变状态的函数
-const resolve = (result)=>{
-    //改变状态的函数会被调用者传入参数
-    //定义响应的变量来接收调用者传入的参数
-    if(this.status = PENDING){
-        //resolve来获取成功状态下面传入的参数
-        this.result = result
-        this.status = RESOLVE
-    }
-}
-const reject = (reason)=>{
-    if(this.status = PENDING){
-        this.reason = reason
-        this.status = REJECT
-    }
-}
-excution(resolve,reject)
-}
-
-//onResolved       onRejected是两个状态回调函数        就是resolved  rejected状态的回调函数
-then(onResolved,onRejected){
-    if(this.status === RESOLVE){
-        onResolved(this.result)
-    }
-    if(this.status === REJECT){
-        onRejected(this.reason)
+    //改变状态函数的默认参数
+    result = undefined
+    reject = undefined
+    //promise的构造函数
+    constructor(excution) {
+        //promise的两个改变状态的函数
+        const resolve = (result) => {
+            //改变状态的函数会被调用者传入参数
+            //定义响应的变量来接收调用者传入的参数
+            if (this.status = PENDING) {
+                //resolve来获取成功状态下面传入的参数
+                this.result = result
+                this.status = RESOLVE
+            }
+        }
+        const reject = (reason) => {
+            if (this.status = PENDING) {
+                this.reason = reason
+                this.status = REJECT
+            }
+        }
+        excution(resolve, reject)
     }
 
-}
+    //onResolved       onRejected是两个状态回调函数        就是resolved  rejected状态的回调函数
+    then(onResolved, onRejected) {
+        if (this.status === RESOLVE) {
+            onResolved(this.result)
+        }
+        if (this.status === REJECT) {
+            onRejected(this.reason)
+        }
+
+    }
 }
 
 
@@ -3583,15 +3583,15 @@ then(onResolved,onRejected){
  * @param {number[]} nums
  * @return {boolean}
  */
- var canJump = function(nums) {
+var canJump = function (nums) {
     let cover = 0,
         len = nums.length;
 
-for(let i = 0;i <= cover;i++ ){
-    cover = cover>nums[i]+i?cover:nums[i]+i
-if(i+nums[i]>=len-1)return true
-}
-return false
+    for (let i = 0; i <= cover; i++) {
+        cover = cover > nums[i] + i ? cover : nums[i] + i
+        if (i + nums[i] >= len - 1) return true
+    }
+    return false
 };
 
 
@@ -3602,7 +3602,7 @@ return false
 //行数组        列数组  如果数据为零        那么使用两个数组来标记  当前的行数或者列数
 //循环矩阵之后      标记行数    列数之后
 //再次遍历二维数组  将标记的行数列数置为0       返回置零 的数组
-var setZeroes = function(matrix) {
+var setZeroes = function (matrix) {
     const m = matrix.length, n = matrix[0].length;
     const row = new Array(m).fill(false);
     const col = new Array(n).fill(false);
@@ -3628,14 +3628,14 @@ var setZeroes = function(matrix) {
 
 
 //二维数组的路径条数问题        没有任何阻碍        那么路径数量是前面一列      上面一行的路径数量和数
-var uniquePaths = function(m, n) {
-    let arr = Array(m).fill().map(()=>Array(n).fill(1))
-for(let i = 1;i < m;i++){
-    for(let j = 1;j < n;j++){
-        arr[i][j]=(arr[i-1][j]+arr[i][j-1])
+var uniquePaths = function (m, n) {
+    let arr = Array(m).fill().map(() => Array(n).fill(1))
+    for (let i = 1; i < m; i++) {
+        for (let j = 1; j < n; j++) {
+            arr[i][j] = (arr[i - 1][j] + arr[i][j - 1])
+        }
     }
-}
-return arr[m-1][n-1]
+    return arr[m - 1][n - 1]
 };
 
 
@@ -3648,7 +3648,7 @@ return arr[m-1][n-1]
 //从岛屿的一点触发   直到不能继续执行为止       那么就会导致岛屿的数量增加1
 //边界条件是<0      >=行数/列数     本身为0的情况
 //dfs深度优先遍历特征
-    //相反的数据方向        判断数据的特征值
+//相反的数据方向        判断数据的特征值
 
 const numIslands = grid => {
     // 定义深度优先遍历函数
@@ -3685,30 +3685,28 @@ const numIslands = grid => {
 //二维数组快速找去目标值
 //先寻找目标所在的行        没有行直接返会false
 //继续寻找所在行的数据有无符合目标值        返回找寻结果
-var searchMatrix = function(matrix, target) {
+var searchMatrix = function (matrix, target) {
     let m = matrix.length,
         n = matrix[0].length,
         resm = false,
         resn = false
-        if(target<matrix[0][0] || target>matrix[m-1][n-1])
+    if (target < matrix[0][0] || target > matrix[m - 1][n - 1])
         return false
-        for(let i = 0;i < m;i++){
-            if(target>=matrix[i][0]&&target<=matrix[i][n-1])
-            {
-                resm=i
-                break
-            }
+    for (let i = 0; i < m; i++) {
+        if (target >= matrix[i][0] && target <= matrix[i][n - 1]) {
+            resm = i
+            break
         }
-        if(resm === false)return false
-        for(let i = 0;i < n;i++){
-            if(target===matrix[resm][i])
-            {
-                resn=true
-                break
-            }
+    }
+    if (resm === false) return false
+    for (let i = 0; i < n; i++) {
+        if (target === matrix[resm][i]) {
+            resn = true
+            break
         }
-        return resn
-    };
+    }
+    return resn
+};
 
 
 
@@ -3716,11 +3714,11 @@ var searchMatrix = function(matrix, target) {
 //反转字符串里面的单词
 //多余的连续空格是直接用一个空格替换    s.replace(/(\s)\1+/g," ")
 //正则表达式使用
-var reverseWords = function(s) {
-    s = s.replace(/(\s)\1+/g," ")
-let arr = s.trim().split(' ')
-let res = arr.reverse().join(' ')
-return res
+var reverseWords = function (s) {
+    s = s.replace(/(\s)\1+/g, " ")
+    let arr = s.trim().split(' ')
+    let res = arr.reverse().join(' ')
+    return res
 };
 
 
@@ -3731,18 +3729,18 @@ return res
 //杨辉三角形返回指定行数的杨辉三角形的数据
 //二维数组的巧妙使用    首位数据 的抢先初始化   
 //继续下面数据的执行的时候  是需要跳过首位数据的 
-    var getRow = function(rowIndex) {
-        const C = new Array(rowIndex + 1).fill(0);
-        for (let i = 0; i <= rowIndex; ++i) {
-            C[i] = new Array(i + 1).fill(0);
-            C[i][0] = C[i][i] = 1;
-            for (let j = 1; j < i; j++) {
-                C[i][j] = C[i - 1][j - 1] + C[i - 1][j];
-            }
+var getRow = function (rowIndex) {
+    const C = new Array(rowIndex + 1).fill(0);
+    for (let i = 0; i <= rowIndex; ++i) {
+        C[i] = new Array(i + 1).fill(0);
+        C[i][0] = C[i][i] = 1;
+        for (let j = 1; j < i; j++) {
+            C[i][j] = C[i - 1][j - 1] + C[i - 1][j];
         }
-        return C[rowIndex];
-    };
-    
+    }
+    return C[rowIndex];
+};
+
 
 
 
@@ -3752,18 +3750,18 @@ return res
 //前序遍历      第一个节点为根节点          中序遍历        根节点的左边是左子树的形成
 //换句话说前序遍历的关键节点是第一个节点        中序遍历的关键节点是中间根节点划分左右边界
 //根据前序遍历      中序遍历生成二叉树
-var buildTree = function(preorder, inorder) {
+var buildTree = function (preorder, inorder) {
     //
-    if(inorder.length === 0)return null
-//第一个根节点是前序遍历的第一个元素
-let root = new TreeNode(preorder[0])
-//mid右边的节点是右子树的全部数据节点
-let mid = inorder.indexOf(preorder[0])
-//根节点 的左子树的前序遍历     和      中序遍历的节点截取  递归生成树
-//左子树递归的终点是左边可以截取的字符数量为零
-root.left = buildTree(preorder.slice(1,mid+1),inorder.slice(0,mid))
-root.right = buildTree(preorder.slice(mid+1),inorder.slice(mid+1))
-return root
+    if (inorder.length === 0) return null
+    //第一个根节点是前序遍历的第一个元素
+    let root = new TreeNode(preorder[0])
+    //mid右边的节点是右子树的全部数据节点
+    let mid = inorder.indexOf(preorder[0])
+    //根节点 的左子树的前序遍历     和      中序遍历的节点截取  递归生成树
+    //左子树递归的终点是左边可以截取的字符数量为零
+    root.left = buildTree(preorder.slice(1, mid + 1), inorder.slice(0, mid))
+    root.right = buildTree(preorder.slice(mid + 1), inorder.slice(mid + 1))
+    return root
 };
 
 
@@ -3776,11 +3774,11 @@ return root
 //二进制数据计算对2取余数的操作         十进制计算数据是对10取余数的操作
 //n进制计算是对n取余数的操作        记得前面数据溢出的加上
 
- var addBinary = function(a, b) {
+var addBinary = function (a, b) {
     let ans = "";
     let ca = 0;
     //两个字符串只要有一个字符没有结束就继续执行函数
-    for(let i = a.length - 1, j = b.length - 1;i >= 0 || j >= 0; i--, j--) {
+    for (let i = a.length - 1, j = b.length - 1; i >= 0 || j >= 0; i--, j--) {
         let sum = ca;
         sum += i >= 0 ? parseInt(a[i]) : 0;
         sum += j >= 0 ? parseInt(b[j]) : 0;
@@ -3796,7 +3794,7 @@ return root
 
 //二叉树的中序遍历
 //遍历左子树的所有节点  插入根节点  遍历右子树的所有节点    空数组插入遍历的节点数据
-var inorderTraversal = function(root) {
+var inorderTraversal = function (root) {
     const res = [];
     const inorder = (root) => {
         if (!root) {
@@ -3841,7 +3839,7 @@ const sortColors = nums => {
 //标准数据的长度那么会return        当长度合适的时候会返回数据组合
 //深度优先遍历包不包含当前的数据会产生两种数据组合方向
 //数组数据的 组合       [...arr,param]
-var combine = function(n, k) {
+var combine = function (n, k) {
     const ans = [];
     const dfs = (cur, n, k, temp) => {
         // 剪枝：temp 长度加上区间 [cur, n] 的长度小于 k，不可能构造出长度为 k 的 temp
@@ -3865,20 +3863,20 @@ var combine = function(n, k) {
 
 
 //arr.myAt(index)
-Array.prototype.myAt = function(index){
+Array.prototype.myAt = function (index) {
     let len = this.length
-    if(len<index)return undefined
-    if(index>=0)return this[index]
-    return this[len+index]
+    if (len < index) return undefined
+    if (index >= 0) return this[index]
+    return this[len + index]
 }
 
 
 
 
 //arr.myConcat()
-Array.prototype.myConcat = function(target){
-    if(Array.isArray(target)){
-        return [...this,target]
+Array.prototype.myConcat = function (target) {
+    if (Array.isArray(target)) {
+        return [...this, target]
     }
     throw new Error('TypeError..')
 }
@@ -3891,7 +3889,7 @@ Array.prototype.myConcat = function(target){
 
 //分隔回文串    可能的分隔方案中每一个元素都是回文串
 
-var partition = function(s) {
+var partition = function (s) {
     const dfs = (i) => {
         //字符串截取完毕    长度是等于字符串的长度
         if (i === n) {
@@ -3907,11 +3905,11 @@ var partition = function(s) {
             }
         }
     }
-    
+
     const n = s.length;
     const f = new Array(n).fill(0).map(() => new Array(n).fill(true));
     let ret = [], ans = [];
-    
+
     for (let i = n - 1; i >= 0; --i) {
         for (let j = i + 1; j < n; ++j) {
             f[i][j] = (s[i] === s[j]) && f[i + 1][j - 1];
@@ -3926,10 +3924,10 @@ var partition = function(s) {
 
 
 //恢复ip地址
-var restoreIpAddresses = function(s) {
+var restoreIpAddresses = function (s) {
     const SEG_COUNT = 4;
     const segments = new Array(SEG_COUNT);
-    const ans = []; 
+    const ans = [];
 
     const dfs = (s, segId, segStart) => {
         // 如果找到了 4 段 IP 地址并且遍历完了字符串，那么就是一种答案
@@ -3971,16 +3969,15 @@ var restoreIpAddresses = function(s) {
 
 //千位分隔符
 //1,200,200     fengefn(num)
-function fengefn(num){
-    let [len,arr] = [num.toString().length,num.toString().split('')]
-    
-    if(len <= 3)
-    {
+function fengefn(num) {
+    let [len, arr] = [num.toString().length, num.toString().split('')]
+
+    if (len <= 3) {
         return num
     }
-    let sign = len/3 | 0
-    for(let i = 0;i < sign;i++){
-        arr.splice(-3*(i+1)-i,0,',')
+    let sign = len / 3 | 0
+    for (let i = 0; i < sign; i++) {
+        arr.splice(-3 * (i + 1) - i, 0, ',')
     }
     return arr.join('')
 
@@ -3988,10 +3985,10 @@ function fengefn(num){
 
 
 //正则表达式实现分隔符号
-function fengereg(num){
+function fengereg(num) {
     let [len] = [num.length]
-    if(len<=3)return num
-   let res =  num.toString().replace(/(\d)(?=(\d{3})+$)/g,()=>{
+    if (len <= 3) return num
+    let res = num.toString().replace(/(\d)(?=(\d{3})+$)/g, () => {
         return ','
     })
     return res
@@ -4013,28 +4010,28 @@ const minimumTotal = (triangle) => {
     // 初始化dp数组
     const dp = new Array(h);
     for (let i = 0; i < h; i++) {
-      dp[i] = new Array(triangle[i].length);
+        dp[i] = new Array(triangle[i].length);
     }
-  
+
     for (let i = h - 1; i >= 0; i--) { // 自底而上遍历
-      for (let j = 0; j < triangle[i].length; j++) { // 同一层的
-        if (i == h - 1) {  // base case 最底层
-          dp[i][j] = triangle[i][j];  
-        } else { // 状态转移方程，上一层由它下面一层计算出
-          dp[i][j] = Math.min(dp[i + 1][j], dp[i + 1][j + 1]) + triangle[i][j];
+        for (let j = 0; j < triangle[i].length; j++) { // 同一层的
+            if (i == h - 1) {  // base case 最底层
+                dp[i][j] = triangle[i][j];
+            } else { // 状态转移方程，上一层由它下面一层计算出
+                dp[i][j] = Math.min(dp[i + 1][j], dp[i + 1][j + 1]) + triangle[i][j];
+            }
         }
-      }
     }
     return dp[0][0];
-  };
-  
+};
+
 
 
 //版本号的比较      1   -1    0
 //1.0.1     1.0.0
 //比较存在三种情况  长度不足的数据是以0来补齐数据的     那么想象的数据是存在的
 //
-var compareVersion = function(version1, version2) {
+var compareVersion = function (version1, version2) {
     const v1 = version1.split('.');
     const v2 = version2.split('.');
     for (let i = 0; i < v1.length || i < v2.length; ++i) {
@@ -4065,51 +4062,51 @@ var compareVersion = function(version1, version2) {
 //每一次循环新建三个数据来装载最大值    最小值      当前值
 //当前数据的来源是上一次数据的依据
 
- var maxProduct = function(nums) {
+var maxProduct = function (nums) {
     if (nums.length == 0) return 0
-  
-  //       [   2,    3,    -2,    4,    5,    -10,    -1   ]
-  // curMax    2     6     -2     4     20     2400   200
-  // curMin    2     3     -12    -48   -240   -200   -2400
-  
+
+    //       [   2,    3,    -2,    4,    5,    -10,    -1   ]
+    // curMax    2     6     -2     4     20     2400   200
+    // curMin    2     3     -12    -48   -240   -200   -2400
+
     let cur = 0
     // 把 cur 处理掉时，能得到的最小值
     let curMin = nums[cur]
-  
+
     // 把 cur 处理掉时，能得到的最大值
     let curMax = nums[cur]
-  
+
     // 所有 curMax 中最大的值，最后的 curMax 不一定是答案
     let resMax = nums[cur]
-  
-    for(let i = 1; i < nums.length; ++i) {
-  
-      let tmp1 = nums[i] * curMax
-      let tmp2 = nums[i] * curMin
-      let tmp3 = nums[i] // 不与过往的最大、最小数相乘，自己自立门户，说不定就是最值
-  
-      curMax = Math.max(tmp1, tmp2, tmp3)
-      curMin = Math.min(tmp1, tmp2, tmp3)
-  
-      if (curMax > resMax) {
-        resMax = curMax
-      }
-  
-      // console.log(`${curMax}  ${curMin}`)
+
+    for (let i = 1; i < nums.length; ++i) {
+
+        let tmp1 = nums[i] * curMax
+        let tmp2 = nums[i] * curMin
+        let tmp3 = nums[i] // 不与过往的最大、最小数相乘，自己自立门户，说不定就是最值
+
+        curMax = Math.max(tmp1, tmp2, tmp3)
+        curMin = Math.min(tmp1, tmp2, tmp3)
+
+        if (curMax > resMax) {
+            resMax = curMax
+        }
+
+        // console.log(`${curMax}  ${curMin}`)
     }
-  
+
     return resMax
-  };
+};
 
 
 
-  
+
 
 //字符串形式返回小数
 //小数循环部分放在括号里面
 //得出的数据符号首先是看两个数据的符号的        异或的结果
 //
-var fractionToDecimal = function(numerator, denominator) {
+var fractionToDecimal = function (numerator, denominator) {
     if (numerator % denominator == 0) {
         return '' + Math.floor(numerator / denominator);
     }
@@ -4158,7 +4155,7 @@ var fractionToDecimal = function(numerator, denominator) {
 //left      right       (right-left)/2|0
 //mid+1         mid-1           mid         return -1
 //每一行数据的搜索
-var searchMatrix = function(matrix, target) {
+var searchMatrix = function (matrix, target) {
     for (const row of matrix) {
         const index = search(row, target);
         if (index >= 0) {
@@ -4190,15 +4187,517 @@ const search = (nums, target) => {
 //列表数据的搜索
 //数据具有规律性    每一次比较数据      交换的 是行数据     列数据
 //左下角数据的转化
- var searchMatrix = function(matrix, target) {
+var searchMatrix = function (matrix, target) {
     const m = matrix.length, n = matrix[0].length;
-    for(let i=m-1,j=0;i>=0&&j<n;){
-        if(matrix[i][j] == target)
+    for (let i = m - 1, j = 0; i >= 0 && j < n;) {
+        if (matrix[i][j] == target)
             return true;
-        else if(matrix[i][j] < target)
+        else if (matrix[i][j] < target)
             j += 1;
         else
             i -= 1;
     }
     return false;
+};
+
+
+// 动态规划     打家劫舍
+// dp[i] = Math.max(dp[i-1], dp[i-2] + num[i-1])
+// 动态规划 从最基础的部分开始比较数据      得出的结果是前面的数据所得
+// 那么数组的数据长度是会比提供数据的长度多一个结果数据的
+// 数据初始化做好
+// 得出公式 根据公式求解
+var rob = function (nums) {
+    let [dp, len] = [[], nums.length]
+    if (len == 1) {
+        return nums[0]
+    }
+    dp[0] = 0
+    dp[1] = nums[0]
+    for (let i = 2; i <= len; i++) {
+        dp[i] = dp[i - 1] > dp[i - 2] + nums[i - 1] ? dp[i - 1] : dp[i - 2] + nums[i - 1]
+    }
+    return dp[len]
+
+};
+
+
+
+// 打家劫舍
+// 房屋相邻情况     首尾房间相邻是不允许的
+var rob = function (nums) {
+    const length = nums.length;
+    if (length === 1) {
+        return nums[0];
+    } else if (length === 2) {
+        return Math.max(nums[0], nums[1]);
+    }
+    return Math.max(robRange(nums, 0, length - 2), robRange(nums, 1, length - 1));
+};
+
+const robRange = (nums, start, end) => {
+
+    let [first, second] = [nums[start], Math.max(nums[start], nums[start + 1])]
+
+    for (let i = start + 2; i <= end; i++) {
+        const temp = second
+        second = Math.max(nums[i] + first, second)
+        first = temp
+    }
+
+    return second
+}
+
+
+
+// 股票最佳的时机
+// 每一次循环都会计算最大值 最小值
+var maxProfit = function (prices) {
+
+    let [max, min] = [0, prices[0]]
+
+    for (const price of prices) {
+        max = Math.max(max, price - min)
+        min = Math.min(min, price)
+    }
+
+    return max
+
+};
+
+// 可以形成正方形的最大面积
+var maximalSquare = function (matrix) {
+    const [m, n] = [matrix.length, matrix[0].length]
+    let dp = []
+    let max_len = 0
+    // gouj
+    for (let i = 0; i < m; i++) {
+        dp.push([])
+        for (let j = 0; j < n; j++) {
+            if (matrix[i][j] == 0) {
+                dp[i][j] = 0
+            } else {
+                dp[i][j] = 1
+            }
+        }
+    }
+    for (let i = 1; i < m; i++) {
+        for (let j = 1; j < n; j++) {
+            if (dp[i][j] == 0) {
+                continue;
+            } else {
+                dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1;
+                max_len = Math.max(max_len, dp[i][j])
+            }
+        }
+    }
+    // 边界问题 因为i是从开始j也是从1开始 会造成 dp[0][1] 和 dp[1][0]位置的解没考录到
+    if (!max_len) {
+        max_len = Math.max(max_len, dp[0][0] || 0, dp[0]?.[1] || 0, dp?.[1]?.[0] || 0)
+    }
+    return max_len * max_len;
+
+};
+
+
+
+
+
+// 找出计算公式中的全部可能的计算情况
+
+var diffWaysToCompute = function (expression) {
+    let map = new Map();
+    let results = [];
+    if (map.has(expression)) return map.get(expression);
+    if (!isNaN(expression - 0)) {
+        results.push(expression - 0);
+        return results;
+    }
+    for (let i = 0; i < expression.length; i++) {
+        if (isNaN(expression[i])) {
+            const op = expression[i];
+            const left = diffWaysToCompute(expression.slice(0, i));
+            const right = diffWaysToCompute(expression.slice(i + 1));
+            for (const l of left) {
+                for (const r of right) {
+                    if (op === '+') {
+                        results.push(l + r);
+                    } else if (op === '-') {
+                        results.push(l - r);
+                    } else {
+                        results.push(l * r);
+                    }
+                }
+            }
+        }
+    }
+    map.set(expression, results);
+    return results;
+};
+
+
+
+// 后序遍历和中序遍历
+var buildTree = function (inorder, postorder) {
+    let post_idx;
+    const idx_map = new Map();
+    const helper = (in_left, in_right) => {
+        // 如果这里没有节点构造二叉树了，就结束
+        if (in_left > in_right) {
+            return null;
+        }
+
+        // 选择 post_idx 位置的元素作为当前子树根节点
+        const root_val = postorder[post_idx];
+        const root = new TreeNode(root_val);
+
+        // 根据 root 所在位置分成左右两棵子树
+        const index = idx_map.get(root_val);
+
+        // 下标减一
+        post_idx--;
+        // 构造右子树
+        // 必须先构造右边子树       右子树遍历完成  那么 post_idx的下标数目达到相应的程度
+        // 从右到左的顺序是不可变的
+        root.right = helper(index + 1, in_right);
+        // 构造左子树
+        root.left = helper(in_left, index - 1);
+        return root;
+    }
+
+    // 从后序遍历的最后一个元素开始
+    post_idx = postorder.length - 1;
+
+    // 建立（元素，下标）键值对的哈希表
+    let idx = 0;
+    inorder.forEach((val, idx) => {
+        idx_map.set(val, idx);
+    });
+    return helper(0, inorder.length - 1);
+};
+
+
+
+
+// 最长严格递增序列的长度
+const lengthOfLIS = (nums) => {
+    let dp = Array(nums.length).fill(1);
+    let result = 1;
+
+    for (let i = 1; i < nums.length; i++) {
+        // 数据的每一轮循环得出一个最大的长度   
+        for (let j = 0; j < i; j++) {
+            // 满足递增数据的要求 递增数据的默认长度是1
+            // 从右向左的数据取值判断
+            if (nums[i] > nums[j]) {//当nums[i] > nums[j]，则构成一个上升对
+                dp[i] = Math.max(dp[i], dp[j] + 1);//更新dp[i]
+            }
+        }
+        // 每一轮循环的更新结果
+        result = Math.max(result, dp[i]);//更新结果
+    }
+
+    return result;
+};
+
+
+
+
+
+// 
+var nthUglyNumber = function (n) {
+
+    if (n === 1) {
+        return 1
+    }
+
+    let [a, b, c, n1, n2, n3, min, res] = [0, 0, 0, 1, 1, 1, 1, []]
+    res[0] = 1
+
+    for (let i = 1; i < n; i++) {
+        n1 = res[a] * 2
+        n2 = res[b] * 3
+        n3 = res[c] * 5
+
+        min = Math.min(n1, n2, n3)
+        res[i] = min
+
+        if (min === n1) {
+            a++
+        }
+        if (min === n2) {
+            b++
+        }
+        if (min === n3) {
+            c++
+        }
+    }
+
+    return res[n - 1]
+};
+
+
+
+// 除去自身元素的乘积数组   
+const productExceptSelf = nums => {
+    const len = nums.length;
+    // 定义左累积数组、右累积数组，初始值都为 1
+    const [resLeft, resRight] = [new Array(len).fill(1), new Array(len).fill(1)];
+    for (let i = 1; i < len; i++) {
+        // 从i=1开始，作左累积运算
+        resLeft[i] = resLeft[i - 1] * nums[i - 1];
+    }
+    for (let i = len - 2; i >= 0; i--) {
+        // 从i=len - 2开始，作右累积运算
+        resRight[i] = resRight[i + 1] * nums[i + 1];
+    }
+    const res = [];
+    for (let i = 0; i < len; i++) {
+        // 两个数组的元素对应相乘，即可得到当前元素的答案
+        res.push(resLeft[i] * resRight[i]);
+    }
+    return res;
+};
+
+
+// shellSort       插入排序分组的排序算法
+function shellSort(arr, sendGap = 5) {
+    let [len, gap, temp] = [arr.length, 1, 0]
+    while (gap < len / sendGap) {
+        gap = gap * sendGap + 1
+    }
+    for (gap; gap > 0; gap = Math.floor(gap / sendGap)) {
+        for (var i = gap; i < len; i++) {
+            temp = arr[i]
+            for (var j = i - gap; j >= 0 && arr[j] > temp; j -= gap) {
+                arr[j + gap] = arr[j]
+            }
+            arr[j + gap] = temp
+        }
+    }
+    return arr
+}
+
+
+
+// 数组当中只出现一次的数据值   用到es6新的数据结构 map数据
+// map数据结构   entries()   [item, value]格式数据
+var singleNumber = function (nums) {
+    const freq = new Map();
+    for (const num of nums) {
+        freq.set(num, (freq.get(num) || 0) + 1);
+    }
+    const ans = [];
+    for (const [num, occ] of freq.entries()) {
+        if (occ === 1) {
+            ans.push(num);
+        }
+    }
+    return ans;
+};
+
+
+
+// 还是需要得出26的余数 不能直接对26取余数  不然26mod26为0  不可得出26
+// 数据Z不能正确返回
+var convertToTitle = function (columnNumber) {
+    const sb = [];
+    while (columnNumber !== 0) {
+        columnNumber--;
+        sb.push(String.fromCharCode(columnNumber % 26 + 'A'.charCodeAt()));
+        columnNumber = Math.floor(columnNumber / 26);
+    }
+    return sb.reverse().join('');
+};
+
+
+// 正整数n  求出最少的平方数的和等于正整数      输出平方数的个数
+// 公式是n = f(n) = 1 + min(j是从1->根号i)  f(n - j*j)
+// f(i)代表组成i的平方数的个数
+
+var numSquares = function (n) {
+    const f = new Array(n + 1).fill(0);
+    for (let i = 1; i <= n; i++) {
+        let minn = Number.MAX_VALUE;
+        for (let j = 1; j * j <= i; j++) {
+            minn = Math.min(minn, f[i - j * j]);
+        }
+        f[i] = minn + 1;
+    }
+    return f[n];
+};
+
+
+// 判断二叉搜索树
+// 根节点的左/右子树    在不为空的情况下    是满足小于/大于根节点的
+
+const helper = (root, lower, upper) => {
+    if (root === null) {
+        return true;
+    }
+    if (root.val <= lower || root.val >= upper) {
+        return false;
+    }
+    return helper(root.left, lower, root.val) && helper(root.right, root.val, upper);
+}
+var isValidBST = function (root) {
+    return helper(root, -Infinity, Infinity);
+};
+
+
+// 链表的插入操作
+var insertionSortList = function (head) {
+    if (head === null) {
+        return head;
+    }
+    const dummyHead = new ListNode(0);
+    dummyHead.next = head;
+    let lastSorted = head, curr = head.next;
+    while (curr !== null) {
+        if (lastSorted.val <= curr.val) {
+            lastSorted = lastSorted.next;
+        } else {
+            let prev = dummyHead;
+            while (prev.next.val <= curr.val) {
+                prev = prev.next;
+            }
+            lastSorted.next = curr.next;
+            curr.next = prev.next;
+            prev.next = curr;
+        }
+        curr = lastSorted.next;
+    }
+    return dummyHead.next;
+};
+
+
+
+// 数组中[0,n]中不存在的 一个数据
+var missingNumber = function (nums) {
+    nums = nums.sort((a, b) => a - b)
+    const len = nums.length
+    for (let i = 0; i < len; i++) {
+        if (nums[i] !== i) {
+            return i
+        }
+    }
+    return len
+};
+
+
+
+// 返回数据的列序号     A-->1           B-->2       ZY-->701
+// 获取字符的unicode编码        a-->97          A-->65      myChar.charCodeAt()
+// 从右向左计算数据     每一次计算完成之后指数的数据乘积是需要乘以26
+// 转化思维     从左向右        从右向左    从上到下    从外到内    从下到上
+var titleToNumber = function (columnTitle) {
+    let number = 0;
+    let multiple = 1;
+    for (let i = columnTitle.length - 1; i >= 0; i--) {
+        const k = columnTitle[i].charCodeAt() - 'A'.charCodeAt() + 1;
+        number += k * multiple;
+        multiple *= 26;
+    }
+    return number;
+};
+
+
+//  前缀树  存储数据    高效存储和检索字符串数据集中的键    
+// 
+var Trie = function () {
+    this.children = {};
+};
+
+Trie.prototype.insert = function (word) {
+    let node = this.children;
+
+    for (const ch of word) {
+        if (!node[ch]) {
+            node[ch] = {};
+        }
+        node = node[ch];
+    }
+
+    node.isEnd = true;
+};
+
+Trie.prototype.search = function (word) {
+    const node = this.searchPrefix(word);
+    return node !== undefined && node.isEnd !== undefined;
+};
+
+Trie.prototype.startsWith = function (prefix) {
+    let node = this.children;
+    for (const ch of prefix) {
+        if (!node[ch]) {
+            return false;
+        }
+        node = node[ch];
+    }
+    return node;
+};
+
+
+
+
+// 股票冷冻期   获取最大收益计算
+var maxProfit = function (prices) {
+
+    let len = prices.length
+
+    if (len < 2) {
+        return 0
+    }
+    // 买股票   卖股票  获取的收益
+
+    const res = Array(len).fill(0).map(() => Array(3).fill(0))
+    // 收益
+    res[0][0] = 0
+    // 买股票的花费小
+    res[0][1] = -prices[0]
+    // 卖股票的收益
+    res[0][2] = 0
+
+    for (let i = 1; i < len; i++) {
+        // 股票收益
+        res[i][0] = Math.max(res[i - 1][0], res[i - 1][2])
+
+        // 买股票
+        res[i][1] = Math.max(res[i - 1][0] - prices[i], res[i - 1][1])
+
+        // 卖股票
+        res[i][2] = res[i - 1][1] + prices[i]
+
+    }
+
+    return Math.max(res[len - 1][0], res[len - 1][2])
+
+};
+
+
+// 两个数组中重复的数据部分
+var intersect = function (nums1, nums2) {
+    //将两个数组从小到大排序
+    nums1.sort((a, b) => a - b)
+    nums2.sort((a, b) => a - b)
+    let res = []
+    let key1 = 0, key2 = 0, index = 0
+    //在两个指针不达边界的前提下不断推进
+    while (key1 < nums1.length && key2 < nums2.length) {
+        //判断nums1[key1]与nums2[key2]的大小，分出大于小于等于三种情况
+        if (nums1[key1] < nums2[key2]) key1++
+        else if (nums1[key1] > nums2[key2]) key2++
+        else {
+            res[index++] = nums1[key1]
+            key1++
+            key2++
+        }
+    }
+    return res
+};
+
+
+// 给定一个数组 返回数组中的数据可以组成的最大数字
+var largestNumber = function(nums) {
+return nums.sort((a, b) => ('' + b + a) - ('' + a + b)).join('').replace(/^0*$/, '') || '0'
 };
