@@ -207,7 +207,21 @@ http://39.104.22.73:67/#/BlogDetail?ID=5c1702c623c1400eb8d42f10
 
 
 
-var largestNumber = function(nums) {
-    const res = nums.sort((a, b) =>  (b + '' + a) - (a + '' + b)).join('')
-    return res.startsWith('0') ? '0' : res
-};
+var res = obj.fn(obj2)
+res()
+Function.prototype.myBind = function (target) {
+if (typeof this !== 'function') {
+throw new TypeError('what is to be a function')
+}
+var getArgs = [].slice.call(arguments, 1)
+var fn = function () {}
+var _this = this
+var bound = function () {
+return _this.apply(this.constructor === _this ? _this : target, getArgs.concat(arguments))
+}
+fn.prototype = this.prototype
+bound.prototype = new fn()
+bound.prototype.constructor = bound
+return bound	
+
+}

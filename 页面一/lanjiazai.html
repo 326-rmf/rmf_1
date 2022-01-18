@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.9/vue.common.dev.js"></script>
+
+  <style>
+      
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div style="height: 100px;background: #f00;">高100》》》测试用</div>
+    <div ref="box">
+      <div v-for="(item, index) in arr" :key="index" style="height: 50px;">{{ item }}</div>
+    </div>
+    <div style="height: 100px;background: #f00;">高100》》》测试用</div>
+  </div>
+</body>
+<script>
+  new Vue({
+    el: "#app",
+    data: {
+      arrs: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 221, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 221, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
+
+      arr: []
+    },
+    created() {
+      this.addArr()//初始化先调用一次
+    },
+    mounted() {//实时监听滚动条的变化
+      window.addEventListener('scroll', this.getScroll)
+    },
+    destroyed() {//注意：监听的函数要在关闭页面时销毁掉,不然会影响到其它页面
+      window.removeEventListener('scroll', this.getScroll)
+    },
+    methods: {
+      getScroll(e) {
+        //懒加载盒子高度+懒加载盒子距离顶部位置=计算出盒子底部的距离
+        // const box_bottom = this.$refs.box.offsetHeight + this.$refs.box.offsetTop
+        const box_bottom = this.$refs.box.offsetHeight
+        console.log(e.currentTarget.scrollY)
+        // 可视区域+滚动条距离顶部位置 = 浏览器窗口底部的位置
+        const count = e.currentTarget.scrollY + document.documentElement.clientHeight
+        if (count >= box_bottom) { //懒加载条件限制判断
+          if (this.arr.length < this.arrs.length) {//做一次判断
+            this.addArr()//达到条件后执行这个函数
+            console.log('达到加载条件，执行加载');
+          }
+        }
+      },
+      addArr() {
+        const count = this.arr.length//执行函数时获取新数组长度
+        if (count >= 200) {//限制最多加载20条数据
+        } else {
+          this.arrs.map((item, index) => {
+            if (this.arr.length < 20 + count) {//每次执行加载5条
+              if (this.arr.length < this.arrs.length) {
+                this.arr.push(this.arrs[this.arr.length])//注意push原数组下标为当前新数组长度
+              }
+            }
+          })
+        }
+      }
+    },
+  })
+</script>
+
+</html>

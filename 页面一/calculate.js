@@ -3374,6 +3374,7 @@ Function.prototype.myBind = function (target) {
     var args1 = [].slice.call(arguments, 1)
     var bind2 = function () {
         var args2 = [].slice.call(arguments)
+        // 判断有没有使用 new 运算符
         return that.apply(typeof this.constructor === that ? this : target, args1.concat(args2))
     }
     var fn = function () { }
@@ -3383,34 +3384,6 @@ Function.prototype.myBind = function (target) {
     return bind2
 
 }
-
-
-
-
-
-
-
-
-//bind
-Function.prototype.myBind = function (obj) {
-    if (typeof this !== 'function') {
-        throw new Error('Function.prototype error-what is tring to be bound')
-    }
-    var _this = this
-    var fn = function () { }
-    var objArgs = Array.prototype.slice.call(arguments, 1)
-    var bound = function () {
-        let boundArgs = Array.prototype.slice.call(arguments)
-        return _this.apply(this.constructor === _this ? this : obj, objArgs.concat(boundArgs))
-    }
-    fn.prototype = this.prototype
-    bound.prototype = new fn()
-    return bound
-}
-
-
-
-
 
 
 //栈实现队列
@@ -4698,6 +4671,279 @@ var intersect = function (nums1, nums2) {
 
 
 // 给定一个数组 返回数组中的数据可以组成的最大数字
-var largestNumber = function(nums) {
-return nums.sort((a, b) => ('' + b + a) - ('' + a + b)).join('').replace(/^0*$/, '') || '0'
+// 组成的字符串是一个部分降序排序   因为数据 0 的影响
+// 排除全是 0 的情况
+var largestNumber = function (nums) {
+    return nums.sort((a, b) => ('' + b + a) - ('' + a + b)).join('').replace(/^0*$/, '')
 };
+
+
+
+// DNA序列总重复的序列
+var findRepeatedDnaSequences = function (s) {
+    const L = 10;
+    const ans = [];
+    const cnt = new Map();
+    const n = s.length;
+    for (let i = 0; i <= n - L; ++i) {
+        const sub = s.slice(i, i + L)
+        cnt.set(sub, (cnt.get(sub) || 0) + 1);
+        // 字符串重复一次之后直接插入数组   后面重复的数据是不需要理会的
+        if (cnt.get(sub) === 2) {
+            ans.push(sub);
+        }
+    }
+    return ans;
+};
+
+
+
+// 同构的字符串 字符串的数据值是固定一一对应的
+// 双向奔赴的字符串 你中有我    我中有你    必须相互牵制
+var isIsomorphic = function (s, t) {
+    let [s1, t1, len] = [{}, {}, s.length]
+    for (let i = 0; i < len; i++) {
+        let [x, y] = [s[i], t[i]]
+        if ((s1[x] && s1[x] !== y) || (t1[y] && t1[y] !== x)) {
+            return false
+        }
+        s1[x] = y
+        t1[y] = x
+    }
+    return true
+};
+
+
+
+// 数据结构提供查找 插入数据的功能  采用对象链式调用的方式  最后有一个标识符表示数据是否查找完毕    
+// 或者数据是否插入完毕
+
+var WordDictionary = function () {
+    this.root = Object.create(null);
+};
+
+WordDictionary.prototype.addWord = function (word) {
+    let cur = this.root;
+    for (const ch of word) {
+        if (!cur[ch]) {
+            cur[ch] = {};
+        }
+        cur = cur[ch];
+    }
+    cur.isWord = true;
+};
+
+WordDictionary.prototype.search = function (word, cur = this.root) {
+    let ch = undefined;
+    for (let i = 0; i < word.length; i++) {
+        ch = word.charAt(i);
+        if (ch === '.') {
+
+            /**
+              当 ch === '.'
+                if(cur还有其他的字符) {
+                  递归search
+                  if(search('.'所处层级的其他字符的剩余部分继续搜索)) {
+                    任意一个搜索成功返回true
+                  }
+                  没搜到返回false
+                }
+              其他部分与基础的Trie一致
+            **/
+            for (const key in cur) {
+                if (this.search(word.slice(i + 1, word.length), cur[key])) {
+                    return true;
+                }
+            }
+            return false;
+        } else if (!cur[ch]) {
+            return false;
+        }
+        cur = cur[ch];
+    }
+    return Boolean(cur.isWord);
+};
+
+
+// 数字连续的最长序列   从中间向两边扩散查找数据    left-- right++
+// 初始长度是 1     数据的去重处理  数据的删除处理  Set数据结构的运用
+var longestConsecutive = function (nums) {
+    let [mySet, max] = [new Set(nums), 0]
+    for (let item of mySet) {
+        let len = 1
+        let [left, right] = [item - 1, item + 1]
+        while (mySet.has(left)) {
+            mySet.delete(left)
+            left--
+            len++
+        }
+        while (mySet.has(right)) {
+            mySet.delete(right)
+            right++
+            len++
+        }
+        max = max > len ? max : len
+    }
+    return max
+};
+
+
+// 数据进栈 数据出栈
+// 运算符的运用 + - * /     charCodeAt()
+var calculate = function (s) {
+    s = s.trim();
+    const stack = new Array();
+    let preSign = '+';
+    let num = 0;
+    const n = s.length;
+    for (let i = 0; i < n; ++i) {
+        // isNaN(' ') --> false      空格是定义好的数据      
+        if (!isNaN(Number(s[i])) && s[i] !== ' ') {
+            num = num * 10 + s[i].charCodeAt() - '0'.charCodeAt();
+        }
+        if (isNaN(Number(s[i])) || i === n - 1) {
+            switch (preSign) {
+                case '+':
+                    stack.push(num);
+                    break;
+                case '-':
+                    stack.push(-num);
+                    break;
+                case '*':
+                    stack.push(stack.pop() * num);
+                    break;
+                default:
+                    stack.push(stack.pop() / num | 0);
+            }
+            preSign = s[i];
+            num = 0;
+        }
+    }
+    let ans = 0;
+    while (stack.length) {
+        ans += stack.pop();
+    }
+    return ans;
+};
+
+
+
+// 
+var wordPattern = function (pattern, s) {
+    const word2ch = new Map();
+    const ch2word = new Map();
+    const words = s.split(' ');
+    if (pattern.length !== words.length) {
+        return false;
+    }
+    for (const [i, word] of words.entries()) {
+        const ch = pattern[i];
+        if (word2ch.has(word) && word2ch.get(word) != ch || ch2word.has(ch) && ch2word.get(ch) !== word) {
+            return false;
+        }
+        word2ch.set(word, ch);
+        ch2word.set(ch, word);
+    }
+    return true;
+};
+
+
+
+
+// 1 2 3
+// 0 -1     卖0 买1
+// 1 -1     卖2 2
+// 2 -1     卖3 
+var maxProfit = function (prices) {
+    const n = prices.length;
+    const dp = new Array(n).fill(0).map(v => new Array(2).fill(0));
+    dp[0][0] = 0, dp[0][1] = -prices[0];
+    for (let i = 1; i < n; ++i) {
+        // 卖出股票
+        dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prices[i]);
+        // 买入股票
+        dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] - prices[i]);
+    }
+    return dp[n - 1][0];
+};
+
+
+
+// 高度平衡二叉树   每个节点的左右两个子树的高度差绝对值不超过 1
+// 不断构建左右两边的子树   
+var sortedArrayToBST = function (nums) {
+    // 将闭区间 [left, right] 中的元素转化成 BST，返回根节点
+    let build = (left, right) => {
+        // 区间为空
+        if (left > right) return null;
+        // 构造根节点
+        // BST 节点左小右大，中间的元素就是根节点
+        let mid = left + ((right - left) >> 1);
+
+        let root = new TreeNode(nums[mid]);
+        root.left = build(left, mid - 1);
+        root.right = build(mid + 1, right);
+        return root;
+    };
+    return build(0, nums.length - 1);
+};
+
+// 二分法查找元素的左右位置 从右边向左边不断查找元素
+// 
+const binarySearch = (nums, target, lower) => {
+    let left = 0, right = nums.length - 1, ans = nums.length;
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+        if (nums[mid] > target || (lower && nums[mid] >= target)) {
+            right = mid - 1;
+            ans = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return ans;
+}
+
+var searchRange = function (nums, target) {
+    let ans = [-1, -1];
+    const leftIdx = binarySearch(nums, target, true);
+    const rightIdx = binarySearch(nums, target, false) - 1;
+    // target 可以只出现一次
+    if (leftIdx <= rightIdx && rightIdx < nums.length && nums[leftIdx] === target && nums[rightIdx] === target) {
+        ans = [leftIdx, rightIdx];
+    }
+    return ans;
+};
+
+// 各位上的数据之和是 10 以内的数据
+var addDigits = function (num) {
+    return num < 10 ? num : (num % 9 || 9)
+};
+
+
+// 二分法查找元素的算术平方根
+var sqrtMy = function (target) {
+    let [left, right] = [0, target]
+    while (left <= right) {
+        let mid = (left + right) / 2 | 0
+        if (mid * mid <= target) {
+            left = mid + 1
+        } else {
+            right = mid - 1
+        }
+    }
+    return right
+}
+
+
+
+//
+var isSymmetric = function (root) {
+    return checkMy(root, root)
+};
+const checkMy = function (p, q) {
+    if (p == null || q == null) {
+        return p == q
+    }
+    return p.val == q.val && checkMy(p.left, q.right) && checkMy(p.right, q.left)
+}
