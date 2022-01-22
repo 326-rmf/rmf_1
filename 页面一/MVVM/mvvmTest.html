@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TestMVVM</title>
+</head>
+
+<body>
+    <div id="test">
+        <p>{{name}}</p>
+        <p v-text="content"></p></br>
+        <p v-html="content"></p>
+        <p v-class="myClass">xxx</p>
+        <input type="text" name="" id="" v-model="name" />
+        <p v-model="name">{{name}}</p>
+    </div>
+    <script type="text/javascript" src="./js/mvvm/compile.js"></script>
+    <script type="text/javascript" src="./js/mvvm/mvvm.js"></script>
+    <script type="text/javascript" src="./js/mvvm/observer.js"></script>
+    <script type="text/javascript" src="./js/mvvm/watcher.js"></script>
+    <script type="text/javascript">
+        const vm = new MVVM({
+            el: '#test',
+            data: {
+                name: 'Tom',
+                content: '<h2>H2标签</h2>',
+                myClass: 'myclass'
+            }
+        })
+        console.log(vm);
+        console.log(vm.name);
+        vm.name = 'jack'
+        console.log(vm._data.name);
+
+
+    </script>
+</body>
+
+</html>

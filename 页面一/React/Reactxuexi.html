@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .red {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="test"></div>
+    <div id="test1"></div>
+    <div id="test2"></div>
+    <div id="test3"></div>
+    <div id="test4"></div>
+    <div id="test5"></div>
+    <div id="example"></div>
+    <div id="test6"></div>
+    <div id="test7"></div>
+    <div id="test8"></div>
+    <div id="test9"></div>
+
+    <!-- react -->
+    <script type="text/javascript" src="js/react.development.js"></script><!-- react-dom -->
+    <script type="text/javascript" src="js/react-dom.development.js"></script><!-- babel 解析jsx为js-->
+    <script type="text/javascript" src="js/babel.min.js"></script>
+
+
+    <script type="text/javascript">
+        let ID = 'rmf'
+        let Data = 'RMF'
+        let Data1 = 'RMF1'
+        let vDOM2 = React.createElement('h2', { id: ID.toUpperCase() }, Data.toLowerCase())
+        ReactDOM.render(vDOM2, document.getElementById('test'))
+        function CreatePerson(name, age) {
+            return (name, age)
+        }
+// var a = 2
+// var b =3
+// for(var i=1;i<b;i++){
+// c=a%b}
+// console.log(c)
+
+    </script>
+
+    <!-- 组件的三个属性 state   ref props -->
+    <script type="text/babel">//babel   因为jsx要借助babel翻译
+        // 创建虚拟DOM
+        let vDOM = <h1>Hello React</h1>
+        //借助react把虚拟DOM渲染到页面  变为真实的DOM
+        ReactDOM.render(vDOM, document.getElementById('test1'))
+        let VDOM1 = (
+            <h3>
+                <span className="red">
+                    {Data1.toLowerCase()}
+                </span>
+            </h3>)
+        ReactDOM.render(VDOM1, document.getElementById('test2'))
+        //工厂函数定义组件方式  简单组件    是无状态的
+        function MyComponent() {
+            return (<h1>简单工厂函数组件</h1>)
+        }
+        //组件调用
+        ReactDOM.render(<MyComponent />, document.getElementById('test3'))
+        //ES6类组件 复杂组件    是有状态的  必须继承React.Component
+        class MyComponent2 extends React.Component {
+            //这样简写是key=value的形式 就是直接在类的实例对象上面去添加属性和属性值
+            //直接给类添加  省了很多事
+            //不用绑定bind
+            //当然函数形式也是赋值的形式来  不可以直接声明定义
+            state = { isHot: true }
+            // constructor(a){
+            //     super(a)
+
+            //     //函数绑定this
+            //     this.demo = this.demo.bind(this)
+            // }
+            //只有绑定this才可以写函数
+            demo = () => {//变量用{}
+                let { isHot } = this.state
+                this.setState({ isHot: !isHot })
+            }
+            //从父类继承的render
+            render() {
+                //页面初始化的时候会调用一次    更新数据的时候会触发render
+                let { isHot } = this.state
+                //函数调用的是this.demo
+                return (<h2 onClick={this.demo}>复杂ES6组件{this.state.isHot ? '热' : '冷'}</h2>)
+            }
+        }
+        ReactDOM.render(<MyComponent2 />, document.getElementById('test3'))
+
+        class MyComponent3 extends React.Component {
+
+            render() {
+                let { name, age, sex } = this.props
+                return (
+                    <ul>
+                        <li>name:{name}</li>
+                        <li>sex:{sex}</li>
+                        <li>age:{age}</li>
+                    </ul>)
+
+            }
+        }
+        let person = { name: 'zs', age: 20, sex: 'man', phone: '1233234' }
+        ReactDOM.render(<MyComponent3 {...person} />, document.getElementById('test4'))
+        class MyComponent4 extends React.Component {
+            //容器  Object类型的js对象
+            myRef = React.createRef()
+            clickHandel = () => {
+                // console.log(this) 
+                console.log(this.myRef.current.value)
+            }
+            blurHandel = (event) => {
+                alert(event.target.value)
+            }
+            render() {
+                return (
+                    <div>
+
+                        <input type="text" ref={this.myRef} />
+                        <button onClick={this.clickHandel}>点我提示数据</button>
+                        <input type="text" placeholder='失去焦点提示' onBlur={this.blurHandel} />
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<MyComponent4 />, document.getElementById('test5'))
+    </script>
+
+    <!-- 添加列表 -->
+    <script type="text/babel">
+        class App extends React.Component {
+            state = {
+                todoArr: ['吃饭', '睡觉', '学习']
+            }
+            addTodo = (data) => {
+                // this.setState({todoArr:data})
+                //获取数组原来状态
+                let { todoArr } = this.state
+                //向todo数组里面追加一条数据
+                todoArr.unshift(data)
+                this.setState({ todoArr: todoArr })
+            }
+            render() {
+                let { todoArr } = this.state
+                return (
+                    <div>
+                        <h1>Simple TODO List</h1>
+                        <Add addTodo={this.addTodo} count={todoArr.length} />
+                        <List todoArr={todoArr} />
+                    </div>
+                )
+            }
+        }
+        class Add extends React.Component {
+            add = () => {
+                //获取用户输入
+                let userInput = this.input.value
+                if (userInput.trim() === '') return
+                this.props.addTodo(userInput)
+                // console.log(this.props.state.todoArr.unshift(userInput))
+                //清空输入框
+                this.input.value = ''
+            }
+            render() {
+                let { count } = this.props
+                return (
+
+                    <div>
+                        <input type="text" ref={(input) => { this.input = input }} />
+                        <button onClick={this.add}>Add #{count}</button>
+                    </div>
+                )
+            }
+        }
+        class List extends React.Component {
+
+            render() {
+                let { todoArr } = this.props
+                return (
+                    <ul>{
+                        todoArr.map((item, index) =>
+                            <li key={index}>{item}</li>
+                        )
+                    }
+                    </ul>
+                )
+            }
+        }
+        ReactDOM.render(<App />, document.getElementById('example'))
+    </script>
+
+    <!-- 受控组件和非受控组件 -->
+    <script type="text/babel">
+        class Login extends React.Component {
+            //初始化状态
+            state = {
+                password: ''
+            }
+
+            submitHandel = (event) => {
+                //阻止默认事件
+                event.preventDefault()
+                let { username } = this.refs
+                let { password } = this.state
+                //弹窗提示用户的输入
+                alert(`准备提交的用户名:${username.value} 密码是${password}`)
+            }
+            changeHandel = (event) => {
+                // console.log(event.target.value)
+                this.setState({ password: event.target.value })
+            }
+
+            render() {
+                return (
+                    <form action="https://www.baidu.com" onSubmit={this.submitHandel}>
+                        用户名:<input type="text" ref="username" />
+            密码:<input type="password" onChange={this.changeHandel} />
+                        <input type="submit" />
+                    </form>
+                )
+            }
+        }
+        ReactDOM.render(<Login />, document.getElementById('test6'))
+    </script>
+
+    <!-- 自定义组件 用的旧的生命周期函数    所以会报错-->
+    <script type="text/babel">
+        class Life extends React.Component {
+            constructor(a) {
+                super(a)
+            }
+            state = {
+                opacity: 1
+            }
+            //当组件被放在页面上后    紧随其后开一个定时器
+            //重写从父类继承过来的componentDidMount
+            //组件将要挂载
+            componentWillMount() {
+
+            }
+            //DidMount是已经挂载完了
+            componentDidMount() {
+                this.timer = setInterval(() => {
+                    let { opacity } = this.state
+                    opacity -= 0.1
+                    if (opacity <= 0) {
+                        opacity = 1
+                    }
+                    this.setState({ opacity })
+                }, 200)
+            }
+            //组件将要更新
+            componentWillUpdate() {
+
+            }
+            //组件更新完了
+            componentDidUpdate() {
+
+            }
+            //willUnmount组件将要消亡 做收尾工作
+            componentWillUnmount() {
+                clearInterval(this.timer)
+            }
+            //组件应该更新吗
+            // shouldComponentUpdate(){
+
+            // }
+            death = () => {
+                ReactDOM.unmountComponentAtNode(document.getElementById('test7'))
+            }
+            render() {
+
+                return (
+                    <div>
+                        <h1 style={{ opacity: this.state.opacity, width: '100px' }}>React不会</h1>
+                        <button onClick={this.death}>kill</button>
+
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<Life />, document.getElementById('test7'))
+    </script>
+
+    <!-- 新的生命周期函数 -->
+    <script type="text/babel">
+        class App2 extends React.Component {
+            state = { data: 'React' }
+            componentDidMount() {
+                console.log('didMount')
+                setTimeout(() => {
+                    this.setState({ data: '0719' })
+                }, 2000)
+            }
+
+            componentDidUpdate(props, state, data) {
+                console.log('didUpdate', props, state, data)
+            }
+            static getDerivedStateFromProps(props, state) {
+                console.log('fromProps')
+                return props
+            }
+            getSnapshotBeforeUpdate(props, state) {
+                console.log('snapshot', props, state)
+                return 'peiqi'
+            }
+            render() {
+                console.log('render')
+                return (
+                    <h1>Hello,{this.state.data}</h1>
+                )
+            }
+        }
+        ReactDOM.render(<App2 />, document.getElementById('test8'))
+    </script>
+
+    <!-- index id作为key -->
+    <script type="text/babel">
+        class PersonList extends React.Component {
+            state = {
+                persons: [
+                    { id: 1, name: '小张', age: 13 },
+                    { id: 2, name: '小李', age: 12 }
+                ]
+            }
+            add = () => {
+                const { persons } = this.state
+                persons.unshift({ id: persons.length + 1, name: '小王', age: 14 })
+                this.setState({ persons })
+            }
+            render() {
+                const { persons } = this.state
+                return (
+                    <div>
+                        <div>
+                            <button onClick={this.add}>添加一个人</button>
+                        </div>
+                        <br />
+                        <h2>使用index作为key</h2>
+                        <ul>
+                            {
+                                persons.map((item, index) => {
+                                    return <li key={index}>{item.name}--{item.age}--<input /></li>
+                                })
+                            }
+                        </ul>
+                        <h2>使用id作为key</h2>
+                        <ul>
+                            {
+                                persons.map((item) => {
+                                    return <li key={item.id}>{item.name}--{item.age}--<input /></li>
+                                })
+                            }
+                        </ul>
+                    </div>
+
+                )
+            }
+        }
+        ReactDOM.render(<PersonList />, document.getElementById('test9'))
+    </script>
+
+    
+</body>
+
+</html>
