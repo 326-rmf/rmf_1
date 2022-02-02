@@ -1,3 +1,89 @@
 {
-    
-}
+    // tsconfig.json    是 ts 编译器的配置文件  ts 编译器可以根据其中的信息来对代码进行编译
+
+    // include 用来指定需要编译的 ts 文件
+    // 路径: ** 表示任意目录
+    // * 表示任意文件
+    // /**/* 表示任意当前目录下的所有 ts 文件
+    "include": [
+        "./src/**/*"
+    ],
+
+    // 除去不需要编译的部分文件 
+    // 默认值是 ["node_modules", "bower_components", "jspm_packages"]
+    "exclude": [
+        "./src/hello/**/*"
+    ],
+
+    // 定义被继承的配置文件
+    // "extends": "./config/base"
+    // base 里面的文件可以直接复用给 tsconfig.json 文件 避免了重复书写 tsconfig.json 文件代码
+
+    // files 指定被翻译的文件列表   只有需要编译少量文件的时候才会用到
+    // "files": ["practiceTS.ts"]
+
+    // 编译器的选项 compilerOptions
+    "compilerOptions": {
+
+        // target 指定 ts 被编译为 es 的版本
+        // 'es3', 'es5', 'es6', 'es2015', 'es2016', 'es2017', 'es2018', 'es2019', 'es2020', 'es2021', 'esnext'.
+        "target": "es5",
+
+        // module 指定需要使用的模块化规范
+        //  'none', 'commonjs', 'amd', 'system', 'umd', 'es6', 'es2015', 'es2020', 'es2022', 'esnext', 'node12', 'nodenext'.
+        "module": "es6",
+
+        // lib 指定项目中使用的库
+        // tsconfig.json:34:17 - error TS6046: Argument for '--lib' option must be: 'es5', 'es6', 'es2015', 'es7', 'es2016', 'es2017', 'es2018', 'es2019', 'es2020', 'es2021', 'esnext', 'dom', 'dom.iterable', 'webworker', 'webworker.importscripts', 'webworker.iterable', 'scripthost', 'es2015.core', 'es2015.collection', 'es2015.generator', 'es2015.iterable', 'es2015.promise', 'es2015.proxy', 'es2015.reflect', 'es2015.symbol', 'es2015.symbol.wellknown', 'es2016.array.include', 'es2017.object', 'es2017.sharedmemory', 'es2017.string', 'es2017.intl', 'es2017.typedarrays', 'es2018.asyncgenerator', 'es2018.asynciterable', 'es2018.intl', 'es2018.promise', 'es2018.regexp', 'es2019.array', 'es2019.object', 'es2019.string', 'es2019.symbol', 'es2020.bigint', 'es2020.promise', 'es2020.sharedmemory', 'es2020.string', 'es2020.symbol.wellknown', 'es2020.intl', 'es2021.promise', 'es2021.string', 'es2021.weakref', 'es2021.intl', 'esnext.array', 'esnext.symbol', 'esnext.asynciterable', 'esnext.intl', 'esnext.bigint', 'esnext.string', 'esnext.promise', 'esnext.weakref'.
+        // "lib": ["dom"]
+
+        // outDir 指定 ts 文件编译后的 js 文件放置位置
+        "outDir": "./dist",
+
+        // outFile 将全局作用域代码合并到一个文件之中
+        // 全局作用域代码中存在 模块文件的引入情况的时候     module 需要设置 amd 或者 system
+        // 否则会报错
+        // "outFile": "./dist/app.js"
+
+
+        // 是否对 js 文件进行编译 默认是 false
+        "allowJs": false,
+
+        // 检查 js 代码是否符合语法规范 默认是 false
+        "checkJs": false,
+
+        // 是否移除注释
+        "removeComments": false,
+
+        // noEmit 不生成编译后的文件    可能不需要生成 js 文件  只需要审核 ts 代码语法的时候会使用到
+        "noEmit": false,
+
+        // onEmitOnError 当有错误的时候是不会生成 js 文件   编译更加严格    避免产生错误的代码
+        "noEmitOnError": false,
+
+        // alwaysStrict  ts 代码默认是不使用严格模式的  
+        // js 文件代码涉及到 module 代码的引入导出的时候    是会自动进行严格模式的应用的
+        "alwaysStrict": false,
+
+        // noImplicitAny 检查是否有 隐式 any 数据类型
+        "noImplicitAny": true,
+
+        // noImplicitThis 不允许不明确类型的 this
+        "noImplicitThis": true,
+
+        // strictNullChecks 严格检查空值    操作的 dom 值是空值的时候 会报错
+        "strictNullChecks": true,
+
+        // strict 所有严格检查的总开关      所有严格检查直接打开
+        // "strict": false,
+
+        
+
+        
+
+
+
+
+    }
+
+} 

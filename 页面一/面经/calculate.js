@@ -3386,6 +3386,9 @@ Function.prototype.myBind = function (target) {
 }
 
 
+
+
+
 //栈实现队列
 let stack1 = []
 let stack2 = []
@@ -5050,3 +5053,369 @@ var longestPalindrome = function (s) {
     }
     return res + (myMap.size ? 1 : 0)
 };
+
+
+// 
+var removeKdigits = function (num, k) {
+    const stack = [];
+    for (let i = 0; i < num.length; i++) {
+        const c = num[i];
+        while (k > 0 && stack.length && stack[stack.length - 1] > c) {
+            stack.pop();
+            k--;
+        }
+        if (c != '0' || stack.length != 0) {
+            stack.push(c);
+        }
+    }
+    while (k > 0) {
+        stack.pop();
+        k--;
+    }
+    return res.length ? res.join('') : '0'
+};
+
+
+// 一个二维矩阵中找出单词的形成路线
+// 边界的条件的形成 标记数据的使用情况
+const exist = (board, word) => {
+    const m = board.length;
+    const n = board[0].length;
+    const used = new Array(m);    // 二维矩阵used，存放bool值
+    for (let i = 0; i < m; i++) {
+        used[i] = new Array(n);
+    }
+    // canFind 判断当前点是否是目标路径上的点
+    const canFind = (row, col, i) => { // row col 当前点的坐标，i当前考察的word字符索引
+        if (i == word.length) {        // 递归的出口 i越界了就返回true
+            return true;
+        }
+        if (row < 0 || row >= m || col < 0 || col >= n) { // 当前点越界 返回false
+            return false;
+        }
+        if (used[row][col] || board[row][col] != word[i]) { // 当前点已经访问过，或，非目标点
+            return false;
+        }
+        // 排除掉所有false的情况，当前点暂时没毛病，可以继续递归考察
+        used[row][col] = true;  // 记录一下当前点被访问了
+        // canFindRest：基于当前选择的点[row,col]，能否找到剩余字符的路径。
+        const canFindRest = canFind(row + 1, col, i + 1) || canFind(row - 1, col, i + 1) ||
+            canFind(row, col + 1, i + 1) || canFind(row, col - 1, i + 1);
+
+        if (canFindRest) { // 基于当前点[row,col]，可以为剩下的字符找到路径
+            return true;
+        }
+        used[row][col] = false; // 不能为剩下字符找到路径，返回false，撤销当前点的访问状态
+        return false;
+    };
+
+    for (let i = 0; i < m; i++) { // 遍历找起点，作为递归入口
+        for (let j = 0; j < n; j++) {
+            if (board[i][j] == word[0] && canFind(i, j, 0)) { // 找到起点且递归结果为真，找到目标路径
+                return true;
+            }
+        }
+    }
+    return false; // 怎么样都没有返回true，则返回false
+};
+
+
+// 后面一个字符串里面的字符 可不可以组成前面一个字符串数据 
+// 一个字符数据只能使用一次
+// 使用的是小写字母
+var canConstruct = function (ransomNote, magazine) {
+    if (ransomNote.length > magazine.length) {
+        return false
+    }
+    const res = Array(26).fill(0)
+    for (let ch of magazine) {
+        res[ch.charCodeAt() - 'a'.charCodeAt()]++
+    }
+    for (let ch of ransomNote) {
+        res[ch.charCodeAt() - 'a'.charCodeAt()]--
+        if (res[ch.charCodeAt() - 'a'.charCodeAt()] < 0) {
+            return false
+        }
+    }
+    return true
+}
+
+
+// 相同数据值 不同数据索引的下标    索引下标相减小于等于给定的目标值
+var containsNearbyDuplicate = function (nums, k) {
+    let myMap = new Map()
+    for (let [key, value] of nums.entries()) {
+        if (myMap.has(value) && key - myMap.get(value) <= k) {
+            return true
+        }
+        myMap.set(value, key)
+    }
+    return false
+};
+
+
+
+// h 指数   一个学者的 h 指数代表 学者有 h 篇文章是被至少引用 h 次次数的
+var hIndex = function (citations) {
+    citations.sort((a, b) => a - b)
+    let [i, h] = [citations.length - 1, 0]
+    while (i >= 0 && citations[i] > h) {
+        h++
+        i--
+    }
+    return h
+};
+
+// 
+var removeDuplicates = function (nums) {
+    let len = nums.length,
+        count = 0
+    if (len < 3) {
+        return len
+    }
+    for (let i = 0; i < nums.length; i++) {
+        let left = nums.indexOf(nums[i], i)
+        let right = nums.lastIndexOf(nums[i])
+        if (right - left < 2) {
+            count++
+        } else {
+            nums.splice(left, right - left - 1)
+            count++
+        }
+    }
+    return count
+
+};
+
+
+// 两个字符串中寻找不同的一个字符数据
+var findTheDifference = function (s, t) {
+    let arr1 = s.split('').sort()
+    let arr2 = t.split('').sort()
+    let [len1, len2] = [arr1.length, arr2.length]
+    for (let i = 0; i < len1; i++) {
+        if (arr1[i] !== arr2[i]) {
+            return arr2[i]
+        }
+    }
+    return arr2[len2 - 1]
+};
+
+
+
+// 一颗树当中寻找路径上节点数据的和是否等于给定的目标数据的值
+// 遍历函数标识外部变量 boolean 值  来进行数据的校验    路径是否存在    然后返回 boolean 值
+var hasPathSum = function (root, targetSum) {
+    if (!root) return false
+    let res = false
+    const dfs = (n, s) => {
+        if (!n.left && !n.right && s === targetSum) {
+            res = true
+        }
+        if (n.left) dfs(n.left, s + n.left.val)
+        if (n.right) dfs(n.right, s + n.right.val)
+    }
+    dfs(root, root.val)
+    return res
+};
+
+
+// 一个容器具有一定的可以容纳的数据数量 
+// 数据可以进行相应的存取操作   超出容器容量的时候  数据删除的是最近最少使用的一个数据
+// this.map.delete(this.map.keys().next().value)
+// this.map.size
+class LRUCache {
+    constructor(capacity) {
+        this.capacity = capacity;
+        this.map = new Map();
+    }
+    get(key) {
+        if (this.map.has(key)) {
+            // get表示访问该值
+            // 所以在访问的同时，要将其调整位置，放置在最后
+            const temp = this.map.get(key);
+            // 先删除，再添加
+            this.map.delete(key);
+            this.map.set(key, temp);
+            // 返回访问的值
+            return temp;
+        } else {
+            // 不存在，返回-1
+            return -1;
+        }
+    }
+    put(key, value) {
+        // 要将其放在最后，所以若存在key，先删除
+        if (this.map.has(key)) this.map.delete(key);
+        // 设置key、value
+        this.map.set(key, value);
+        if (this.map.size > this.capacity) {
+            // 若超出范围，将map中头部的删除
+            // map.keys()返回一个迭代器
+            // 迭代器调用next()方法，返回包含迭代器返回的下一个值，在value中
+            this.map.delete(this.map.keys().next().value);
+        }
+    }
+}
+
+
+
+// 归并排序     数据量
+// let a = new ListNode(-1); let b = a; // b 代替 a 去改变链表的元素的位置变化
+// 改变靠着链表 b       输出靠着 链表 a.next    
+var sortList = function (head) {
+    // 链表节点数目小于等于 1   直接返回 不用排序
+    if (!head || head.next === null) return head;
+    // 使用快慢指针找到中间节点 双指针排序
+    let slow = head,
+        fast = head.next;
+    while (fast !== null && fast.next !== null) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    // 将链表分成两半并返回后半部分链表的头节点
+    let newList = slow.next;
+    slow.next = null;
+
+    // 对前后两个链表进行排序
+    let left = sortList(head);
+    let right = sortList(newList);
+    // 将排序好的两个有序链表合并为一个链表
+    // 改变指针的新的链表去替代改变链表元素的顺序
+    let res = new ListNode(-1);
+    let nHead = res;
+    // 合并链表只需要调整指针的指向
+    // 两个链表哪个节点的值小就先指向它
+    while (left !== null && right !== null) {
+        if (left.val < right.val) {
+            nHead.next = left;
+            left = left.next;
+        } else {
+            nHead.next = right;
+            right = right.next;
+        }
+        nHead = nHead.next;
+    }
+    nHead.next = left === null ? right : left;
+    return res.next;
+};
+
+
+
+// 0 1 背包
+// 动态规划 当背包中的容量变化 会在相应的结果数据上加 1
+// i-- j-- 是假想其他字符串数据将占据的位置
+// 结果应该是最大的容量 
+// 输入的是字符串数组   结果是最大容量的字符串数组的子集    但是子集最多有 m 个 0, n 个 1
+const findMaxForm = (strs, m, n) => {
+    const dp = Array.from(Array(m + 1), () => Array(n + 1).fill(0));
+    let numOfZeros, numOfOnes;
+    for (let str of strs) {
+        numOfZeros = 0;
+        numOfOnes = 0;
+        for (let c of str) {
+            if (c === '0') {
+                numOfZeros++;
+            } else {
+                numOfOnes++;
+            }
+        }
+        for (let i = m; i >= numOfZeros; i--) {
+            for (let j = n; j >= numOfOnes; j--) {
+                dp[i][j] = Math.max(dp[i][j], dp[i - numOfZeros][j - numOfOnes] + 1);
+            }
+        }
+    }
+    return dp[m][n];
+};
+
+
+// 一个二进制数据字符串 找出二进制字符串中字符为 1 的 数据的总数
+// 数据是左移操作
+var hammingWeight = function (n) {
+    let res = 0
+    for (let i = 0; i < 32; i++) {
+        if ((n & (1 << i)) !== 0) {
+            res++
+        }
+    }
+    return res
+};
+
+
+
+// 计算逆波兰表达式     运算符不在操作数的中间  运算符写在操作数的后面
+// 一个执行栈不断执行运算数据   数据推入栈  符号取出数据运算
+var evalRPN = function (tokens) {
+    let stack = []
+    let num1 = 0,
+        num2 = 0
+    for (let ch of tokens) {
+        if (isNumber(ch)) {
+            stack.push(parseInt(ch))
+        } else {
+            num2 = stack.pop()
+            num1 = stack.pop()
+            switch (ch) {
+                case '+':
+                    stack.push(num1 + num2)
+                    break
+                case '-':
+                    stack.push(num1 - num2)
+                    break
+                case '*':
+                    stack.push(num1 * num2)
+                    break
+                case '/':
+                    stack.push(num1 / num2 | 0)
+                    break
+            }
+        }
+    }
+    return stack[0]
+};
+function isNumber(target) {
+    return !(target === '+' || target === '-' || target === '*' || target === '/')
+}
+
+
+
+// 寻找数组中最小的数据     数据的元素数据具有重复的元素
+var findMin = function (nums) {
+    let len = nums.length
+    if (len === 1) {
+        return nums[0]
+    }
+    for (let i = 1; i < len; i++) {
+        if (nums[i] < nums[i - 1]) {
+            return nums[i]
+        }
+    }
+    return nums[len - 1] < nums[0] ? nums[len - 1] : nums[0]
+};
+
+
+
+// 使用辅助栈的方式 将最小的数据进行每一次的存储操作
+// this.minNum = [Infinity]
+var MinStack = function () {
+    this.stack = []
+    this.minNum = [Infinity]
+};
+
+MinStack.prototype.push = function (val) {
+    this.stack[this.stack.length] = val
+    this.minNum.push(Math.min(this.minNum[this.minNum.length - 1], val))
+    return val
+};
+
+
+
+// 二次幂的数据的二进制形式 100000
+// 那么数据减一 并且和原来的数据进行与操作  应该得出的结果是 0 那么原来的数据就是二次幂数据
+var isPowerOfTwo = function (n) {
+    return n > 0 && (n & (n - 1)) === 0
+};
+
+
+

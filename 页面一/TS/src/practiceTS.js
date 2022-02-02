@@ -31,3 +31,14 @@ var a;
 a = function (n1, n2) {
     return n1 + n2;
 };
+// class 类的简介 类类似于一个函数      
+// 类中包含了两个部分 属性 方法
+var Person = /** @class */ (function () {
+    function Person() {
+        this.name = 'Tom';
+        this.age = 20;
+    }
+    return Person;
+}());
+var pre = new Person();
+console.log(pre);
