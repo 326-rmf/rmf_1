@@ -263,10 +263,6 @@ var findMedianSortedArrays = function (nums1, nums2) {
 
 
 //得到回文字符串的长度最大  采用的是从中间依次解析法
-/**
-* @param {string} s
-* @return {string}
-*/
 var longestPalindrome = function (s) {
     //字符串长度小于2的时候 直接返回字符串  例如''  直接返回空  'a' 直接返回a 
     if (s.length < 2) {
@@ -5418,4 +5414,322 @@ var isPowerOfTwo = function (n) {
 };
 
 
+// 数组元素中缺失的第一个正整数 数组元素需要去重
+var firstMissingPositive = function (nums) {
+    nums = [... new Set(nums.filter((item) => item > 0).sort((a, b) => a - b))]
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i] !== i + 1) {
+            return i + 1
+        }
+    }
+    return nums.length + 1
+};
 
+
+// s 中是否存在由 words 连接组成的字符串数据    顺序不限制
+// words 数据不可重用       返回符合的字符串的起始位置 
+var findSubstring = function (s, words) {
+    let map = new Map()
+    let res = []
+    for (const ch of words) {
+        map.set(ch, (map.get(ch) || 0) + 1)
+    }
+    let wordLen = words[0].length
+    let wordsLen = wordLen * words.length
+    let sLen = s.length
+    for (let i = 0; i < sLen - wordsLen + 1; i++) {
+        let getStr = s.slice(i, i + wordsLen)
+        let newMap = new Map(map)
+        let flag = true
+        for (let j = 0; j < wordsLen - wordLen + 1; j += wordLen) {
+            let str = getStr.slice(j, j + wordLen)
+            if (newMap.get(str)) {
+                newMap.set(str, newMap.get(str) - 1)
+            } else {
+                flag = false
+                break
+            }
+        }
+        if (flag === true) {
+            res.push(i)
+        }
+    }
+    return res
+};
+
+
+// 
+var cloneGraph = function (node) {
+    if (!node) return;
+    const visited = new Map();//存放遍历过的节点
+    const dfs = (n) => {
+        const nCopy = new Node(n.val);//拷贝节点
+        visited.set(n, nCopy);//节点值和新建节点以键值对存入visited
+        (n.neighbors || []).forEach(ne => {
+            if (!visited.has(ne)) {
+                dfs(ne);//递归遍历相邻节点
+            }
+            nCopy.neighbors.push(visited.get(ne));//复制相邻节点
+        })
+    }
+    dfs(node);//深度优先遍历
+    return visited.get(node);//返回visited中的新创建的节点
+};
+
+
+
+// 
+var cloneGraph = function (node) {
+    if (!node) return
+    const visited = new Map()
+    const dfs = (n) => {
+        const nCopy = new Node(n.val)
+        visited.set(n, nCopy)
+            (n.neighbors || []).forEach(ne => {
+                if (!visited.has(ne)) {
+                    dfs(ne)
+                }
+                nCopy.neighbors.push(visited.get(ne))
+            })
+    }
+    dfs(node)
+    return visited.get(node)
+};
+
+
+// 最长的连续括号
+// ()           首先会假定首部 -1
+var longestValidParentheses = function (s) {
+    let [res, len, maxLen] = [[-1], s.length, 0]
+    for (let i = 0; i < len; i++) {
+        if (s[i] === '(') {
+            res.push(i)
+        } else {
+            // 去除前括号标记位置
+            res.pop()
+            if (res.length) {
+                maxLen = maxLen > i - res.at(-1) ? maxLen : i - res.at(-1)
+            } else {
+                res[0] = i
+            }
+        }
+    }
+    return maxLen
+};
+
+
+// 格雷编码     n 位格雷序列码是一个 2**n 个整数组成的序列
+// 相邻数据之间的二进制表示只有一个数据是不同的
+var grayCode = function (n) {
+    let num = 1 << n
+    let res = []
+    for (let i = 0; i < num; i++) {
+        res.push((i >> 1) ^ i)
+    }
+    return res
+};
+
+
+
+
+// 千分位数字
+function thousandNum(num) {
+    let str = num + ''
+    // + 代表至少一个三位数的匹配 0 个三位数是不匹配的
+    return str.replace(/(\d)(?=(?:\d{3})+$)/, '$1,')
+}
+
+
+// 查找子字符串在父字符串中出现的次数
+function getSum(str1, str2) {
+    let res = 0
+    let index = str1.indexOf(str2)
+    while (index !== -1) {
+        res++
+        index = str1.indexOf(str2, index + 1)
+    }
+    return res
+}
+
+
+// 尾递归   斐波那契
+function getNum(target, pre, cur) {
+    if (target === 0) {
+        return 0
+    }
+    return target < 2 ? cur : getNum(target - 1, cur, pre + cur)
+}
+
+
+// 数组的扁平化
+const dp = (arr) => {
+    arr.forEach((item) => {
+        return Array.isArray(item) ? dp(item) : res.push(item)
+    })
+}
+
+// set 数据结构比较
+function setCompare(set1, set2) {
+    for (let value of set1) {
+        if (!set2.has(value)) {
+            return false
+        }
+    }
+    return true
+}
+
+
+// 回文字符串 双指针    
+function PalindromeFn(str) {
+    let left = 0
+    let right = str.length - 1
+    while (left < right) {
+        if (str[left] !== str[right]) {
+            return false
+        } else {
+            left++
+            right--
+        }
+    }
+    return true
+}
+
+
+// 对象设置访问器描述符的代理
+// 访问器描述符的参数设置的是 当前代理的对象    以及获取的当前对象的属性
+function _setProxy(obj) {
+    let proxy = new Proxy(obj, {
+        get: function (target, propKey) {
+            if (propKey in target) {
+                count++
+            } else {
+                count--
+            }
+        }
+    })
+}
+
+
+// 访问对象的属性不能是没有权限访问的
+function _proxy(obj, ...props) {
+    let arr = props
+    return new Proxy(obj, {
+        get: function (target, propKey) {
+            if (arr.includes(propKey)) {
+                return 'noright'
+            }
+            return target[propKey]
+        }
+    })
+}
+
+
+
+// 两个节点的第一个共同父节点
+function getCommanParent(node1, node2) {
+    while (true) {
+        node1 = node1.parentNode
+        if (node1.contains(node2)) {
+            return node1
+        }
+    }
+}
+
+
+// url中获取参数
+// 参数重复时候的连接相同参数值的方式   obj[key] = [].concat(obj[key], value)       对象中嵌套数组数据
+// 字符串的截取 不断 split('sign')  加上数组的索引值的牵引得到最终结果
+function getUrlParam(sUrl, sKey) {
+    let arr = sUrl.split('?')[1].split('#')[0].split('&')
+    let obj = {}
+    arr.forEach((item) => {
+        let [key, value] = item.split('=')
+        if (obj[key] === undefined) {
+            obj[key] = value
+        } else {
+            obj[key] = [].concat(obj[key], value)
+        }
+    })
+    return sKey !== undefined ? obj[sKey] || '' : obj
+}
+
+
+// bindThis     f 中的 this 指针指向了 target
+function bindThis(f, target) {
+    let args1 = Array.prototype.slice.call(arguments, 2)
+    return function () {
+        return f.apply(target, Array.prototype.slice.call(arguments).concat(args1))
+    }
+}
+
+
+// 在指定空间中创建对象
+// createObj({a:{test: 1, b: 2}}, 'a.b.c.d')
+// 在 a 的空间中创建 b 对象 b 的空间中创建 c 对象   c 的空间中创建 d 对象
+function createObj(namespace_, target) {
+    let arr = target.split('.')
+    arr.forEach((item) => {
+        namespace_ = namespace_[item] = Object.assign({}, namespace_[item])
+    })
+    return namespace_
+}
+
+
+// 邮箱正则     \w 字母数字下划线   
+function testEmail(emailStr) {
+    let pattern = /^[\w\.]+@[\da-z\.-]+\.([a-z]+|[\u4E00-\u9FFF]+)$/
+    return pattern.test(emailStr)
+}
+
+// 返回函数数组 也就是说返回值数组的元素是函数
+function returnFnArr(arr, fn) {
+    let res = []
+    arr.forEach((item, index) => {
+        res[index] = fn.bind(this, item)
+    })
+    return res
+}
+
+// 函数的柯里化
+// var fn2 = curryIt(fn); fn2(para1)(para2)(para3)      返回的函数支持链式调用
+function curryIt(fn) {
+    let argsArr = []
+    return function curried(arg) {
+        argsArr.push(arg)
+        if (argsArr.length >= fn.length) {
+            return fn.apply(this, argsArr)
+        } else {
+            return function curried2(args2) {
+                // 注意是 call 函数 参数是单独的形式    若是用 apply 那么参数会变为数组的形式
+                return curried.call(this, args2)
+            }
+        }
+    }
+}
+
+// 数据计算的精度问题
+function multiply(a, b) {
+    let aPoint = (a + '').indexOf('.') !== -1 ? (a + '').split('.')[1].length : 1
+    let bPoint = (b + '').indexOf('.') !== -1 ? (b + '').split('.')[1].length : 1
+    return a * Math.pow(10, aPoint) * b * Math.pow(10, bPoint) / (Math.pow(10, aPoint) * Math.pow(10, bPoint))
+}
+
+
+// 测试美元数据是否符合标准
+function testUSD(str) {
+    let pattern = /^\$\d{1,3}(,\d{3})*(\.\d{2})*$/
+    return pattern.test(str)
+}
+
+
+
+// 驼峰式命名 匹配第一个字符将其转换大小写 但是 replace 方法返回的新的字符串 那么需要赋值操作
+// 
+function cssStyle2DomStyle(sName) {
+    let arr1 = sName.split('-')
+    let arr2 = arr1.map((item) => {
+        item = item.replace(/./, (item) => item.toUpperCase())
+        return item
+    })
+    return arr2.join('').replace(/./, (item) => item.toLowerCase())
+}
