@@ -6,76 +6,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        body,html{
-    padding: 0;
-    margin: 0;
-    font-size: 14px;
-    color: #000000;
+        html, body {margin: 0;}
+.color1 {color: #E60012;}
+.color2 {color: #EB6100;}
+.color3 {color: #F39800;}
+.color4 {color: #FCC800;}
+.color5 {color: #FFF100;}
+.color6 {color: #CFDB00;}
+.color7 {color: #8FC31F;}
+.color8 {color: #22AC38;}
+.color9 {color: #009944;}
+.color10 {color: #009B6B;}
+.color11 {color: #009E96;}
+.color12 {color: #00A0C1;}
+.color13 {color: #00A0E9;}
+.color14 {color: #0086D1;}
+.color15 {color: #0068B7;}
+.color16 {color: #00479D;}
+.color17 {color: #1D2088;}
+.color18 {color: #601986;}
+.color19 {color: #920783;}
+.color20 {color: #BE0081;}
+.color21 {color: #E4007F;}
+.color22 {color: #E5006A;}
+.color23 {color: #E5004F;}
+.color24 {color: #E60033;}
+.word {font-size: 20px;}
+.content {text-align: center;font-size:0;}
+.blink {
+    font-size: 20px;
+    animation: fade 500ms infinite;
+    -webkit-animation: fade 500ms infinite;
 }
-table{
-    border-collapse: collapse;
-    width: 100%;
-    table-layout: fixed;
-}
-thead{
-    background: #3d444c;
-    color: #ffffff;
-}
-td,th{
-    border: 1px solid #e1e1e1;
-    padding: 0;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
+@keyframes fade {
+    from {opacity: 1.0;}
+    50% {opacity: 0;}
+    to {opacity: 1.0;}
 }
     </style>
 </head>
 <body>
-    <table id="jsTrolley">
-        <thead><tr><th>名称</th><th>价格</th><th>操作</th></tr></thead>
-        <tbody>
-            <tr><td>产品1</td><td>10.00</td><td><a href="javascript:void(0);">删除</a></td></tr>
-            <tr><td>产品2</td><td>30.20</td><td><a href="javascript:void(0);">删除</a></td></tr>
-            <tr><td>产品3</td><td>20.50</td><td><a href="javascript:void(0);">删除</a></td></tr>
-        </tbody>
-        <tfoot><tr><th>总计</th><td colspan="2">60.70(3件商品)</td></tr></tfoot>
-    </table>
+    <div class="content">
+        <span class="word color23">h</span>
+        <span class="word color22">e</span>
+        <span class="word color4">l</span>
+        <span class="word color24">l</span>
+        <span class="word color17">o</span>
+        <span class="word color2">&nbsp;</span>
+        <span class="word color9">w</span>
+        <span class="word color3">o</span>
+        <span class="word color1">r</span>
+        <span class="word color23">l</span>
+        <span class="word color15">d</span>
+        <br>
+        <span class="word color15">你</span>
+        <span class="word color13">好</span>
+        <span class="word color16">世</span>
+        <span class="word color19">界</span>
+        <span class="blink" id="jsBlink">|</span>
+    </div>
 </body>
 </html>
-<script type='text/javascript'>  
-   function add(items) {
-    var tbody = document.getElementsByTagName('tbody')[0]
-    var tfoot = document.getElementsByTagName('tfoot')[0]
-    var num = tbody.children.length
-    var total = parseFloat(tfoot.innerText.match(/\d+.\d+/)[0])
-    var str = ''
-    items.forEach((item) => {
-        str += `<tr>
-                <td>${item.name}</td>
-                <td>${item.price.toFixed(2)}</td><td>
-                <a href="javascript:void(0);">删除</a></td></tr>`
-        total = (total + parseFloat(`${item.price}`)).toFixed(2)
-        num++
-    })
-    tbody.innerHTML = tbody.innerHTML + str
-    var newTotal = `<tr><th>总计</th><td colspan="2">${total.toFixed(2)}(${num}件商品)</td></tr>`
-    tfoot.innerHTML = newTotal
-}
-
-function bind() {
-    var tbody = document.getElementsByTagName('tbody')[0]
-    var tfoot = document.getElementsByTagName('tfoot')[0]
-    tbody.addEventListener('click', function (e) {
-        var num = tbody.children.length
-        if (e.target.tagName === 'A') {
-            var price = parseFloat(e.target.parentElement.parentElement.innerHTML.match(/\d+.\d+/)[0])
-            var total = tfoot.innerHTML.match(/\d+.\d+/)[0]
-            total = (total - price).toFixed(2)
-            var tf = `<tr><th>总计</th><td colspan="2">${total}(${num - 1}件商品)</td></tr>`
-            tfoot.innerHTML = tf
-            e.target.parentElement.parentElement.remove()
+<script type='text/javascript'>
+    function output(str) {
+    let container = document.querySelector('.content')
+    let spanChildren_ = Array.from(container.children)
+    let lastSpan = document.querySelector('.blank')
+    let count = 0
+    for (let i = 0; i < spanChildren.length - 1; i++) {
+        container.removeChild(spanChildren_[i])
+    }
+    let timer = setInterval(() => {
+        let el = ''
+        if (str[count] === '\n') {
+            el = document.createElement('br')
+        } else {
+            el = document.createElement('span')
+            el.className = 'word ' + 'color' + ((Math.random() * 24 + 1) | 0)
+            el.innerText = str[count]
+            if (str[count] === ' ') {el.innerHTML = '&nbsp;'}
+            if (str[count] === '<') {el.innerHTML = '&lt'}
+            if (str[count] === '>') {el.innerHTML = '&gt'}
+            el = item
         }
-    })
+        container.insertBefore(el, lastSpan)
+        count++
+        if (count === str.length) {
+            clearInterval(timer)
+        }
+        
+    }, 200)
+    
 }
-bind()
 </script>
