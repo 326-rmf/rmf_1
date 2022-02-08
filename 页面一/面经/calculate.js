@@ -2860,7 +2860,7 @@ Function.prototype.myCall = function (target) {
     var getArgs = [...arguments].slice(1)
     //最后对象上面是不能平白无故多出一个函数的      那么我们用一个变量来存储函数并且返回
     //并且记得删除平白无故多出的函数
-    var res = target.fn(getArgs)
+    var res = target.fn(...getArgs)
     delete target.fn
     return res
 }
@@ -3250,7 +3250,7 @@ var detectCycle = function (head) {
 
 
 
-手写forEach()
+// 手写forEach()
 Array.prototype.myEach = function (callback, thisArg) {
     if (!Array.isArray(this) || typeof (callback) !== 'function') {
         throw new Error('wrong...')
@@ -3259,6 +3259,21 @@ Array.prototype.myEach = function (callback, thisArg) {
     for (let i of this) {
         callback.call(T, i)
     }
+}
+
+
+// 手写 map
+Array.prototype._map = function (fn) {
+    if (typeof fn !== 'function') {
+        throw new TypeError('what is to be a function')
+    }
+    let array = this
+    let len = array.length
+    let res = []
+    for (let i = 0; i < len; i++) {
+        res[i] = fn.call(arguments[1], array[i], i, array)
+    }
+    return res
 }
 
 
@@ -5732,4 +5747,50 @@ function cssStyle2DomStyle(sName) {
         return item
     })
     return arr2.join('').replace(/./, (item) => item.toLowerCase())
+}
+
+
+// fn.call(target, ...args)
+Function.prototype._call = function (target) {
+    if (typeof this !== 'function') {
+        throw new TypeError('..')
+    }
+    var args = [...arguments].slice(1)
+    target.fn = this
+    let res = target.fn(...args)
+    delete target.fn
+    return res
+}
+
+
+// 
+Array.prototype._reduce = function (fn, initialValue) {
+    let len = this.length
+    for (let i = 0; i < len; i++) {
+        if (initialValue == undefined) {
+            initialValue = fn(this[i], this[i + 1], i + 1, this)
+            i++
+        } else {
+            initialValue = fn(initialValue, this[i], i, this)
+        }
+    }
+    return initialValue
+}
+
+// 
+Object.prototype._create = function (proto) {
+    if (typeof proto !== 'object' || proto == null) {
+        return 
+    }
+    let fn = function () {}
+    fn.prototype = proto
+    return new fn()
+}
+
+const _new  = function () {
+    const object1 = {}
+    const fn = arguments[0]
+    object1.__proto__ = fn.prototype
+    const object2 = fn.apply(object1, arguments)
+    return object2 instanceof Object ? object2 : object1
 }
