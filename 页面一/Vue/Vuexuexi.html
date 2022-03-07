@@ -275,12 +275,30 @@
         <rmfok1 v-bind:rmfok1prop1='rmfok1prop1' v-slot="{ rmfok1prop1 }">{{ rmfok1prop1 }}</rmfok1>
         <p v-uprmf='500'>uprmffixed</p>
         <p v-uprmf2:[direction]='500'>uprmffixed</p>
+        <button v-on:click="btn_fn_2">fn_1</button>
+        <p>{{rmf_new}}</p>
     </div>
-    <script type="text/javascript" src="./js/vue.js"></script>
+    <script type="text/javascript" src="../js/vue.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.1/moment.js"></script>
-    <script type="text/javascript" src="./js/Vue-MyPlugin.js"></script>
+    <script type="text/javascript" src="../js/Vue-MyPlugin.js"></script>
     <script type="text/javascript">
 
+        let mixin_1 = {
+            methods: {
+                btn_fn_1() {
+                    console.log('mixin')
+                },
+                btn_fn_2() {
+                    console.log('mixin_2')
+                }
+            },
+            data() {
+                return {
+                    rmf_new: 'mixin'
+                }
+            }
+
+        }
 
         // 自定义一个新的组件开始
         //组件的定义必须先于实力化引入
@@ -443,9 +461,9 @@
 
 
             //data数据区域
-            data: {
-
-
+            data() {
+                return {
+                rmf_new: 'origin',
                 // 普通变量区域
                 searchName: '',
                 msg: 'h1',
@@ -476,7 +494,7 @@
                 rmfNum1: 100326,
                 rmfdata: 'rmfdata',
                 rmfok1prop1: 'rmfok1prop1data',
-                direction:'top',
+                direction: 'top',
 
 
 
@@ -512,7 +530,9 @@
                     { id: 3, content: 'rm3' }
                 ]
 
-            },
+            }
+            
+        },
 
 
             //methods方法区域
@@ -520,6 +540,9 @@
                 // onFocus(){
                 //     alert('1')
                 // },
+                btn_fn_1() {
+                    console.log('origin')
+                },
                 changeColor() {
                     alert('1')
                 },
@@ -553,6 +576,9 @@
                 }
 
             },
+            mixins: [mixin_1],
+
+
 
 
             //计算属性区域
@@ -688,7 +714,7 @@
 
 
 
-        //defineProperty函数设置set get方法来自动调用开始 
+        //defineProperty函数设置set get方法来自动调用开始
 //     Object.defineProperty(p,'fullName',{//匹配对象 属性描述符
 // 	//当读取属性值时候	自动调用
 // 	get(){

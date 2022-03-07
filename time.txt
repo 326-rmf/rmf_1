@@ -1,24 +1,3 @@
-56		音乐台效果		 弹簧效果
-57		三国女将
-56	封装弹簧..属性
-
-
-
-
-
-
-
-
-
-113   		3.46		MVVM分析解剖	库的嵌套调用可以再看一下	没看懂	但是主要说的是数据处理的流程	处理的思维就是调用内部定义的函数来实现数据绑定和处理
-114 		2.30		MVVM数据解析	没看懂
-
-
-116		2.39		外卖项目从这个时间点开始就没看了
-
-
-p24		
-
 
 服务器ip
 101.35.143.191
@@ -29,75 +8,8 @@ id_rsa_2048
 :wq	保存退出
 sudo rm -rf /etc/..
 
-宝塔的下载使用s
-下载安装宝塔的时候记得
-通过8888端口的防火墙
-外网面板地址: http://101.35.143.191:8888/e792bb67
-内网面板地址: http://10.0.4.4:8888/e792bb67
-username: nclby2m4
-password: 48dce32a
-netstat -ntlp-->查看网络状态
-101.35.143.191
-navicat破解版
-https://github.com/shaofeng666/Navicat-for-MySQL-/tree/master
-
-
-
-
-
-
-
-
-
-
-
-数据库
-https://blog.csdn.net/weixin_42757413/article/details/106396750
-链接：https://pan.baidu.com/s/1_cg5GjpjHPRGUSw28z89Yw
-提取码：9mzs
-
-sqlserver密码
-123456rmf
-
-
-
-	
-
 
 326-rmf.github.io
-
-
-
-解决git push 问题：
-下面两段代码是参考
-1.	代理
-git config --global --unset http.proxy
-git config --global --unset https.proxy
-下面这句代码取消全局代理
-git  config --global http.sslVerify false
-dns更新:
-ipconfig /flushdns
-还是不行的话
-电脑重启直接成功
-git push --set-upstream origin main
-win+R-->C:\WINDOWS\system32\drivers\etc-->notepad hosts-->达到host
-git config --global http.proxy
-git config --global https.proxy
-git config --global --unset http.proxy
-git config --global --unset https.proxy
-2.	ip
-得到github的ip
-http://github.com.ipaddress.com
-得到github fastly的ip 
-http://github.global.ssl.fastly.net.ipaddress.com/
-把得到的ip在host文件里面设置
-# GitHub Start
-140.82.112.3 githhub.com	
-199.232.69.194 github.global-ssl.fastly.net
-
-dev-sidecar	git加速
-
-
 
 快捷键
 ctrl+shift+p		总命令行
@@ -110,82 +22,15 @@ ctrl+shift+esc		任务管理器
 shift+delete		直接永久性删除
 
 
-
-
-
-# DPI越大		鼠标越灵活
-
-
 接口:
 https://picsum.photos/id/101/300/300		图片接口
 https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5
 http://localhost:3000/disease
 
 
-npm账号:
-rmf_326
-75395184260rmf
-2405825227@qq.com
 
-
-VS里面的插件:
-LaTeX Words		统计字数
-
-
-浏览器暗黑
--	chrome://flags/
-
-
-
-    
 0ebfb7e9088c20e1c31d24cfd655f26a12acf2df
 {user:'admin',token:'admin',isLogin:true}
-
-
-##  目前完成
-1.  vue+elementui+echarts+axios   elementui是阿里放弃维护的一个ui库
-2.  微信小程序
-3.  了解react+antd
-
-
-
-
-网易邮箱
-rmf326@163.com
-
-
-
-
-13469950843
-75395184260rmf.
-
-
-高德地图key
-25ffac494a3a526e14b33e38d002ad7a
-
-
-
-比较	全排列	跨域		设计模式		Promise
-不同页面之间进行通信		async/await	jquery.js
-dom的api	有顺序的ajax请求		fetch&&ajax
-移动端	redux	node	express		html5	css3
-
-
-
-
-/
-
-
-
-https://rmf-web-1-8gp3wim9d7222096-1306744005.ap-shanghai.app.tcloudbase.com
-
-
-
-
-
-
-
-
 
 
 
@@ -207,4 +52,4 @@ http://39.104.22.73:67/#/BlogDetail?ID=5c1702c623c1400eb8d42f10
 
 
 
-()(()()
+

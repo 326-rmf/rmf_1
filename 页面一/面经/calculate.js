@@ -60,7 +60,7 @@ var listReverse = function (list) {
 //链表反转
 //改变数据指向的问题
 //1->2->3->null         null<-1<-2<-3
-var out = function (head) {
+var out_ = function (head) {
     //链表前一个值
     var prev = null
     //链表后面一个值
@@ -2879,7 +2879,7 @@ Function.prototype.myApply = function (target) {
     target.fn = this
     var getArgs = arguments[1]
     var res = target.fn(getArgs)
-    delete target.fn
+    Reflect.deleteProperty(target, 'fn')
     return res
 }
 
@@ -3357,26 +3357,6 @@ Function.prototype.myCall = function (target) {
     delete target.fn
     return res
 }
-
-
-
-
-
-//手写apply
-//obj1.fn.apply(target,[args])
-Function.prototype.myApply = function (target) {
-    if (typeof this !== 'function') {
-        throw new Error('wrong...')
-    }
-    target = target || window
-    target.fn = this
-    var getArgs = arguments[1]
-    var res = target.fn(getArgs)
-    delete target.fn
-    return res
-}
-
-
 
 
 Function.prototype.myBind = function (target) {
@@ -5535,6 +5515,7 @@ var longestValidParentheses = function (s) {
 
 // 格雷编码     n 位格雷序列码是一个 2**n 个整数组成的序列
 // 相邻数据之间的二进制表示只有一个数据是不同的
+// 100 10    101 10 
 var grayCode = function (n) {
     let num = 1 << n
     let res = []
@@ -5780,17 +5761,975 @@ Array.prototype._reduce = function (fn, initialValue) {
 // 
 Object.prototype._create = function (proto) {
     if (typeof proto !== 'object' || proto == null) {
-        return 
+        return
     }
-    let fn = function () {}
+    let fn = function () { }
     fn.prototype = proto
     return new fn()
 }
 
-const _new  = function () {
+
+// new 一个实例对象 需要用到函数对象
+const _new = function () {
     const object1 = {}
-    const fn = arguments[0]
+    const fn = [...arguments].shift()
     object1.__proto__ = fn.prototype
     const object2 = fn.apply(object1, arguments)
     return object2 instanceof Object ? object2 : object1
+}
+
+
+// Object_freeze
+Object.prototype._freeze = function (object) {
+    for (key in object) {
+        let keyType = Object.prototype.toString.call(key).slice(8, -1)
+        if (keyType === 'object' || keyType === 'array') {
+            Object.prototype._freeze(object[key])
+        } else {
+            Object.defineProperty(object, key, {
+                writable: false
+            })
+        }
+    }
+    Object.seal(object)
+}
+
+
+
+
+// 数据的浅拷贝      
+const _shallowClone = target => {
+    // 补全代码
+    if (typeof target === 'object' && target !== null) {
+        // 构造函数的合理应用       constructor.name
+        let cons = target.constructor
+        let pattern = /^(Function | RegExp | Date | Map | Set)$/i
+        if (pattern.test(cons.name)) {
+            return target
+        } else {
+            let _target = Array.isArray(target) ? [] : {}
+            for (let prop in target) {
+                // hasOwnProperty 避免了原型对象上面的属性和方法的拷贝
+                // 不能忘记 for in 在原型上面的弊端
+                if (target.hasOwnProperty(prop)) {
+                    _target[prop] = target[prop]
+                }
+            }
+            return _target
+        }
+    } else {
+        return target
+    }
+}
+
+
+// 简单的深拷贝对象的方法   预先定义一个结果变量来返回拷贝的对象
+// 对对象中的数据多次递归直到得出基本数据类型的值用来返回
+const _sampleDeepClone = target => {
+    // 补全代码
+    if (typeof target === 'object' && target !== null) {
+        var _target = Array.isArray(target) ? [] : {}
+        for (let prop in target) {
+            // 不能忘记 for in 在原型上面可以遍历方法和属性的这一个弊端
+            if (target.hasOwnProperty(prop)) {
+                _target[prop] = _sampleDeepClone(target[prop])
+            }
+        }
+        return _target
+    } else {
+        return target
+    }
+}
+
+
+
+// 循环引用的解决方案用到了 map 数据结构 
+// map.get(target)
+const _completeDeepClone = (target, map = new Map()) => {
+    // 补全代码
+    if (typeof target === 'object' && target !== null) {
+        let pattern = /^(Function | Map | Set | RegExp | Date)$/
+        let _constructor = target.constructor
+        if (pattern.test(_constructor.name)) {
+            return new _constructor(target)
+        }
+        let _cloneTarget = Array.isArray(target) ? [] : {}
+        // 数据存在循环引用数据的时候 会直接获取数据值来返回
+        if (map.has(target)) {
+            return map.get(target)
+        }
+        map.set(target, _cloneTarget)
+        for (let prop in target) {
+            if (target.hasOwnProperty(prop)) {
+                _cloneTarget[prop] = _completeDeepClone[prop]
+            }
+        }
+        return _cloneTarget
+    } else {
+        return target
+    }
+}
+
+
+
+// 寄生组合式继承
+function Human(name) {
+    this.name = name
+    this.kingdom = 'animal'
+    this.color = ['yellow', 'white', 'brown', 'black']
+}
+Human.prototype.getName = function () {
+    return this.name
+}
+
+function Chinese(name, age) {
+    Human.call(this, name)
+    this.color = 'yellow'
+    this.age = age
+}
+// 寄生组合式继承   那么一个对象的原型指向另外一个对象的原型    构造函数的修正
+Chinese.prototype = Object.create(Human.prototype)
+Chinese.prototype.constructor = Chinese
+Chinese.prototype.getAge = function () {
+    return this.age
+}
+
+
+// 发布订阅模式
+// emit 发布事件        on 定义事件
+class EventEmitter {
+    // 补全代码
+    constructor() {
+        // 装载事件的对象
+        this.events = {}
+    }
+    emit(functionName) {
+        // 发布了一个事件名称   当事件名称触发 会触发事件名称数组中装载的回调函数
+        if (this.events[functionName]) {
+            this.events[functionName].forEach(callback => callback())
+        }
+    }
+    on(event, fn) {
+        if (!this.events[event]) {
+            // 回调函数的装载使用数组的形式
+            this.events[event] = [fn]
+        } else {
+            this.events[event].push(fn)
+        }
+    }
+}
+
+
+// 一个整数的质数因子的获取和输出
+// 180 --> 2 2 3 3 5
+function getNumber(target) {
+    let str = ''
+    while (true) {
+        let i = 2
+        while (i * i <= target) {
+            // 直接把某一个质因数列举完 能被 4 整除的数据   早已经被 2 列举完毕
+            while (target % i === 0) {
+                target /= i
+                str += i + ' '
+            }
+            i++
+        }
+        if (target - 1) {
+            str += target + ' '
+        }
+        break
+    }
+}
+
+
+// n -> m 的操作只有三种 n += 1          n -= 1       n = n**2
+function solve(n, m) {
+    // write code here
+    if (n >= m) {
+        return n - m
+    }
+    let sqrtNum = Math.sqrt(m) | 0
+    // 左边平方数字 还是 右边平方数字 距离目标数据更近
+    if (m - sqrtNum * sqrtNum > (sqrtNum + 1) * (sqrtNum + 1) - m) {
+        sqrtNum++
+    }
+    let choose1 = m - n
+    let choose2 = solve(n, sqrtNum) + Math.abs(m - sqrtNum * sqrtNum) + 1
+    return Math.min(choose1, choose2)
+}
+
+
+
+// 字母
+// 'aaaa'       -->     'ccgk'
+// 选定字符串的开始位置 剩余的字符从左到右依次加上 2 3 5
+// 超过 26 那么对 26 取余数
+// 相反的方向思考就是 目标字符串的获取 是由于其余三个字符的作为起始位置变化而来的字符数据
+function solve(s1, s2) {
+    // write code here
+    let arr = []
+    let min = 200
+    for (let i = 0; i < 4; i++) {
+        arr[i] = (s2[i].charCodeAt() - s1[i].charCodeAt() + 26) % 26
+    }
+    for (let i = 0; i < 26; i++) {
+        for (let j = 0; j < 26; j++) {
+            for (let k = 0; k < 26; k++) {
+                for (let q = 0; q < 26; q++) {
+                    if ((2 * (j + k + q)) % 26 === arr[0]
+                        && (2 * i + 3 * (k + q)) % 26 === arr[1]
+                        && (3 * (i + j) + 5 * q) % 26 === arr[2]
+                        && 5 * (i + j + k) % 26 === arr[3]
+                    ) {
+                        min = min < (i + j + k + q) ? min : (i + j + k + q)
+                    }
+                }
+            }
+        }
+    }
+    return min
+}
+
+// 数字规律的临界值的取舍问题
+function solve(a, b, n) {
+    // write code here
+    // a b b-a -a -b a-b         a b b-a
+    let res = [a, b, b - a, -a, -b, a - b]
+    let num = n % 6 - 1
+    num = num == -1 ? 5 : num
+    let _num = res[num]
+    return _num % 1000000007 < 0 ? _num % 1000000007 + 1000000007 : _num % 1000000007
+}
+
+
+// 
+function digSum(potatoNum, connectRoad) {
+    // write code here
+    if (!connectRoad.length) {
+        return potatoNum.indexOf(Math.max(...potatoNum)) + 1 + ''
+    }
+    let len = connectRoad.length
+    let res = []
+    let max = 0
+    let cal = 0
+    let temp = 0
+    let res_ = ''
+    const dp = (potatoNum, connectRoad, start, end) => {
+        if (end == len - 1) {
+            res.push(connectRoad[end][0], connectRoad[end][1])
+            for (let value of res) {
+                cal += potatoNum[value - 1]
+            }
+            if (max < cal) {
+                max = cal
+                res_ = res.join('-')
+            }
+            res.pop()
+            cal = 0
+            return
+        }
+        for (let i = start; i < len - 1; i++) {
+            res.push(connectRoad[i][0], connectRoad[i][1])
+            temp = i
+            for (let j = temp + 1; j < len; j++) {
+                if (connectRoad[temp][1] === connectRoad[j][0]) {
+                    temp = j
+                    dp(potatoNum, connectRoad, temp, j)
+                    res.pop()
+                }
+
+            }
+
+        }
+    }
+
+    dp(potatoNum, connectRoad, 0, 0)
+    return res_
+}
+
+// 和为 n 的 k 个数字的组合
+// 数字不重复
+var combinationSum3 = function (k, n) {
+    let temp = [];
+    const ans = [];
+    const check = (mask, k, n) => {
+        temp = [];
+        for (let i = 0; i < 9; ++i) {
+            if ((1 << i) & mask) {
+                temp.push(i + 1);
+            }
+        }
+        return temp.length === k && temp.reduce((previous, value) => previous + value, 0) === n;
+    }
+
+    for (let mask = 0; mask < (1 << 9); ++mask) {
+        if (check(mask, k, n)) {
+            ans.push(temp);
+        }
+    }
+    return ans;
+};
+
+
+
+// 权值最大的路径
+// potatoNum 是对应的权值点的权值       connectRoad 是对应权值点可指向的权值
+function digSum(potatoNum, connectRoad) {
+    // write code here
+    if (!connectRoad.length) {
+        return potatoNum.indexOf(Math.max(...potatoNum)) + 1 + ''
+    }
+
+    let res = []
+    let len = connectRoad.length
+    let arr = []
+    let start = 0
+    let max = 0
+    let str = ''
+    let newres = []
+    let cal = 0
+
+    const dp = (choices, arr_) => {
+        if (choices == 0) {
+
+            newres = [...new Set(res)]
+
+            for (let value of newres) {
+                cal += potatoNum[value - 1]
+            }
+
+            if (max < cal) {
+                max = cal
+                str = newres.join('-')
+            }
+
+            cal = 0
+            res.pop()
+            res.pop()
+            return
+        }
+
+        for (let i = 0; i < choices; i++) {
+
+            res.push(arr_[i][0], arr_[i][1])
+
+            arr = connectRoad.filter((item) => item[0] == res[res.length - 1])
+            start = arr.length
+            dp(start, arr)
+
+            if (i == choices - 1) {
+                res.pop()
+                res.pop()
+            }
+
+        }
+    }
+
+    dp(len, connectRoad)
+
+    return str
+
+}
+
+
+// S 当中寻找 520 字符串    '?' 可以作为 '5' '2' '0'
+
+function findOccurrences(S) {
+    // write code here
+    let a = 0, b = 0, c = 0, mod = 998244353
+    let len = S.length
+
+    for (let i = 0; i < len; i++) {
+        if (S[i] == '5') {
+            a++                 // 5 的个数
+        } else if (S[i] == '2') {
+            b += a              // 52 的个数
+        } else if (S[i] == '0') {
+            c += b              // 520 的个数   作为 当前字符为 '0' 并且加上前面为 '52' 的个数 
+        } else if (S[i] == '?') {
+            c += b
+            b += a
+            a++
+        }
+        a %= mod
+        b %= mod
+        c %= mod
+    }
+    return c
+}
+
+// 动态规划
+// dp[i] = dp[i - 5] + dp[i - 6] + ... + dp[0]
+// dp[i - 1] = dp[i - 6] + dp[i - 7] + ... + dp[0]
+// dp[i] - dp[i - 1] = dp[i - 5]
+// dp[i] = dp[i - 1] + dp[i - 5]
+function messageCount(N) {
+    // write code here
+    if (N < 5) {
+        return 0
+    }
+    let res = [1, 1, 1, 1, 1, 2]
+    let mod = 998244353
+    for (let i = 11; i <= N; i++) {
+        res[i - 5] = (res[i - 6] + res[i - 10]) % mod
+    }
+    return res[N - 5]
+}
+
+// 8    -> [] [1] [2] [3] [1,2] [1,3] [2,3] [1,2,3]
+//      -> 000 001 010 011 100 101 110 111
+function solve(n, m, limit) {
+    // write code here
+    let res = 0
+
+    const check = (mask, u, v) => {
+        if (((mask >> (u - 1)) & 1) == 1 && ((mask >> (v - 1)) & 1) == 1) {
+            return true
+        }
+        return false
+    }
+
+    for (let mask = 0; mask < (1 << n); mask++) {
+        let pass = true
+        for (let value of limit) {
+            if (check(mask, value.x, value.y)) {
+                pass = false
+                break
+            }
+        }
+        if (pass) {
+            res++
+        }
+    }
+
+    return res
+
+}
+
+// 二叉树的右视图的获取
+var rightSideView = function (root) {
+
+    if (!root) {
+        return []
+    }
+
+    let res = []
+
+    const dp = (root, res, step) => {
+        if (root) {
+            if (res.length == step) {
+                res.push(root.val)
+            }
+            dp(root.right, res, step + 1)
+            dp(root.left, res, step + 1)
+        }
+    }
+
+    dp(root, res, 0)
+
+    return res
+
+};
+
+// 节流
+function throttle(fn, delay) {
+    let pre = Date.now()
+    let timer = null
+    let run = () => {
+        timer = setTimeout(() => {
+            fn.apply(context, args)
+            clearTimeout(timer)
+            timer = null
+        }, delay)
+    }
+    return function () {
+        let context = this
+        let args = arguments
+        if (!timer) {
+            fn.apply(context, args)
+            run()
+        }
+    }
+}
+
+// 防抖
+function debounce(fn, delay, immediate) {
+    let startTime = 0
+    let timer = null
+    let run = (timeInterval) => {
+        timer = setTimeout(() => {
+            let now = Date.now()
+            let timeDuration = now - startTime
+            if (timeInterval < timeDuration) {
+                fn.call(context, args)
+                clearTimeout(timer)
+                timer = null
+            } else {
+                startTime = now
+                run(delay - timeDuration)
+            }
+        }, timeInterval)
+
+    }
+    return function () {
+        let context = this
+        let args = arguments
+        startTime = Date.now()
+        if (!timer) {
+            if (immediate) {
+                fn.apply(context, args)
+            }
+            run(delay)
+        }
+    }
+}
+
+// 重复的两个字符是需要去除的
+function delComChar(s) {
+    let res = []
+    for (let value of s) {
+        if (res.length && res[res.length - 1] == value) {
+            res.pop()
+        } else {
+            res.push(value)
+        }
+    }
+    return res.join('')
+}
+
+// 归并排序     O(n)最佳    O(nlogn)最差
+function mergeSort(arr) {
+    let len = arr.length
+    if (len < 2) {
+        return arr
+    }
+    let middle = len / 2 | 0
+    let left = arr.slice(0, middle)
+    let right = arr.slice(middle)
+    return merge(mergeSort(left), mergeSort(right))
+}
+function merge(left, right) {
+    let res = []
+    while (left.length && right.length) {
+        if (left[0] < right[0]) {
+            res.push(left.shift())
+        } else {
+            res.push(right.shift())
+        }
+    }
+    while (left.length) {
+        res.push(left.shift())
+    }
+    while (right.length) {
+        res.push(right.shift())
+    }
+    return res
+}
+
+// 快速排序         最佳 O(nlogn)   最差 O(n**2)
+function quickSort(arr) {
+    let len = arr.length
+    if (len <= 1) {
+        return arr
+    }
+    let middle = arr.shift()
+    let left = []
+    let right = []
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] < middle) {
+            left.push(arr[i])
+        } else {
+            right.push(arr[i])
+        }
+    }
+    return quickSort(left).concat(middle, quickSort(right))
+}
+
+// 计数排序     数组 C 存储的是 数据的个数的综合
+// [empty, 2, 10, 12, 14, 14, 15, 17, 19, 21]
+// 数组 B 存储的是结果
+// O(n + k)     情况都是 n + k
+function countingSort(arr) {
+    let len = arr.length
+    if (len == 1) {
+        return arr
+    }
+    let min = 0
+    let max = 0
+    let B = []
+    let C = []
+    for (let i = 0; i < len; i++) {
+        min = min < arr[i] ? min : arr[i]
+        max = max > arr[i] ? max : arr[i]
+        C[arr[i]] = (C[arr[i]] || 0) + 1
+    }
+    for (let i = min; i < max; i++) {
+        // [empty, 2, 10, 12, 14, 14, 15, 17, 19, 21]
+        C[i + 1] = (C[i] || 0) + (C[i + 1] || 0)
+    }
+    console.log(C)
+    for (let i = len - 1; i >= 0; i--) {
+        // [empty, 2, 10, 12, 14, 14, 15, 17, 19, 21]
+        // 数据是从右边向左边的数据进行插入的
+        B[C[arr[i]] - 1] = arr[i]
+        C[arr[i]]--
+    }
+    return B
+}
+
+// 基数排序     count 代表最长的数据的位数长度
+// 从低位的等级逐步向高位的等级进发         O(n * k)
+function baseNumSort(arr, count) {
+    let [mod, dec, len, arr2] = [10, 1, arr.length, []]
+    const dp = (arr, count) => {
+        for (let i = 0; i < count; i++) {
+            for (let j = 0; j < len; j++) {
+                let level = parseInt((arr[j] % mod) / dec)
+                if (arr2[level] == null) {
+                    arr2[level] = []
+                }
+                arr2[level].push(arr[j])
+            }
+            let start = 0
+            for (let k = 0; k < arr2.length; k++) {
+                let value = null
+                if (arr2[k] != null) {
+                    while ((value = arr2[k].shift()) != null) {
+                        // 改变的是原来的数组 不必重新声明一个数组存储数据
+                        arr[start++] = value
+                    }
+                }
+            }
+            mod *= 10
+            dec *= 10
+        }
+    }
+    dp(arr, count)
+    return arr
+}
+
+// 插入排序         O(n)        O(n**2)
+function insertSort(arr) {
+    let len = arr.length
+    for (let i = 1; i < len; i++) {
+        let left = 0, right = i - 1, key = arr[i]
+        while (left <= right) {
+            let mid = (left + right) / 2 | 0
+            if (key < arr[mid]) {
+                right = mid - 1
+            } else {
+                left = mid + 1
+            }
+        }
+        for (let j = i - 1; j >= left; j--) {
+            arr[j + 1] = arr[j]
+        }
+        arr[left] = key
+    }
+    return arr
+}
+
+// 希尔排序是插入排序加上分段       O(nlog2n)
+function shellSort(arr) {
+    let len = arr.length
+    let gap = 1
+    let temp = 0
+    while (gap < len / 5) {
+        gap = gap * 5 + 1
+    }
+    for (gap; gap > 0; gap = Math.floor(gap / 5)) {
+        for (let i = gap; i < len; i++) {
+            temp = arr[i]
+            for (var j = i - gap; j >= 0 && arr[j] > temp; j -= gap) {
+                arr[j + gap] = arr[j]
+            }
+            arr[j + gap] = temp
+        }
+    }
+    return arr
+}
+
+// 数组数据中选择 k 个数据  要求最大值和最小值的差值最小化
+var minimumDifference = function (nums, k) {
+    const n = nums.length;
+    nums.sort((a, b) => a - b);
+    let ans = Number.MAX_SAFE_INTEGER;
+    for (let i = 0; i < n - k + 1; i++) {
+        ans = Math.min(ans, nums[i + k - 1] - nums[i]);
+    }
+    return ans;
+};
+
+// 
+var closeStrings = function (word1, word2) {
+    if (word1.length != word2.length) return false;
+    let tab1 = new Array(26).fill(0);
+    let tab2 = new Array(26).fill(0);
+    for (let i = 0; i < word1.length; i++) {
+        tab1[word1.charCodeAt(i) - 97]++;
+        tab2[word2.charCodeAt(i) - 97]++;
+    }
+    for (let i = 0; i < 26; i++) {
+        if (tab1[i] && tab2[i]) continue;
+        if (tab1[i] || tab2[i]) return false;
+    }
+    tab1.sort((a, b) => a - b);
+    tab2.sort((a, b) => a - b);
+    for (let i = 0; i < 26; i++) {
+        if (tab1[i] != tab2[i]) return false;
+    }
+    return true;
+};
+
+// 以 i 结尾的和为 k 的子数组的个数
+var subarraySum = function (nums, k) {
+    const mp = new Map();
+    // 必须初始化 (0, 1)
+    mp.set(0, 1);
+    let count = 0, pre = 0;
+    for (const x of nums) {
+        pre += x;
+        if (mp.has(pre - k)) {
+            // 后面的数据等于前面的数据
+            count += mp.get(pre - k);
+        }
+        if (mp.has(pre)) {
+            // 当前数据是需要增加 1 
+            mp.set(pre, mp.get(pre) + 1);
+        } else {
+            mp.set(pre, 1);
+        }
+    }
+    return count;
+};
+
+// 加油站的秘密是加油的数量必须是大于路程的长度的
+var canCompleteCircuit = function (gas, cost) {
+    const n = gas.length;
+    let i = 0;
+    while (i < n) {
+        let sumOfGas = 0, sumOfCost = 0;
+        let cnt = 0;
+        while (cnt < n) {
+            const j = (i + cnt) % n;
+            sumOfGas += gas[j];
+            sumOfCost += cost[j];
+            if (sumOfCost > sumOfGas) {
+                break;
+            }
+            cnt++;
+        }
+        if (cnt === n) {
+            return i;
+        } else {
+            // 若是出现一个断点不能达到想要的目的 那么前面的一切作废
+            i = i + cnt + 1;
+        }
+    }
+    return -1;
+};
+
+// 
+var reorderList = function (head) {
+    let res = []
+    let len = 0
+    // 数组中放入链表的节点
+    while (head) {
+        // 提前存入链表的后续节点
+        let temp = head.next
+        head.next = null
+        res.push(head)
+        head = temp
+        len++
+    }
+    let left = -1, right = len
+    while (++left < --right) {
+        // 链表指针的指向是 向后指向的
+        res[left].next = res[right]
+        // 左右指针还存在间隔的数据 那么需要指向下面一个数据
+        if (left + 1 != right) {
+            res[right].next = res[left + 1]
+        }
+    }
+    return res[0]
+};
+
+// 二叉树的层序遍历
+var levelOrder = function (root) {
+    let res = []
+    if (!root) {
+        return res
+    }
+    let nodeArr = [root]
+    while (nodeArr.length) {
+        let len = nodeArr.length
+        res.push([])
+        for (let i = 0; i < len; i++) {
+            let node = nodeArr.shift()
+            res[res.length - 1].push(node.val)
+            if (node.left) {
+                nodeArr.push(node.left)
+            }
+            if (node.right) {
+                nodeArr.push(node.right)
+            }
+        }
+    }
+    return res
+};
+
+// [m, n] 之间的所有数据进行按位与的操作的结果数据
+// 
+var rangeBitwiseAnd = function (m, n) {
+    let shift = 0;
+    // 找到公共前缀
+    // 当 m n 数据在按位与的过程中数据相同的时候
+    while (m < n) {
+        m >>= 1;
+        n >>= 1;
+        ++shift;
+    }
+    return n << shift;
+};
+
+// 
+function goNext(generatorfn) {
+    let fn = generatorfn()
+    function next(data) {
+        var res = fn.next(data)
+        if (res.done) {
+            return res.value
+        }
+        res.value.then(function (data) {
+            next(data)
+        })
+    }
+    next()
+}
+goNext(gen)
+
+// 包围的字母 
+var solve = function (board) {
+    // 创建二维数组，默认全部置0
+    let m = board.length, n = board[0].length
+    let visited = new Array(m).fill(0).map(() => new Array(n).fill(0))
+    // dfs模板代码
+    var dfs = (i, j, flag) => {
+        if (i < 0 || i >= m || j < 0 || j >= n || visited[i][j] || board[i][j] === 'X') return
+        visited[i][j] = 1
+        if (flag) board[i][j] = 'X'
+        dfs(i + 1, j, flag)
+        dfs(i, j + 1, flag)
+        dfs(i - 1, j, flag)
+        dfs(i, j - 1, flag)
+    }
+    // 处理边缘的O  与边缘 O 有关联的 O 将会被标记为 used   
+    // 再次总的遍历的时候将会跳过相应的 O
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            if ((i === 0 || i === m - 1 || j === 0 || j === n - 1) && board[i][j] === 'O') {
+                dfs(i, j, false);
+            }
+        }
+    }
+    // 处理非边缘的O
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            if (i !== 0 && i !== m - 1 && j !== 0 && j !== n - 1 && board[i][j] === 'O') {
+                dfs(i, j, true);
+            }
+        }
+    }
+    return board
+};
+
+// 猜测数字的结果是 公牛 奶牛两种结果
+// 数据拥有并且位置正确 为公牛 数据拥有但是位置不正确那么 为母牛
+var getHint = function (secret, guess) {
+    let map = new Map()
+    let a = 0, b = 0
+    let len = secret.length
+    for (let i = 0; i < len; i++) {
+        map.set(secret[i], (map.get(secret[i]) || 0) + 1)
+    }
+    for (let i = 0; i < len; i++) {
+        if (guess[i] == secret[i] && map.get(guess[i])) {
+            map.set(guess[i], map.get(guess[i]) - 1)
+            a++
+        }
+    }
+    for (let i = 0; i < len; i++) {
+        if (guess[i] !== secret[i] && map.get(guess[i])) {
+            map.set(guess[i], map.get(guess[i]) - 1)
+            b++
+        }
+    }
+    return a + 'A' + b + 'B'
+};
+
+// 
+var containsNearbyAlmostDuplicate = function (nums, k, t) {
+    function getId(x) {
+        return Math.floor(x / (t + 1));
+    }
+    if (t < 0) return false;
+
+    // 大桶，里面最多有k个小桶。（超过k的时候会删除第一个小桶，滑动窗口的概念
+    const map = new Map();
+
+    for (let i = 0; i < nums.length; i++) {
+        // m是当前遍历元素将要在的桶
+        const m = getId(nums[i]);
+
+        // 当前大桶中有这个小桶的话，说明存在重复且符合条件，下面两个条件也一样。每次会对比桶的左右小桶。
+        if (map.has(m)) {
+            return true;
+            // 如果当前小桶的右边桶存在，且两个桶相差小于t
+        } else if (map.has(m + 1) && Math.abs(map.get(m + 1) - nums[i]) <= t) {
+            return true;
+            // 如果当前小桶的左边桶存在，且两个桶相差小于t
+        } else if (map.has(m - 1) && Math.abs(map.get(m - 1) - nums[i]) <= t) {
+            return true;
+        }
+        // 将这个桶存到大桶里面
+        map.set(m, nums[i]);
+        // 如果i大于k，也就是大桶装满了，则需要把大桶里面的第一个小桶删了。
+        if (i >= k) {
+            map.delete(getId(nums[i - k]));
+        }
+    }
+    return false;
+};
+
+// sum(1)(2).sumof()    // 3
+function sum() {
+    let total = [...arguments].reduce((pre, cur) => pre + cur)
+    const res = (...args) => {
+        return sum(total, ...args)
+    }
+    res.sumof = () => total
+    return res
+}
+
+//
+function debounce(fn, delay) {
+    let now = Date.now()
+    let timer = null
+    let remain = 0
+    let context = this
+    const run = (timerRemain) => {
+        timer && clearTimeout(timer)
+        let cur = Date.now()
+        remain = cur - now
+        timer = setTimeout(() => {
+            if (remain > timerRemain) {
+                fn.call(context)
+                now = Date.now()
+            } else {
+                run(remain)
+            }
+        }, timerRemain)
+    }
+    run(delay)
+    
 }
