@@ -1248,6 +1248,29 @@ var isValidSudoku = function (board, h = {}) {
     return true
 };
 
+ var isValidSudoku = function(board) {
+    const rows = new Array(9).fill(0).map(() => new Array(9).fill(0));
+    const columns = new Array(9).fill(0).map(() => new Array(9).fill(0));
+    const subboxes = new Array(3).fill(0).map(() => new Array(3).fill(0).map(() => new Array(9).fill(0)));
+  
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            const c = board[i][j];//2 2
+            if (c !== '.') {
+                const index = c.charCodeAt() - '0'.charCodeAt() - 1;
+                rows[i][index]++; //记录每行确定数字出现的次数
+                columns[j][index]++;  //记录每列确定数字出现的次数
+                subboxes[Math.floor(i / 3)][Math.floor(j / 3)][index]++;//记录每个小九宫格确定数字出现的次数
+              
+                if (rows[i][index] > 1 || columns[j][index] > 1 || subboxes[Math.floor(i / 3)][Math.floor(j / 3)][index] > 1) {
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+  } 
+
 
 
 //子数组和的最大值
@@ -6732,4 +6755,42 @@ function debounce(fn, delay) {
     }
     run(delay)
     
+}
+
+// 丑数 2 3 5s
+var isUgly = function(n) {
+    if (n <= 0) {
+        return false
+    }
+    const arr = [2, 3, 5]
+    for (item of arr) {
+        while (n % item == 0) {
+            n = n / item
+        }
+    }
+    return n == 1
+
+};
+
+// 无限的整数数列   给出第 n 位上的数字
+ var findNthDigit = function(n) {
+    let cur = 1, base = 9;
+    while(n > cur * base){
+        n -= cur * base;
+        cur++;
+        base*=10;
+    }
+    n--;
+    const num = Math.pow(10,cur - 1) + Math.floor(n / cur), idx = n % cur;
+    return Math.floor(num / Math.pow(10,cur - 1 - idx)) % 10;
+};
+
+// 
+Array.prototype.myMap = function (fn, thisValue) {
+    const res = []
+    thisValue = thisValue || []
+    this.reduce((pre, cur, index, arr) => {
+        return res.push(fn.call(thisValue, cur, index, arr))
+    }, [])
+    return res
 }
