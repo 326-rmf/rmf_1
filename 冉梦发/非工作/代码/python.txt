@@ -1,0 +1,90 @@
+##	Python成员运算符
+-	in	not in	
+-	if ( a in list ):
+   print "1 - 变量 a 在给定的列表中 list 中"
+else:
+   print "1 - 变量 a 不在给定的列表中 list 中"
+##	Python身份运算符
+-	is 是判断两个标识符是不是引用自一个对象
+-	is not 是判断两个标识符是不是引用自不同对象
+-	if ( a is b ):
+   print "1 - a 和 b 有相同的标识"
+else:
+   print "1 - a 和 b 没有相同的标识"
+-	is 与 == 区别：
+	is 用于判断两个变量引用对象是否为同一个(同一块内存空间)， == 用于判断引用变量的值是否相等。
+##	Python 条件语句
+-	if(a%2==0): print(a, "is even");else: print(a, "is odd");a += 1
+-	if elif elif else
+-	 python 并不支持 switch 语句
+##	Python 循环语句
+-	Python 中没有 do..while 循环
+-	break continue pass
+-	while and for 循环语句
+-	for iterating_var in sequence:
+   	statements(s)
+-	for else, while else 语句
+-	for num in range(10,20):  # 迭代 10 到 20 (不包含) 之间的数字
+-	print ('%d 等于 %d * %d' % (num,i,j))
+-	Python pass 是空语句，是为了保持程序结构的完整性。pass 不做任何事情，一般用做占位语句。
+-	pass 便是占据一个位置，因为如果定义一个空函数程序会报错，当你没有想好函数的内容是可以用 pass 填充，使程序可以正常运行
+-	您可以通过使用del语句删除单个或多个对象
+	-	del var_1,var_b
+-	复数(complex numbers) - 复数由实数部分和虚数部分构成，可以用a + bj,或者**complex(a,b)**表示， 复数的实部a和虚部b都是**浮点型**。
+-	int long float complex str repr eval tuple list chr unichr ord hex oct
+-	Python math 模块提供了许多对浮点数的数学运算函数。
+-	Python cmath 模块包含了一些用于复数运算的函数。
+-	cmath 模块的函数跟 math 模块函数基本一致，区别是 cmath 模块运算的是复数，math 模块运算的是数学运算。
+-	使用 math 或 cmath 函数必须先导入
+-	choice(seq)	从序列的元素中随机挑选一个元素，比如random.choice(range(10))，从0到9中随机挑选一个整数。
+-	shuffle(lst)	将序列的所有元素随机排序
+-	uniform(x, y)	随机生成下一个实数，它在[x,y]范围内。
+-	r/R	原始字符串 - 原始字符串：所有的字符串都是直接按照字面的意思来使用，没有转义特殊或不能打印的字符。 原始字符串除在字符串的第一个引号前加上字母"r"（可以大小写）以外，与普通字符串有着几乎完全相同的语法。
+	-	print r'\n';print R'\n'; 输出：\n \n
+-	Python 中三引号可以将复杂的字符串进行赋值。
+-	Python 三引号允许一个字符串跨多行，字符串中可以包含换行符、制表符以及其他特殊字符。
+-	Python 中定义一个 Unicode 字符串和定义一个普通字符串一样简单。	u"hello"
+-	元组中只包含一个元素时，需要在元素后面添加逗号。tup1 = (50,)
+-	元组中的元素值是不允许修改的。元组中的元素值是不允许删除的，但我们可以使用del语句来删除整个元组  
+-	键必须不可变，所以可以用数字，字符串或元组充当，所以用列表就不行
+##	Python 函数
+-	函数代码块以 def 关键词开头，后接函数标识符名称和圆括号()
+-	在 python 中，strings, tuples, 和 numbers 是不可更改的对象，而 list,dict 等则是可以修改的对象。
+-	不可变类型：变量赋值 a=5 后再赋值 a=10，这里实际是新生成一个 int 值对象 10，再让 a 指向它，而 5 被丢弃，不是改变a的值，相当于新生成了a。
+-	lambda函数的语法只包含一个语句
+	-	lambda [arg1 [,arg2,.....argn]]:expression
+	-	sum = lambda arg1, arg2: arg1 + arg2
+##	Python 模块
+-	from…import* 语句	导入一个模块中的所有项目	然而这种声明不该被过多地使用
+	-	from math import *
+-	global VarName 的表达式会告诉 Python， VarName 是一个全局变量
+-	dir() 函数一个排好序的字符串列表，内容是一个模块里定义过的名字。
+	-	import math;content = dir(math)
+-	Python中的包
+	-	包是一个分层次的文件目录结构，文件夹下必须存在 __init__.py 文件, 该文件的内容可以为空。__init__.py 用于标识当前文件夹是一个包。
+##	Python 文件I/O
+-	读取键盘输入
+	-	raw_input，input
+	-	input([prompt]) 函数和 raw_input([prompt]) 函数基本类似，但是 input 可以接收一个Python表达式作为输入，并将运算结果返回。
+##	Python异常处理
+-	使用except而不带任何异常类型,这不是一个很好的方式，我们不能通过该程序识别出具体的异常信息。因为它捕获所有的异常。
+-	try:;except:;else:;finally:;
+-	一个异常可以是一个字符串，类或对象
+-	定义一个异常非常简单
+	-	def functionName( level ):
+    		if level < 1:
+        	raise Exception("Invalid level!", level)
+       		# 触发异常后，后面的代码就不会再执行
+	-	为了能够捕获异常，"except"语句必须有用相同的异常来抛出类对象或者字符串
+##	Python 面向对象
+-	__init__()方法是一种特殊的方法，被称为类的构造函数或初始化方法，当创建了这个类的实例时就会调用该方法
+	-	def __init__(self):
+	-	self代表类的实例，而非类
+	-	类的方法与普通的函数只有一个特别的区别——它们必须有一个额外的第一个参数名称, 按照惯例它的名称是 self。
+-	self 不是 python 关键字
+-	实例化类其他编程语言中一般用关键字 new，但是在 Python 中并没有这个关键字，类的实例化类似函数调用方式。
+	-	t = Test()
+-	类变量，它的值将在这个类的**所有实例之间共享**。你可以在内部类或外部类使用 Employee.empCount 访问。
+-	类的私有属性:两个下划线开头，声明该属性为私有，不能在类的外部被使用或直接访问__private_attrs
+-	类的私有方法:两个下划线开头，声明该方法为私有方法，不能在类的外部调用
+-	Python不允许实例化的类访问私有数据，但你可以使用 object._className__attrName（ 对象名._类名__私有属性名 ）访问属性

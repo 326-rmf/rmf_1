@@ -1,0 +1,44 @@
+document.write(`<html><head>
+        <link href="NewErrorPageTemplate.css" rel="stylesheet" type="text/css">
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>haha</title>
+
+        <script language="javascript" src="errorPageStrings.js" type="text/javascript">
+        </script>
+        <script language="javascript" src="httpErrorPagesScripts.js" type="text/javascript">
+        </script>
+    </head>
+
+    <body>
+// 思路：获取当前时间戳
+        <div>生成随机数算法</div>
+           // 按钮每点击一次颜色都会发生变化
+<button onclick="changeColor()" id = "btn_change_color">
+每点击一次改变颜色的按钮哦
+</button>
+// 随机数不断滚动生成
+
+<div id="data_1"></div>
+<script>
+const btn_change_color = document.getElementById("btn_change_color")
+
+const generateColorFn = function () {
+return Math.floor(Math.random()*255)
+}
+const changeColor = function() {
+
+// rgb方法随机生成颜色数据
+var color_r = generateColorFn()
+
+btn_change_color.style.color = "rgb("+generateColorFn()+","+generateColorFn()+","+generateColorFn()+")"
+}
+// 
+</script>
+</body></html>
+
+<style>
+#btn_change_color {
+color: blue;
+}</style>
+`)

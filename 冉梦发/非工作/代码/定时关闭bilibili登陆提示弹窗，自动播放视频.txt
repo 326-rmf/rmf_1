@@ -1,0 +1,24 @@
+var closeSign = 0;
+var btn1,btn2;
+var sh = setInterval(()=>{
+
+btn2 = document.getElementsByClassName('bpx-player-video-wrap');
+console.log('bpx-player-video-wrap',btn2[0].children[0].paused);
+if(btn2[0].children[0].paused){btn2[0].children[0].play()}
+
+
+
+btn1 = document.getElementsByClassName('bili-mini-close-icon');
+console.log('bili-mini-close-icon',btn1[0]);
+if(btn1[0]){btn1[0].click()}
+},1000)
+
+
+
+ 
+
+
+
+
+
+
